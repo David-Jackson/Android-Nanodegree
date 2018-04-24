@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.udacity.sandwichclub.DetailActivity">
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/sandwich_picture_content_description"
+        android:scaleType="centerCrop"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/image_mask"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/background_image_mask"/>
+
+    <TextView
+        android:id="@+id/tv_sandwich_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@android:color/white"
+        app:layout_anchor="@id/tv_aliases"
+        app:layout_anchorGravity="top"
+        android:layout_gravity="top"
+        tools:text="Sandwich"/>
+
+    <TextView
+        android:id="@+id/tv_aliases"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        app:layout_anchor="@id/iv_image"
+        app:layout_anchorGravity="bottom"
+        android:layout_gravity="top"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:paddingBottom="8dp"
+        tools:text="Thing with bread"/>
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/iv_image"
+        app:layout_anchorGravity="bottom"
+        android:layout_gravity="bottom"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp">
+
+        <ImageView
+            android:id="@+id/tv_description_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_info_outline_black_24dp"
+            android:tint="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="72dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_description_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:text="A very long description that wraps over multiple lines"/>
+
+        <View
+            android:id="@+id/div_description"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/tv_description"/>
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_aka_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:text="@string/detail_also_known_as_label"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintEnd_toEndOf="@+id/tv_origin_title"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tv_description" />-->
+        <!--<TextView-->
+            <!--android:id="@+id/tv_aka"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--app:layout_constraintRight_toRightOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="@id/tv_aka_title"-->
+            <!--app:layout_constraintLeft_toRightOf="@id/tv_aka_title" />-->
+
+        <ImageView
+            android:id="@+id/tv_origin_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_pin_drop_black_24dp"
+            android:tint="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/div_description" />
+        <TextView
+            android:id="@+id/tv_origin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="72dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_origin_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:text="Planet Earth"/>
+
+        <View
+            android:id="@+id/div_origin"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/tv_origin"/>
+
+        <ImageView
+            android:id="@+id/tv_ingredients_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_restaurant_menu_black_24dp"
+            android:tint="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/div_origin" />
+        <TextView
+            android:id="@+id/tv_ingredients"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="72dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_ingredients_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:text="Carbon, Hydrogen, Oxygen"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.design.widget.CoordinatorLayout>
