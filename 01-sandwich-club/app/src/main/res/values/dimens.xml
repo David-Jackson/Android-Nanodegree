@@ -4,4 +4,19 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="sandwich_image_height">200dp</dimen>
+    <dimen name="sandwich_title_text_size">30sp</dimen>
+    <dimen name="sandwich_title_margin_horz">24dp</dimen>
+    <dimen name="sandwich_title_margin_vert">8dp</dimen>
+
+    <dimen name="sandwich_icon_margin_horz">24dp</dimen>
+    <dimen name="sandwich_icon_margin_vert">16dp</dimen>
+
+    <dimen name="sandwich_text_margin_left">72dp</dimen>
+    <dimen name="sandwich_text_margin_right">16dp</dimen>
+    <dimen name="sandwich_text_margin_vert">2dp</dimen>
+
+    <dimen name="sandwich_divider_margin_horz">16dp</dimen>
+    <dimen name="sandwich_divider_margin_vert">16dp</dimen>
+    <dimen name="sandwich_divider_height">1dp</dimen>
+
 </resources>
