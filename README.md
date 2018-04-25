@@ -10,5 +10,7 @@ Here a repository of all work done on projects for Udacity's Android Nanodegree 
 - Dual Detail Views: Detail Activity and Detail Bottom Sheet.
 - These dual detail views use the [same layout file](https://github.com/David-Jackson/Android-Nanodegree/blob/master/01-sandwich-club/app/src/main/res/layout/activity_detail.xml) and [same UI code](https://github.com/David-Jackson/Android-Nanodegree/blob/master/01-sandwich-club/app/src/main/java/com/udacity/sandwichclub/handlers/DetailViewHandler.java).
   - Only difference being that the Bottom Sheet view uses an [addition class](https://github.com/David-Jackson/Android-Nanodegree/blob/master/01-sandwich-club/app/src/main/java/com/udacity/sandwichclub/handlers/BottomSheetHandler.java) that extends the DetailViewHandler.
+- Some sandwich attributes, description, aliases, origin, and ingredients, are optionial. If they are empty, the UI will adapt. 
+- NestedScrollView: Scroll through the content, while keeping the image and title in view.
 
 ![Sandwich Club in action](https://github.com/David-Jackson/Android-Nanodegree/raw/master/01-sandwich-club/images/device-2018-04-25-143017.gif)
