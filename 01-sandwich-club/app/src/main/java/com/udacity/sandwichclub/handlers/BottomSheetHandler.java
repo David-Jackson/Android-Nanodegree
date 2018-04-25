@@ -27,8 +27,7 @@ public class BottomSheetHandler extends DetailViewHandler {
             @Override
             public void onClick(View v) {
                 // when the scrim is clicked, hide the scrim and bottom sheet
-                scrim.setVisibility(View.INVISIBLE);
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                closeBottomSheet();
             }
         });
 
@@ -57,7 +56,7 @@ public class BottomSheetHandler extends DetailViewHandler {
         bottomSheetBehavior.setPeekHeight(
                 (int) activity.getResources().getDimension(R.dimen.sandwich_image_height));
         bottomSheetBehavior.setHideable(true);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        closeBottomSheet();
     }
 
     public void openBottomSheet(int position) {
@@ -67,5 +66,14 @@ public class BottomSheetHandler extends DetailViewHandler {
         } else {
             Toast.makeText(activity, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public boolean isBottomSheetOpen() {
+        return bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_HIDDEN;
+    }
+
+    public void closeBottomSheet() {
+        scrim.setVisibility(View.INVISIBLE);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 }

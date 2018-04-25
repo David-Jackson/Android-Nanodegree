@@ -65,8 +65,8 @@ public class DetailViewHandler {
         title.setText(sandwich.getMainName());
 
         String aliasesString = sandwich.getAlsoKnownAsString();
-        desctiption.setVisibility(aliasesString.isEmpty() ? View.GONE : View.VISIBLE);
-        desctiption.setText(aliasesString);
+        aliases.setVisibility(aliasesString.isEmpty() ? View.GONE : View.VISIBLE);
+        aliases.setText(aliasesString);
 
         String descriptionString = sandwich.getDescription();
         desctiption.setVisibility(descriptionString.isEmpty() ? View.GONE : View.VISIBLE);

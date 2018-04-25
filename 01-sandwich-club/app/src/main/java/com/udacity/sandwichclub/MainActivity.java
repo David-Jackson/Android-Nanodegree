@@ -54,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        if (bottomSheetHandler.isBottomSheetOpen()) {
+            bottomSheetHandler.closeBottomSheet();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void launchDetailActivity(int position) {
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(DetailActivity.EXTRA_POSITION, position);
