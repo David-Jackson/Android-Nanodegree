@@ -29,28 +29,32 @@
 
     <TextView
         android:id="@+id/tv_sandwich_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:textColor="@android:color/white"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_aliases"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:text="Sandwich" />
 
     <TextView
         android:id="@+id/tv_aliases"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:layout_marginBottom="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:textColor="@android:color/white"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/image_mask"
-        app:layout_constraintStart_toStartOf="@+id/tv_sandwich_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:text="Thing with bread" />
 
     <android.support.v4.widget.NestedScrollView
