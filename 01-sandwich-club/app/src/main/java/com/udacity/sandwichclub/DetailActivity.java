@@ -11,7 +11,7 @@ import com.udacity.sandwichclub.handlers.DetailViewHandler;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private static final String TAG = "DetailActivity";
+    private static final String TAG = DetailActivity.class.getSimpleName();
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;

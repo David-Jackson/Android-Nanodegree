@@ -13,7 +13,16 @@ import java.util.List;
 
 public class JsonUtils {
 
-    private static final String TAG = "JsonUtils";
+    private static final String TAG = JsonUtils.class.getSimpleName();
+
+
+    public static final String KEY_NAME = "name";
+    public static final String KEY_MAIN_NAME = "mainName";
+    public static final String KEY_IMAGE = "image";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_ALSO_KNOW_AS = "alsoKnownAs";
+    public static final String KEY_INGREDIENTES = "ingredients";
+    public static final String KEY_PLACE_OF_ORIGIN = "placeOfOrigin";
 
     public static Sandwich parseSandwichJson(String json) {
         Sandwich sandwich = null;
@@ -21,11 +30,11 @@ public class JsonUtils {
             JSONObject sandwichJson = new JSONObject(json);
             Log.d(TAG, "parseSandwichJson: " + sandwichJson.toString());
             sandwich = new Sandwich(
-                    sandwichJson.getJSONObject("name").getString("mainName"),
+                    sandwichJson.getJSONObject(KEY_NAME).getString(KEY_MAIN_NAME),
                     getAliases(sandwichJson),
-                    sandwichJson.getString("placeOfOrigin"),
-                    sandwichJson.getString("description"),
-                    sandwichJson.getString("image"),
+                    sandwichJson.optString(KEY_PLACE_OF_ORIGIN),
+                    sandwichJson.optString(KEY_DESCRIPTION),
+                    sandwichJson.optString(KEY_IMAGE),
                     getIngredients(sandwichJson)
             );
         } catch (JSONException e) {
@@ -35,20 +44,20 @@ public class JsonUtils {
     }
 
     private static List<String> getAliases(JSONObject sandwichJson) throws JSONException {
-        List<String> aliases = new ArrayList<>();
-        JSONArray aliasesJson = sandwichJson.getJSONObject("name").getJSONArray("alsoKnownAs");
-        for (int i = 0; i < aliasesJson.length(); i++) {
-            aliases.add(aliasesJson.getString(i));
-        }
-        return aliases;
+        JSONArray aliasesJson = sandwichJson.getJSONObject(KEY_NAME).getJSONArray(KEY_ALSO_KNOW_AS);
+        return jsonArrayToList(aliasesJson);
     }
 
     private static List<String> getIngredients(JSONObject sandwichJson) throws JSONException {
-        List<String> ingredients = new ArrayList<>();
-        JSONArray ingredientsJson = sandwichJson.getJSONArray("ingredients");
-        for (int i = 0; i < ingredientsJson.length(); i++) {
-            ingredients.add(ingredientsJson.getString(i));
+        JSONArray ingredientsJson = sandwichJson.getJSONArray(KEY_INGREDIENTES);
+        return jsonArrayToList(ingredientsJson);
+    }
+
+    private static List<String> jsonArrayToList(JSONArray array) {
+        List<String> res = new ArrayList<>();
+        for (int i = 0; i < array.length(); i++) {
+            res.add(array.optString(i));
         }
-        return ingredients;
+        return res;
     }
 }

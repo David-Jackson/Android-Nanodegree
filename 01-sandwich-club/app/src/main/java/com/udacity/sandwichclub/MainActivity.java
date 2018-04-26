@@ -14,7 +14,7 @@ import com.udacity.sandwichclub.handlers.BottomSheetHandler;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     Switch detailSwitch;
     BottomSheetHandler bottomSheetHandler;
