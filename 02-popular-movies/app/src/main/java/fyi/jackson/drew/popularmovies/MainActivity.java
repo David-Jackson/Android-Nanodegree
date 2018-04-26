@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.rv_movies);
-        MovieListAdapter adapter = new MovieListAdapter(DummyData.getMovies());
+        MovieListAdapter adapter = new MovieListAdapter(DummyData.getMovies(), 2);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup());
 
