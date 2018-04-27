@@ -15,16 +15,11 @@ public class JSONUtils {
     public static final String KEY_ID = "id";
     public static final String KEY_TITLE = "title";
     public static final String KEY_OVERVIEW = "overview";
-    public static final String KEY_TAGLINE = "tagline";
     public static final String KEY_POSTER_PATH = "poster_path";
-    public static final String KEY_BACKDROP_PATH = "backdrop_path";
-    public static final String KEY_BUDGET = "budget";
-    public static final String KEY_REVENUE = "revenue";
     public static final String KEY_POPULARITY = "popularity";
     public static final String KEY_VIDEO = "video";
     public static final String KEY_VOTE_AVERAGE = "vote_average";
     public static final String KEY_VOTE_COUNT = "vote_count";
-    public static final String KEY_GENRES = "GENRES";
     public static final String KEY_RELEASE_DATE = "release_date";
 
     public static final String KEY_NAME = "name";
@@ -40,16 +35,11 @@ public class JSONUtils {
         movie.setId(json.optInt(KEY_ID));
         movie.setTitle(json.optString(KEY_TITLE));
         movie.setOverview(json.optString(KEY_OVERVIEW));
-        movie.setTagline(json.optString(KEY_TAGLINE));
         movie.setPosterPath(json.optString(KEY_POSTER_PATH));
-        movie.setBackdropPath(json.optString(KEY_BACKDROP_PATH));
-        movie.setBudget(json.optInt(KEY_BUDGET));
-        movie.setRevenue(json.optInt(KEY_REVENUE));
         movie.setPopularity(json.optDouble(KEY_POPULARITY));
         movie.setVideo(json.optBoolean(KEY_VIDEO));
         movie.setVoteAverage(json.optDouble(KEY_VOTE_AVERAGE));
         movie.setVoteCount(json.optInt(KEY_VOTE_COUNT));
-        movie.setGenres(jsonToGenresList(json.optJSONArray(KEY_GENRES)));
         movie.setReleaseDate(json.optString(KEY_RELEASE_DATE));
 
         return movie;

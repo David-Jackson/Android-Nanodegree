@@ -1,5 +1,7 @@
 package fyi.jackson.drew.popularmovies.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONObject;
 
 import java.util.List;
@@ -9,19 +11,23 @@ public class Movie {
     int id;
     String title;
     String overview;
-    String tagline;
+    @SerializedName("poster_path")
     String posterPath;
-    String backdropPath;
-    int budget;
-    int revenue;
     Double popularity;
     boolean video;
+    @SerializedName("vote_average")
     Double voteAverage;
+    @SerializedName("vote_count")
     int voteCount;
-    List<Genre> genres;
+    @SerializedName("release_date")
     String releaseDate;
 
     // optional attributes
+//    String tagline;
+//    String backdropPath;
+//    int budget;
+//    int revenue;
+//    List<Genre> genres;
 //    String originalTitle;
 //    String imdbId;
 //    Integer collection;
@@ -58,44 +64,12 @@ public class Movie {
         this.overview = overview;
     }
 
-    public String getTagline() {
-        return tagline;
-    }
-
-    public void setTagline(String tagline) {
-        this.tagline = tagline;
-    }
-
     public String getPosterPath() {
         return posterPath;
     }
 
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
-    }
-
-    public String getBackdropPath() {
-        return backdropPath;
-    }
-
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
-    }
-
-    public int getBudget() {
-        return budget;
-    }
-
-    public void setBudget(int budget) {
-        this.budget = budget;
-    }
-
-    public int getRevenue() {
-        return revenue;
-    }
-
-    public void setRevenue(int revenue) {
-        this.revenue = revenue;
     }
 
     public Double getPopularity() {
@@ -128,14 +102,6 @@ public class Movie {
 
     public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
-    }
-
-    public List<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
     }
 
     public String getReleaseDate() {
