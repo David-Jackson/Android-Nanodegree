@@ -16,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@mipmap/test_poster"
+            app:srcCompat="@drawable/ic_poster_placeholder"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/view_center"/>
 
