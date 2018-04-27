@@ -3,6 +3,7 @@ package fyi.jackson.drew.popularmovies.recycler;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,11 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import java.util.List;
 
 import fyi.jackson.drew.popularmovies.R;
 import fyi.jackson.drew.popularmovies.model.Movie;
 import fyi.jackson.drew.popularmovies.recycler.holder.MovieViewHolder;
+import fyi.jackson.drew.popularmovies.utils.MovieUtils;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
@@ -45,7 +51,15 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final MovieViewHolder holder, int position) {
-        // TODO: 4/26/2018 Use Palette to generate dynamic background colors
+        Movie movie = movieList.get(position);
+
+        String url = MovieUtils.buildPosterUrl(movie.getPosterPath(), MovieUtils.API_POSTER_SIZE_W342);
+
+        Picasso.get()
+                .load(url)
+                .placeholder(R.drawable.ic_poster_placeholder)
+                .error(R.mipmap.test_poster)
+                .into(holder.poster);
     }
 
     @Override
