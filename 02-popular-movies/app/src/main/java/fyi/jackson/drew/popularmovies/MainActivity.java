@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.rv_movies);
-        final MovieListAdapter adapter = new MovieListAdapter(DummyData.getMovies(), 2);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        final MovieListAdapter adapter = new MovieListAdapter(DummyData.getMovies(), 6);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 6);
         gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup());
 
         recyclerView.setAdapter(adapter);

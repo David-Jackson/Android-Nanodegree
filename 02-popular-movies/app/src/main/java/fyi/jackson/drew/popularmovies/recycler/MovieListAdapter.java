@@ -25,47 +25,21 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     private List<Movie> movieList;
     private GridLayoutManager.SpanSizeLookup spanSizeLookup;
 
-    private static final int TYPE_NORMAL = 1, TYPE_WIDE_RIGHT = 2, TYPE_WIDE_LEFT = 3;
-
     public MovieListAdapter(List<Movie> movieList, final int spanCount) {
         this.movieList = movieList;
         spanSizeLookup = new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return getItemViewType(position) == TYPE_NORMAL ? 1 : spanCount;
+                return (position % 8 < 2 ? 3 : 2);
             }
         };
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        boolean left = position % 10 == 0;
-        boolean right = position % 5 == 0;
-        if (left) {
-            return TYPE_WIDE_LEFT;
-        } else if (right) {
-            return TYPE_WIDE_RIGHT;
-        } else {
-            return TYPE_NORMAL;
-        }
     }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        int viewId;
-        switch (viewType) {
-            case TYPE_WIDE_LEFT:
-                viewId = R.layout.view_holder_movie_wide_left;
-                break;
-            case TYPE_WIDE_RIGHT:
-                viewId = R.layout.view_holder_movie_wide_right;
-                break;
-            default:
-                viewId = R.layout.view_holder_movie_normal;
-        }
-        View v = inflater.inflate(viewId, parent, false);
+        View v = inflater.inflate(R.layout.view_holder_movie_normal, parent, false);
         return new MovieViewHolder(v);
     }
 
