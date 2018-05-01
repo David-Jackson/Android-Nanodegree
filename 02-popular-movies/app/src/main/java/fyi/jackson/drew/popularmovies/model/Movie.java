@@ -1,12 +1,15 @@
 package fyi.jackson.drew.popularmovies.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
 
 import java.util.List;
 
-public class Movie {
+public class Movie implements Parcelable {
 
     int id;
     String title;
@@ -36,8 +39,50 @@ public class Movie {
 //    String originalLanguage;
 //    String status;
 
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
     public Movie() {
 
+    }
+
+    public Movie(Parcel in) {
+        setId(in.readInt());
+        setTitle(in.readString());
+        setOverview(in.readString());
+        setPosterPath(in.readString());
+        setPopularity(in.readDouble());
+        setVoteAverage(in.readDouble());
+        setVoteCount(in.readInt());
+        setReleaseDate(in.readString());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(overview);
+        dest.writeString(posterPath);
+        dest.writeDouble(popularity);
+        dest.writeDouble(voteAverage);
+        dest.writeInt(voteCount);
+        dest.writeString(releaseDate);
     }
 
     public int getId() {
@@ -111,4 +156,5 @@ public class Movie {
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
+
 }
