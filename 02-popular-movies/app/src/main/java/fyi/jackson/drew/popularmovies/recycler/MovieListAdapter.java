@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import java.util.List;
 import fyi.jackson.drew.popularmovies.R;
 import fyi.jackson.drew.popularmovies.model.Movie;
 import fyi.jackson.drew.popularmovies.recycler.holder.MovieViewHolder;
+import fyi.jackson.drew.popularmovies.utils.MovieItemClickListener;
 import fyi.jackson.drew.popularmovies.utils.MovieUtils;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieViewHolder> {
@@ -30,9 +32,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     private List<Movie> movieList;
     private GridLayoutManager.SpanSizeLookup spanSizeLookup;
+    private MovieItemClickListener movieItemClickListener;
 
-    public MovieListAdapter(List<Movie> movieList, final int spanCount) {
+    public MovieListAdapter(List<Movie> movieList, MovieItemClickListener movieItemClickListener) {
         this.movieList = movieList;
+        this.movieItemClickListener = movieItemClickListener;
         spanSizeLookup = new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -50,16 +54,25 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MovieViewHolder holder, int position) {
-        Movie movie = movieList.get(position);
+    public void onBindViewHolder(@NonNull final MovieViewHolder holder, final int position) {
+        final Movie movie = movieList.get(position);
 
-        String url = MovieUtils.buildPosterUrl(movie.getPosterPath(), MovieUtils.API_POSTER_SIZE_W342);
+        String posterUrl = MovieUtils.buildPosterUrl(movie.getPosterPath(), MovieUtils.API_POSTER_SIZE_W342);
 
         Picasso.get()
-                .load(url)
+                .load(posterUrl)
                 .placeholder(R.drawable.ic_poster_placeholder)
                 .error(R.mipmap.test_poster)
                 .into(holder.poster);
+
+        ViewCompat.setTransitionName(holder.poster, movie.getTitle());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movieItemClickListener.onMovieClicked(holder.getAdapterPosition(), movie, holder.poster);
+            }
+        });
     }
 
     @Override

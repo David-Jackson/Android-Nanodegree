@@ -3,6 +3,8 @@
     <string name="title_activity_scrolling">Movie Title</string>
     <string name="action_settings">Settings</string>
 
+    <string name="title_popular_movies">Popular Movies</string>
+    <string name="title_rated_movies">Top Rated Movies</string>
     <string name="action_sort_by_popularity">Sort by Popularity</string>
     <string name="action_sort_by_rating">Sort by Rating</string>
 </resources>
