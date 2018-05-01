@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.io.IOException;
 
@@ -56,12 +58,31 @@ public class MainActivity extends AppCompatActivity {
                 adapter.setMovieList(response.body().getResults());
                 adapter.notifyDataSetChanged();
             }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.getItem(0).setChecked(true);
+        return true;
+    }
 
             @Override
             public void onFailure(Call<MovieList> call, Throwable t) {
                 Log.d(TAG, "onFailure: Failed to get movies");
             }
         });
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        item.setChecked(true);
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_sort_by_popularity:
+                popularCallHandler.populateAdapter();
+                break;
+            case R.id.menu_sort_by_rating:
+                topRatedCallHandler.populateAdapter();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupRetrofit() {
