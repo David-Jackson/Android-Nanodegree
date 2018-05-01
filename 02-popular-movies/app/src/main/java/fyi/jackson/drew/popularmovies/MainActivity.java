@@ -14,6 +14,7 @@ import fyi.jackson.drew.popularmovies.model.DummyData;
 import fyi.jackson.drew.popularmovies.model.MovieList;
 import fyi.jackson.drew.popularmovies.network.MovieApiService;
 import fyi.jackson.drew.popularmovies.recycler.MovieListAdapter;
+import fyi.jackson.drew.popularmovies.utils.MovieCallHandler;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -30,17 +31,20 @@ public class MainActivity extends AppCompatActivity {
     private static final String API_BASE_URL = "https://api.themoviedb.org/3/";
 
     RecyclerView recyclerView;
+    MovieListAdapter adapter;
     MovieApiService apiService;
 
-    Call<MovieList> popularMovieCall;
+    MovieCallHandler popularCallHandler;
+    MovieCallHandler topRatedCallHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         recyclerView = findViewById(R.id.rv_movies);
-        final MovieListAdapter adapter = new MovieListAdapter(DummyData.getMovies(), 6);
+        adapter = new MovieListAdapter(DummyData.getMovies(), 6);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 6);
         gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup());
 
@@ -49,15 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
         setupRetrofit();
 
+        popularCallHandler.populateAdapter();
+    }
 
-        popularMovieCall.enqueue(new Callback<MovieList>() {
-            @Override
-            public void onResponse(Call<MovieList> call, Response<MovieList> response) {
-                if (response == null || response.body() == null) onFailure(call, new Throwable());
-                Log.d(TAG, "onResponse: Got movies, total of " + response.body().getResults().size());
-                adapter.setMovieList(response.body().getResults());
-                adapter.notifyDataSetChanged();
-            }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -65,11 +63,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-            @Override
-            public void onFailure(Call<MovieList> call, Throwable t) {
-                Log.d(TAG, "onFailure: Failed to get movies");
-            }
-        });
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         item.setChecked(true);
@@ -120,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 .client(client)
                 .build();
         apiService = retrofit.create(MovieApiService.class);
-        popularMovieCall = apiService.getPopularMovies();
+        popularCallHandler = new MovieCallHandler(apiService.getPopularMovies(), adapter);
+        topRatedCallHandler = new MovieCallHandler(apiService.getTopRatedMovies(), adapter);
     }
 }
