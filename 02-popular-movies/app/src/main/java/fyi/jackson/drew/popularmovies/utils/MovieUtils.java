@@ -1,6 +1,13 @@
 package fyi.jackson.drew.popularmovies.utils;
 
-import android.net.Uri;
+import android.content.Context;
+
+import java.io.IOException;
+
+import fyi.jackson.drew.popularmovies.R;
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
+import okhttp3.Request;
 
 public class MovieUtils {
 
@@ -39,6 +46,30 @@ public class MovieUtils {
             size = API_POSTER_SIZE_ORIGINAL;
         }
         return buildPosterUrl(suffix, size);
+    }
+
+    public static Interceptor apiKeyInterceptor(Context context) {
+        final String apiKey = context.getString(R.string.api_key);
+
+        // Define the interceptor, add authentication headers for API key
+        return new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Interceptor.Chain chain) throws IOException {
+                Request original = chain.request();
+                HttpUrl originalHttpUrl = original.url();
+
+                HttpUrl url = originalHttpUrl.newBuilder()
+                        .addQueryParameter("api_key", apiKey)
+                        .build();
+
+                // Request customization: add request headers
+                Request.Builder requestBuilder = original.newBuilder()
+                        .url(url);
+
+                Request request = requestBuilder.build();
+                return chain.proceed(request);
+            }
+        };
     }
 
 }

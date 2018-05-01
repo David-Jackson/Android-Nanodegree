@@ -2,33 +2,24 @@ package fyi.jackson.drew.popularmovies;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import java.io.IOException;
-
 import fyi.jackson.drew.popularmovies.model.DummyData;
 import fyi.jackson.drew.popularmovies.model.Movie;
-import fyi.jackson.drew.popularmovies.model.MovieList;
 import fyi.jackson.drew.popularmovies.network.MovieApiService;
 import fyi.jackson.drew.popularmovies.recycler.MovieListAdapter;
 import fyi.jackson.drew.popularmovies.utils.MovieCallHandler;
 import fyi.jackson.drew.popularmovies.utils.MovieItemClickListener;
-import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
+import fyi.jackson.drew.popularmovies.utils.MovieUtils;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -88,31 +79,9 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
     }
 
     private void setupRetrofit() {
-        final String apiKey = getString(R.string.api_key);
-
-        // Define the interceptor, add authentication headers for API key
-        Interceptor interceptor = new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Interceptor.Chain chain) throws IOException {
-                Request original = chain.request();
-                HttpUrl originalHttpUrl = original.url();
-
-                HttpUrl url = originalHttpUrl.newBuilder()
-                        .addQueryParameter("api_key", apiKey)
-                        .build();
-
-                // Request customization: add request headers
-                Request.Builder requestBuilder = original.newBuilder()
-                        .url(url);
-
-                Request request = requestBuilder.build();
-                return chain.proceed(request);
-            }
-        };
-
         // Add the interceptor to OkHttpClient
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.interceptors().add(interceptor);
+        builder.interceptors().add(MovieUtils.apiKeyInterceptor(this));
         OkHttpClient client = builder.build();
 
 
