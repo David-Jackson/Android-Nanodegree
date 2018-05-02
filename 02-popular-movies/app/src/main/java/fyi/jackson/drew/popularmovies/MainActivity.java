@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity implements MovieItemClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String API_BASE_URL = "https://api.themoviedb.org/3/";
+    public static final String API_BASE_URL = "https://api.themoviedb.org/3/";
 
     RecyclerView recyclerView;
     MovieListAdapter adapter;

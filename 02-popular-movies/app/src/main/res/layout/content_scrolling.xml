@@ -14,12 +14,29 @@
 
         <ImageView
             android:id="@+id/iv_poster"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:adjustViewBounds="true"
-            android:src="@mipmap/test_poster"/>
+            android:src="@mipmap/test_poster"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_tagline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:textSize="24dp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@+id/iv_poster"
+            app:layout_constraintTop_toBottomOf="@+id/iv_poster"
+            app:layout_constraintStart_toEndOf="@+id/iv_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="This is a movie Tagline" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -27,8 +27,13 @@
                 android:id="@+id/app_bar_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/test_backdrop"
                 android:scaleType="centerCrop" />
+
+            <View
+                android:id="@+id/app_bar_scrim"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_app_bar_scrim" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

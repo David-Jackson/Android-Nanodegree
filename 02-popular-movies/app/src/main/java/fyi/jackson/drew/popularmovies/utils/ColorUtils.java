@@ -3,6 +3,14 @@ package fyi.jackson.drew.popularmovies.utils;
 import android.graphics.Color;
 
 public class ColorUtils {
+
+    /**
+     * Determine text color (White or Dark Grey) given a background color
+     *
+     * @param backgroundColor Color integer of background to base text color on.
+     *
+     * @return Color integer
+     */
     public static int getTextColor(int backgroundColor) {
         // This method of breaking out color components is sourced from:
         // https://developer.android.com/reference/android/graphics/Color

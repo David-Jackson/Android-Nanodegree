@@ -8,12 +8,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import fyi.jackson.drew.popularmovies.model.DetailedMovie;
 import fyi.jackson.drew.popularmovies.model.Movie;
+import fyi.jackson.drew.popularmovies.network.MovieApiService;
 import fyi.jackson.drew.popularmovies.utils.MovieUtils;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static fyi.jackson.drew.popularmovies.MainActivity.API_BASE_URL;
 
 public class ScrollingActivity extends AppCompatActivity {
 
@@ -66,5 +76,39 @@ public class ScrollingActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.interceptors().add(MovieUtils.apiKeyInterceptor(this));
+        OkHttpClient client = builder.build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+
+        MovieApiService apiService = retrofit.create(MovieApiService.class);
+        apiService.getMovie(movie.getId()).enqueue(new retrofit2.Callback<DetailedMovie>() {
+            @Override
+            public void onResponse(Call<DetailedMovie> call, Response<DetailedMovie> response) {
+                updateUI(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<DetailedMovie> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void updateUI(DetailedMovie movie) {
+        TextView tagline = findViewById(R.id.tv_tagline);
+        tagline.setText(movie.getTagline());
+
+        ImageView backdrop = findViewById(R.id.app_bar_image);
+        Picasso.get()
+                .load(MovieUtils.buildPosterUrl(movie.getBackdropPath()))
+                .into(backdrop);
     }
 }
