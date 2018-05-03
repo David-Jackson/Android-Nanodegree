@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final String API_BASE_URL = "https://api.themoviedb.org/3/";
 
+    public static final String EXTRA_MOVIE_ITEM = "EXTRA_MOVIE_ITEM";
+    public static final String EXTRA_MOVIE_IMAGE_TRANSITION_NAME = "EXTRA_MOVIE_IMAGE_TRANSITION_NAME";
+
     RecyclerView recyclerView;
     MovieListAdapter adapter;
     MovieApiService apiService;
@@ -94,9 +97,6 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         popularCallHandler = new MovieCallHandler(apiService.getPopularMovies(), adapter);
         topRatedCallHandler = new MovieCallHandler(apiService.getTopRatedMovies(), adapter);
     }
-
-    public static final String EXTRA_MOVIE_ITEM = "EXTRA_MOVIE_ITEM";
-    public static final String EXTRA_MOVIE_IMAGE_TRANSITION_NAME = "EXTRA_MOVIE_IMAGE_TRANSITION_NAME";
 
     @Override
     public void onMovieClicked(int pos, Movie movie, ImageView sharedImageView) {
