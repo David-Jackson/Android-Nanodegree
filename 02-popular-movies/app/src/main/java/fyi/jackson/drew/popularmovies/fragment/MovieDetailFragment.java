@@ -87,7 +87,7 @@ public class MovieDetailFragment extends Fragment {
 
 
         MainFragmentActivity fragmentActivity = (MainFragmentActivity) getActivity();
-        fragmentActivity.appBarLayout.setActivated(false);
+        fragmentActivity.enableAppBar();
         fragmentActivity.appBarLayout.setExpanded(true);
 
         Picasso.get()

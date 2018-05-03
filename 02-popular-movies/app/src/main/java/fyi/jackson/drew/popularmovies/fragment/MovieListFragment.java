@@ -79,7 +79,7 @@ public class MovieListFragment extends Fragment implements MovieItemClickListene
 
         MainFragmentActivity fragmentActivity = (MainFragmentActivity) getActivity();
         fragmentActivity.appBarLayout.setExpanded(false);
-        fragmentActivity.appBarLayout.setActivated(false);
+        fragmentActivity.disableAppBar();
     }
 
     private void setupRetrofit() {

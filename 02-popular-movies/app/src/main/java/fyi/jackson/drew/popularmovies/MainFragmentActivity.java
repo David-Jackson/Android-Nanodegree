@@ -3,15 +3,18 @@ package fyi.jackson.drew.popularmovies;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import fyi.jackson.drew.popularmovies.fragment.MovieListFragment;
+import fyi.jackson.drew.popularmovies.utils.ScrollControlAppBarLayoutBehavior;
 
 public class MainFragmentActivity extends AppCompatActivity {
 
     public ImageView appBarImageView;
     public AppBarLayout appBarLayout;
+    private ScrollControlAppBarLayoutBehavior appBarLayoutBehavior;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,6 +29,15 @@ public class MainFragmentActivity extends AppCompatActivity {
         appBarLayout = findViewById(R.id.app_bar);
         appBarImageView = findViewById(R.id.app_bar_image);
 
-        setTitle("Test Title");
+        appBarLayoutBehavior = (ScrollControlAppBarLayoutBehavior)
+                ((CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams()).getBehavior();
+    }
+
+    public void disableAppBar() {
+        appBarLayoutBehavior.setScrollBehavior(false);
+    }
+
+    public void enableAppBar() {
+        appBarLayoutBehavior.setScrollBehavior(true);
     }
 }
