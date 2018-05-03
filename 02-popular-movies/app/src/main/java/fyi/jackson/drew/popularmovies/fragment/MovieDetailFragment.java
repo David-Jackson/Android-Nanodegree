@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import fyi.jackson.drew.popularmovies.MainFragmentActivity;
+import fyi.jackson.drew.popularmovies.MainActivity;
 import fyi.jackson.drew.popularmovies.R;
 import fyi.jackson.drew.popularmovies.model.Movie;
 import fyi.jackson.drew.popularmovies.utils.MovieUtils;
@@ -50,7 +50,7 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.content_scrolling, container, false);
+        return inflater.inflate(R.layout.fragment_movie_detail, container, false);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class MovieDetailFragment extends Fragment {
                 });
 
 
-        MainFragmentActivity fragmentActivity = (MainFragmentActivity) getActivity();
+        MainActivity fragmentActivity = (MainActivity) getActivity();
         fragmentActivity.enableAppBar();
         fragmentActivity.appBarLayout.setExpanded(true);
         fragmentActivity.toolbarLayout.setTitle(movie.getTitle());

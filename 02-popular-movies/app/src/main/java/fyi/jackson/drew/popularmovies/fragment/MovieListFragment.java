@@ -1,16 +1,11 @@
 package fyi.jackson.drew.popularmovies.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.AutoTransition;
-import android.transition.Explode;
-import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +13,13 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-import fyi.jackson.drew.popularmovies.MainFragmentActivity;
+import fyi.jackson.drew.popularmovies.MainActivity;
 import fyi.jackson.drew.popularmovies.R;
 import fyi.jackson.drew.popularmovies.model.Movie;
 import fyi.jackson.drew.popularmovies.network.MovieApiService;
 import fyi.jackson.drew.popularmovies.recycler.MovieListAdapter;
-import fyi.jackson.drew.popularmovies.utils.MovieCallHandler;
-import fyi.jackson.drew.popularmovies.utils.MovieItemClickListener;
+import fyi.jackson.drew.popularmovies.network.MovieCallHandler;
+import fyi.jackson.drew.popularmovies.ui.MovieItemClickListener;
 import fyi.jackson.drew.popularmovies.utils.MovieUtils;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -57,7 +52,7 @@ public class MovieListFragment extends Fragment implements MovieItemClickListene
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_main, container, false);
+        return inflater.inflate(R.layout.fragment_movie_list, container, false);
     }
 
     @Override
@@ -77,7 +72,7 @@ public class MovieListFragment extends Fragment implements MovieItemClickListene
         setupRetrofit();
         if (initialData == null) popularCallHandler.populateAdapter();
 
-        MainFragmentActivity fragmentActivity = (MainFragmentActivity) getActivity();
+        MainActivity fragmentActivity = (MainActivity) getActivity();
         fragmentActivity.toolbarLayout.setTitle(getString(R.string.title_popular_movies));
         fragmentActivity.appBarLayout.setExpanded(false);
         fragmentActivity.disableAppBar();

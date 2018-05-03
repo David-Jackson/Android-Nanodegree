@@ -1,4 +1,4 @@
-package fyi.jackson.drew.popularmovies.utils;
+package fyi.jackson.drew.popularmovies.ui;
 
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;

@@ -1,4 +1,4 @@
-package fyi.jackson.drew.popularmovies.utils;
+package fyi.jackson.drew.popularmovies.network;
 
 import android.util.Log;
 

@@ -3,7 +3,6 @@ package fyi.jackson.drew.popularmovies.recycler.holder;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import fyi.jackson.drew.popularmovies.R;
 

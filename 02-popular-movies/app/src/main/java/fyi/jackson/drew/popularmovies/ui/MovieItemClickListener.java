@@ -1,4 +1,4 @@
-package fyi.jackson.drew.popularmovies.utils;
+package fyi.jackson.drew.popularmovies.ui;
 
 import android.widget.ImageView;
 

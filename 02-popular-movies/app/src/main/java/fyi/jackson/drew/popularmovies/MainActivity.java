@@ -1,60 +1,40 @@
 package fyi.jackson.drew.popularmovies;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
+import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageView;
 
-import fyi.jackson.drew.popularmovies.model.DummyData;
-import fyi.jackson.drew.popularmovies.model.Movie;
-import fyi.jackson.drew.popularmovies.network.MovieApiService;
-import fyi.jackson.drew.popularmovies.recycler.MovieListAdapter;
-import fyi.jackson.drew.popularmovies.utils.MovieCallHandler;
-import fyi.jackson.drew.popularmovies.utils.MovieItemClickListener;
-import fyi.jackson.drew.popularmovies.utils.MovieUtils;
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import fyi.jackson.drew.popularmovies.fragment.MovieListFragment;
+import fyi.jackson.drew.popularmovies.ui.ScrollControlAppBarLayoutBehavior;
 
-public class MainActivity extends AppCompatActivity implements MovieItemClickListener {
+public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-    public static final String API_BASE_URL = "https://api.themoviedb.org/3/";
-
-    public static final String EXTRA_MOVIE_ITEM = "EXTRA_MOVIE_ITEM";
-    public static final String EXTRA_MOVIE_IMAGE_TRANSITION_NAME = "EXTRA_MOVIE_IMAGE_TRANSITION_NAME";
-
-    RecyclerView recyclerView;
-    MovieListAdapter adapter;
-    MovieApiService apiService;
-
-    MovieCallHandler popularCallHandler;
-    MovieCallHandler topRatedCallHandler;
+    public ImageView appBarImageView;
+    public AppBarLayout appBarLayout;
+    public CollapsingToolbarLayout toolbarLayout;
+    private ScrollControlAppBarLayoutBehavior appBarLayoutBehavior;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toolbarLayout = findViewById(R.id.toolbar_layout);
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.content, MovieListFragment.newInstance())
+                .commit();
 
-        recyclerView = findViewById(R.id.rv_movies);
-        adapter = new MovieListAdapter(DummyData.getMovies(), this);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 6);
-        gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup());
+        appBarLayout = findViewById(R.id.app_bar);
+        appBarImageView = findViewById(R.id.app_bar_image);
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(gridLayoutManager);
-
-        setupRetrofit();
-
-        popularCallHandler.populateAdapter();
+        appBarLayoutBehavior = (ScrollControlAppBarLayoutBehavior)
+                ((CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams()).getBehavior();
     }
 
     @Override
@@ -64,55 +44,28 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        item.setChecked(true);
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.menu_sort_by_popularity:
-                setTitle(R.string.title_popular_movies);
-                popularCallHandler.populateAdapter();
-                break;
-            case R.id.menu_sort_by_rating:
-                setTitle(R.string.title_rated_movies);
-                topRatedCallHandler.populateAdapter();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        item.setChecked(true);
+//        int id = item.getItemId();
+//        switch (id) {
+//            case R.id.menu_sort_by_popularity:
+//                setTitle(R.string.title_popular_movies);
+//                popularCallHandler.populateAdapter();
+//                break;
+//            case R.id.menu_sort_by_rating:
+//                setTitle(R.string.title_rated_movies);
+//                topRatedCallHandler.populateAdapter();
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+    public void disableAppBar() {
+        appBarLayoutBehavior.setScrollBehavior(false);
     }
 
-    private void setupRetrofit() {
-        // Add the interceptor to OkHttpClient
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.interceptors().add(MovieUtils.apiKeyInterceptor(this));
-        OkHttpClient client = builder.build();
-
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-        apiService = retrofit.create(MovieApiService.class);
-        popularCallHandler = new MovieCallHandler(apiService.getPopularMovies(), adapter);
-        topRatedCallHandler = new MovieCallHandler(apiService.getTopRatedMovies(), adapter);
-    }
-
-    @Override
-    public void onMovieClicked(int pos, Movie movie, ImageView sharedImageView) {
-        Intent intent = new Intent(this, ScrollingActivity.class);
-        intent.putExtra(EXTRA_MOVIE_ITEM, movie);
-        intent.putExtra(EXTRA_MOVIE_IMAGE_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
-
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                this,
-                sharedImageView,
-                ViewCompat.getTransitionName(sharedImageView));
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            startActivity(intent, options.toBundle());
-        } else {
-            startActivity(intent);
-        }
+    public void enableAppBar() {
+        appBarLayoutBehavior.setScrollBehavior(true);
     }
 }

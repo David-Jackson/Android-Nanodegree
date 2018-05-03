@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import java.util.List;
 import fyi.jackson.drew.popularmovies.R;
 import fyi.jackson.drew.popularmovies.model.Movie;
 import fyi.jackson.drew.popularmovies.recycler.holder.MovieViewHolder;
-import fyi.jackson.drew.popularmovies.utils.MovieItemClickListener;
+import fyi.jackson.drew.popularmovies.ui.MovieItemClickListener;
 import fyi.jackson.drew.popularmovies.utils.MovieUtils;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieViewHolder> {
