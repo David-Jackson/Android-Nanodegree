@@ -61,6 +61,7 @@ public class MovieDetailFragment extends Fragment {
         String transitionName = getArguments().getString(EXTRA_TRANSITION_NAME);
 
         String posterUrl = MovieUtils.buildPosterUrl(movie.getPosterPath(), MovieUtils.API_POSTER_SIZE_W342);
+        String backdropUrl = MovieUtils.buildPosterUrl(movie.getBackdropPath(), MovieUtils.API_POSTER_SIZE_W342);
 
         TextView taglineTextView = view.findViewById(R.id.tv_tagline);
 
@@ -86,7 +87,12 @@ public class MovieDetailFragment extends Fragment {
 
 
         MainFragmentActivity fragmentActivity = (MainFragmentActivity) getActivity();
+        fragmentActivity.appBarLayout.setActivated(false);
         fragmentActivity.appBarLayout.setExpanded(true);
+
+        Picasso.get()
+                .load(backdropUrl)
+                .into(fragmentActivity.appBarImageView);
 
     }
 
