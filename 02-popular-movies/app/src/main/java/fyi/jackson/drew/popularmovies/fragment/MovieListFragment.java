@@ -10,10 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.transition.AutoTransition;
 import android.transition.Explode;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import java.util.List;
 
 import fyi.jackson.drew.popularmovies.MainFragmentActivity;
 import fyi.jackson.drew.popularmovies.R;
@@ -35,6 +38,7 @@ public class MovieListFragment extends Fragment implements MovieItemClickListene
     RecyclerView recyclerView;
     MovieListAdapter adapter;
     MovieApiService apiService;
+    List<Movie> movieList;
 
     MovieCallHandler popularCallHandler;
     MovieCallHandler topRatedCallHandler;
@@ -60,7 +64,9 @@ public class MovieListFragment extends Fragment implements MovieItemClickListene
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new MovieListAdapter(null, this);
+        List<Movie> initialData = (popularCallHandler == null) ? null : popularCallHandler.getMovieArrayList();
+
+        adapter = new MovieListAdapter(initialData, this);
         recyclerView = view.findViewById(R.id.rv_movies);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 6);
         gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup());
@@ -69,11 +75,11 @@ public class MovieListFragment extends Fragment implements MovieItemClickListene
         recyclerView.setLayoutManager(gridLayoutManager);
 
         setupRetrofit();
-
-        popularCallHandler.populateAdapter();
+        if (initialData == null) popularCallHandler.populateAdapter();
 
         MainFragmentActivity fragmentActivity = (MainFragmentActivity) getActivity();
-        fragmentActivity.appBarLayout.setExpanded(false, true);
+        fragmentActivity.appBarLayout.setExpanded(false);
+        fragmentActivity.appBarLayout.setActivated(false);
     }
 
     private void setupRetrofit() {

@@ -2,6 +2,9 @@ package fyi.jackson.drew.popularmovies.utils;
 
 import android.util.Log;
 
+import java.util.List;
+
+import fyi.jackson.drew.popularmovies.model.Movie;
 import fyi.jackson.drew.popularmovies.model.MovieList;
 import fyi.jackson.drew.popularmovies.recycler.MovieListAdapter;
 import retrofit2.Call;
@@ -50,4 +53,7 @@ public class MovieCallHandler {
         });
     }
 
+    public List<Movie> getMovieArrayList() {
+        return (movieList == null) ? null : movieList.getResults();
+    }
 }

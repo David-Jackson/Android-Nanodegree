@@ -16,6 +16,8 @@ public class Movie implements Parcelable {
     String overview;
     @SerializedName("poster_path")
     String posterPath;
+    @SerializedName("backdrop_path")
+    String backdropPath;
     Double popularity;
     boolean video;
     @SerializedName("vote_average")
@@ -25,9 +27,8 @@ public class Movie implements Parcelable {
     @SerializedName("release_date")
     String releaseDate;
 
+    //    String tagline;
     // optional attributes
-//    String tagline;
-//    String backdropPath;
 //    int budget;
 //    int revenue;
 //    List<Genre> genres;
@@ -62,6 +63,7 @@ public class Movie implements Parcelable {
         setTitle(in.readString());
         setOverview(in.readString());
         setPosterPath(in.readString());
+        setBackdropPath(in.readString());
         setPopularity(in.readDouble());
         setVoteAverage(in.readDouble());
         setVoteCount(in.readInt());
@@ -79,6 +81,7 @@ public class Movie implements Parcelable {
         dest.writeString(title);
         dest.writeString(overview);
         dest.writeString(posterPath);
+        dest.writeString(backdropPath);
         dest.writeDouble(popularity);
         dest.writeDouble(voteAverage);
         dest.writeInt(voteCount);
@@ -157,4 +160,11 @@ public class Movie implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
 }
