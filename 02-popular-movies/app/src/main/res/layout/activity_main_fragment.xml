@@ -11,8 +11,8 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_expanded_height"
-        android:fitsSystemWindows="true"
         app:layout_behavior="fyi.jackson.drew.popularmovies.utils.ScrollControlAppBarLayoutBehavior"
+        app:expanded="false"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout

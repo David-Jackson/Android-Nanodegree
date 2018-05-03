@@ -89,6 +89,7 @@ public class MovieDetailFragment extends Fragment {
         MainFragmentActivity fragmentActivity = (MainFragmentActivity) getActivity();
         fragmentActivity.enableAppBar();
         fragmentActivity.appBarLayout.setExpanded(true);
+        fragmentActivity.toolbarLayout.setTitle(movie.getTitle());
 
         Picasso.get()
                 .load(backdropUrl)

@@ -3,6 +3,7 @@ package fyi.jackson.drew.popularmovies;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -14,12 +15,14 @@ public class MainFragmentActivity extends AppCompatActivity {
 
     public ImageView appBarImageView;
     public AppBarLayout appBarLayout;
+    public CollapsingToolbarLayout toolbarLayout;
     private ScrollControlAppBarLayoutBehavior appBarLayoutBehavior;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_fragment);
+        toolbarLayout = findViewById(R.id.toolbar_layout);
 
         getSupportFragmentManager()
                 .beginTransaction()
