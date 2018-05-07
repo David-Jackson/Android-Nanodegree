@@ -7,6 +7,9 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,7 +28,8 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MovieListFragment extends Fragment implements MovieItemClickListener {
+public class MovieListFragment extends Fragment implements
+        MovieItemClickListener {
 
     public static final String TAG = MovieListFragment.class.getSimpleName();
     public static final String API_BASE_URL = "https://api.themoviedb.org/3/";
@@ -107,5 +111,37 @@ public class MovieListFragment extends Fragment implements MovieItemClickListene
                 .addToBackStack(TAG)
                 .replace(R.id.content, movieDetailFragment)
                 .commit();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        menu.getItem(0).setChecked(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        item.setChecked(true);
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_sort_by_popularity:
+                setTitle(R.string.title_popular_movies);
+                popularCallHandler.populateAdapter();
+                break;
+            case R.id.menu_sort_by_rating:
+                setTitle(R.string.title_rated_movies);
+                topRatedCallHandler.populateAdapter();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setTitle(CharSequence title) {
+        ((MainActivity) getActivity()).toolbarLayout.setTitle(title);
+    }
+
+    public void setTitle(int resId) {
+        CharSequence title = getString(resId);
+        setTitle(title);
     }
 }
