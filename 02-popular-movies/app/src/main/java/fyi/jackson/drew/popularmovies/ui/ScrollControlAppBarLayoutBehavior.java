@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+// This code comes from this StackOverflow answer:
+// https://stackoverflow.com/a/48086783
 public class ScrollControlAppBarLayoutBehavior extends AppBarLayout.Behavior {
 
     private boolean shouldScroll = false;
