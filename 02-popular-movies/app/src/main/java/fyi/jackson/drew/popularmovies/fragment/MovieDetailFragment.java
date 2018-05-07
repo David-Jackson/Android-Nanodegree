@@ -1,11 +1,12 @@
 package fyi.jackson.drew.popularmovies.fragment;
 
-import android.support.v4.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -56,6 +57,7 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
 
         Movie movie = getArguments().getParcelable(EXTRA_MOVIE_ITEM);
         String transitionName = getArguments().getString(EXTRA_TRANSITION_NAME);
@@ -87,6 +89,7 @@ public class MovieDetailFragment extends Fragment {
 
 
         MainActivity fragmentActivity = (MainActivity) getActivity();
+        fragmentActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         fragmentActivity.enableAppBar();
         fragmentActivity.appBarLayout.setExpanded(true);
         fragmentActivity.toolbarLayout.setTitle(movie.getTitle());
@@ -97,5 +100,13 @@ public class MovieDetailFragment extends Fragment {
 
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getFragmentManager().popBackStack();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

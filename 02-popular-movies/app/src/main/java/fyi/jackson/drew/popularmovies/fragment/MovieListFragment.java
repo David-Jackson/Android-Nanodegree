@@ -58,6 +58,7 @@ public class MovieListFragment extends Fragment implements MovieItemClickListene
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
 
         List<Movie> initialData = (popularCallHandler == null) ? null : popularCallHandler.getMovieArrayList();
 
@@ -73,6 +74,7 @@ public class MovieListFragment extends Fragment implements MovieItemClickListene
         if (initialData == null) popularCallHandler.populateAdapter();
 
         MainActivity fragmentActivity = (MainActivity) getActivity();
+        fragmentActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         fragmentActivity.toolbarLayout.setTitle(getString(R.string.title_popular_movies));
         fragmentActivity.appBarLayout.setExpanded(false);
         fragmentActivity.disableAppBar();

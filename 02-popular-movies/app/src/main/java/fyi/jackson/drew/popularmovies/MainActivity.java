@@ -6,7 +6,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
+import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import fyi.jackson.drew.popularmovies.fragment.MovieListFragment;
@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbarLayout = findViewById(R.id.toolbar_layout);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -36,30 +37,6 @@ public class MainActivity extends AppCompatActivity {
         appBarLayoutBehavior = (ScrollControlAppBarLayoutBehavior)
                 ((CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams()).getBehavior();
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        menu.getItem(0).setChecked(true);
-        return true;
-    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        item.setChecked(true);
-//        int id = item.getItemId();
-//        switch (id) {
-//            case R.id.menu_sort_by_popularity:
-//                setTitle(R.string.title_popular_movies);
-//                popularCallHandler.populateAdapter();
-//                break;
-//            case R.id.menu_sort_by_rating:
-//                setTitle(R.string.title_rated_movies);
-//                topRatedCallHandler.populateAdapter();
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     public void disableAppBar() {
         appBarLayoutBehavior.setScrollBehavior(false);
