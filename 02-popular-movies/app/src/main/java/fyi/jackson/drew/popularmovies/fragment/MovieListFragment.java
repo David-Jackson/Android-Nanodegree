@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +42,7 @@ public class MovieListFragment extends Fragment implements
 
     MovieCallHandler popularCallHandler;
     MovieCallHandler topRatedCallHandler;
+    MovieCallHandler activeCallHandler;
 
     public MovieListFragment() {}
 
@@ -67,8 +69,10 @@ public class MovieListFragment extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
-        List<Movie> initialData = (popularCallHandler == null) ? null : popularCallHandler.getMovieArrayList();
+        List<Movie> initialData =
+                (activeCallHandler == null) ? null : activeCallHandler.getMovieArrayList();
 
+        adapter.setMovieList(initialData);
         recyclerView = view.findViewById(R.id.rv_movies);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 6);
         gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup());
@@ -76,7 +80,7 @@ public class MovieListFragment extends Fragment implements
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        if (initialData == null) popularCallHandler.populateAdapter();
+        if (initialData == null) activeCallHandler.populateAdapter();
 
         MainActivity fragmentActivity = (MainActivity) getActivity();
         fragmentActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -100,15 +104,19 @@ public class MovieListFragment extends Fragment implements
         apiService = retrofit.create(MovieApiService.class);
         popularCallHandler = new MovieCallHandler(apiService.getPopularMovies(), adapter);
         topRatedCallHandler = new MovieCallHandler(apiService.getTopRatedMovies(), adapter);
+        activeCallHandler = popularCallHandler;
     }
 
     @Override
     public void onMovieClicked(int pos, Movie movie, ImageView sharedImageView) {
-        Fragment movieDetailFragment = MovieDetailFragment.newInstance(movie, ViewCompat.getTransitionName(sharedImageView));
+        String transitionName = ViewCompat.getTransitionName(sharedImageView);
+
+        Fragment movieDetailFragment =
+                MovieDetailFragment.newInstance(movie, transitionName);
 
         getFragmentManager()
                 .beginTransaction()
-                .addSharedElement(sharedImageView, ViewCompat.getTransitionName(sharedImageView))
+                .addSharedElement(sharedImageView, transitionName)
                 .addToBackStack(TAG)
                 .replace(R.id.content, movieDetailFragment)
                 .commit();
@@ -127,13 +135,14 @@ public class MovieListFragment extends Fragment implements
         switch (id) {
             case R.id.menu_sort_by_popularity:
                 setTitle(R.string.title_popular_movies);
-                popularCallHandler.populateAdapter();
+                activeCallHandler = popularCallHandler;
                 break;
             case R.id.menu_sort_by_rating:
                 setTitle(R.string.title_rated_movies);
-                topRatedCallHandler.populateAdapter();
+                activeCallHandler = topRatedCallHandler;
                 break;
         }
+        activeCallHandler.populateAdapter();
         return super.onOptionsItemSelected(item);
     }
 
