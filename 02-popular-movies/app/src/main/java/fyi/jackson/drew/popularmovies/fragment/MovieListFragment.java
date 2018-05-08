@@ -125,7 +125,8 @@ public class MovieListFragment extends Fragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
-        menu.getItem(0).setChecked(true);
+        int activeMenuItemIndex = (activeCallHandler == popularCallHandler) ? 0 : 1;
+        menu.getItem(activeMenuItemIndex).setChecked(true);
     }
 
     @Override
