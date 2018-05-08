@@ -38,7 +38,6 @@ public class MovieListFragment extends Fragment implements
     RecyclerView recyclerView;
     MovieListAdapter adapter;
     MovieApiService apiService;
-    List<Movie> movieList;
 
     MovieCallHandler popularCallHandler;
     MovieCallHandler topRatedCallHandler;

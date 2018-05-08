@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp">
+    android:layout_margin="@dimen/list_card_margin">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,9 +21,7 @@
             android:id="@+id/iv_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_margin="@dimen/list_favorite_margin"
             app:layout_constraintBottom_toBottomOf="@id/iv_poster"
             app:layout_constraintEnd_toEndOf="@id/iv_poster"
             app:srcCompat="@drawable/ic_favorite_border_black_24dp"

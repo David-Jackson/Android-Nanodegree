@@ -2,4 +2,11 @@
     <dimen name="app_bar_expanded_height">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="list_card_margin">4dp</dimen>
+    <dimen name="list_favorite_margin">8dp</dimen>
+
+    <dimen name="detail_poster_width">130dp</dimen>
+    <dimen name="detail_margin">16dp</dimen>
+    <dimen name="detail_text_size">16sp</dimen>
 </resources>
