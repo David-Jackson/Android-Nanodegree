@@ -59,11 +59,21 @@ public class MovieDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
+        MainActivity fragmentActivity = (MainActivity) getActivity();
+        fragmentActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        fragmentActivity.enableAppBar();
+        fragmentActivity.appBarLayout.setExpanded(true);
+
+        Point screenSize = new Point();
+        fragmentActivity.getWindowManager().getDefaultDisplay().getSize(screenSize);
+
         Movie movie = getArguments().getParcelable(EXTRA_MOVIE_ITEM);
         String transitionName = getArguments().getString(EXTRA_TRANSITION_NAME);
 
+        fragmentActivity.toolbarLayout.setTitle(movie.getTitle());
+
         String posterUrl = MovieUtils.buildPosterUrl(movie.getPosterPath(), MovieUtils.API_POSTER_SIZE_W342);
-        String backdropUrl = MovieUtils.buildPosterUrl(movie.getBackdropPath(), MovieUtils.API_POSTER_SIZE_W342);
+        String backdropUrl = MovieUtils.buildPosterUrl(movie.getBackdropPath(), screenSize.x);
 
         TextView taglineTextView = view.findViewById(R.id.tv_tagline);
 
@@ -87,12 +97,6 @@ public class MovieDetailFragment extends Fragment {
                     }
                 });
 
-
-        MainActivity fragmentActivity = (MainActivity) getActivity();
-        fragmentActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        fragmentActivity.enableAppBar();
-        fragmentActivity.appBarLayout.setExpanded(true);
-        fragmentActivity.toolbarLayout.setTitle(movie.getTitle());
 
         Picasso.get()
                 .load(backdropUrl)
