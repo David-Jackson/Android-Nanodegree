@@ -64,6 +64,6 @@
         android:tint="@android:color/white"
         app:layout_anchor="@+id/app_bar"
         app:layout_anchorGravity="right|bottom"
-        app:srcCompat="@drawable/ic_star_border_black_24dp" />
+        app:srcCompat="@drawable/ic_favorite_border_black_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

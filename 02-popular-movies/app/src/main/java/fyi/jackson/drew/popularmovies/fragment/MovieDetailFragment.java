@@ -1,9 +1,11 @@
 package fyi.jackson.drew.popularmovies.fragment;
 
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -75,7 +77,28 @@ public class MovieDetailFragment extends Fragment {
         String posterUrl = MovieUtils.buildPosterUrl(movie.getPosterPath(), MovieUtils.API_POSTER_SIZE_W342);
         String backdropUrl = MovieUtils.buildPosterUrl(movie.getBackdropPath(), screenSize.x);
 
-        TextView taglineTextView = view.findViewById(R.id.tv_tagline);
+        TextView plotTextView = view.findViewById(R.id.tv_plot);
+        plotTextView.setText(movie.getOverview());
+
+        float voteAverage = (float) (movie.getVoteAverage() / 2);
+
+        AppCompatRatingBar ratingBar = view.findViewById(R.id.rb_rating);
+        ratingBar.setIsIndicator(true);
+        ratingBar.setStepSize(0.1f);
+        ratingBar.setRating(voteAverage);
+
+        TextView voteAverageTextView = view.findViewById(R.id.tv_vote_average);
+        voteAverageTextView.setText(getString(R.string.template_vote_average, voteAverage));
+
+        int voteCount = movie.getVoteCount();
+        String voteCountString = getResources().getQuantityString(
+                R.plurals.template_vote_count, voteCount, voteCount);
+
+        TextView voteCountTextView = view.findViewById(R.id.tv_vote_count);
+        voteCountTextView.setText(voteCountString);
+
+        TextView releasedDateTextView = view.findViewById(R.id.tv_release_date);
+        releasedDateTextView.setText(getString(R.string.template_release_date, movie.getReleaseDate()));
 
         ImageView posterImageView = view.findViewById(R.id.iv_poster);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

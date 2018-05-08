@@ -26,7 +26,7 @@
             android:layout_marginRight="8dp"
             app:layout_constraintBottom_toBottomOf="@id/iv_poster"
             app:layout_constraintEnd_toEndOf="@id/iv_poster"
-            app:srcCompat="@drawable/ic_star_border_black_24dp"
+            app:srcCompat="@drawable/ic_favorite_border_black_24dp"
             android:tint="@android:color/white"/>
 
 

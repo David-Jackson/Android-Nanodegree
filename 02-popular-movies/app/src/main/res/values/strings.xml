@@ -7,4 +7,11 @@
     <string name="title_rated_movies">Top Rated Movies</string>
     <string name="action_sort_by_popularity">Sort by Popularity</string>
     <string name="action_sort_by_rating">Sort by Rating</string>
+
+    <string name="template_vote_average">%1$.2f / 5.0</string>
+    <plurals name="template_vote_count">
+        <item quantity="one">%d vote</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
+    <string name="template_release_date">Released %1$s</string>
 </resources>
