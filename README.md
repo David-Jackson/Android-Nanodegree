@@ -2,6 +2,17 @@
 
 Here a repository of all work done on projects for Udacity's Android Nanodegree program.
 
+## Project #2: Popular Movies Part 1
+*In this project, you will build an app to help users discover popular and recent movies. You will build a clean UI, sync to a server, and present information to the user.*
+
+### Features
+- **Shared Element Transitions**: Smooth, meaningful transitions make interacting with this app much more enjoyable.
+- **Fragments**! By implementing fragments for the [list](https://github.com/David-Jackson/Android-Nanodegree/blob/master/02-popular-movies/app/src/main/java/fyi/jackson/drew/popularmovies/fragment/MovieListFragment.java) and [detail](https://github.com/David-Jackson/Android-Nanodegree/blob/master/02-popular-movies/app/src/main/java/fyi/jackson/drew/popularmovies/fragment/MovieDetailFragment.java) views, we are able to achieve smooth transitions without the overhead of shared element transitions with activities.
+- Material Design: This app capitializes on it's use of fragments with a shared CollapsingToolbarLayout, leading to extra continuity between screens.
+- Laying groundwork for Part 2: Layout considerations have been given for how to implement the favoriting feature requred in Part 2.
+
+![Popular Movies Part 1 in action](https://github.com/David-Jackson/Android-Nanodegree/raw/master/02-popular-movies/images/device-2018-05-08-163344.gif)
+
 ## Project #1: Sandwich Club
 *Design the layout for the detail activity so the different elements display in a sensible way. Implement the JSON parsing in JsonUtils so it produces a Sandwich Object that can be used to populate the UI that you designed.*
 
