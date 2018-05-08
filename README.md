@@ -5,6 +5,9 @@ Here a repository of all work done on projects for Udacity's Android Nanodegree 
 ## Project #2: Popular Movies Part 1
 *In this project, you will build an app to help users discover popular and recent movies. You will build a clean UI, sync to a server, and present information to the user.*
 
+### NOTE: 
+To run this app, you must also have an [API Key](https://www.themoviedb.org/documentation/api) as a string with the name of `api_key` in a resource file.
+
 ### Features
 - **Shared Element Transitions**: Smooth, meaningful transitions make interacting with this app much more enjoyable.
 - **Fragments**! By implementing fragments for the [list](https://github.com/David-Jackson/Android-Nanodegree/blob/master/02-popular-movies/app/src/main/java/fyi/jackson/drew/popularmovies/fragment/MovieListFragment.java) and [detail](https://github.com/David-Jackson/Android-Nanodegree/blob/master/02-popular-movies/app/src/main/java/fyi/jackson/drew/popularmovies/fragment/MovieDetailFragment.java) views, we are able to achieve smooth transitions without the overhead of shared element transitions with activities.
