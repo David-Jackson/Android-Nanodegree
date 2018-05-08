@@ -51,6 +51,9 @@ public class MovieListFragment extends Fragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        adapter = new MovieListAdapter(null, this);
+        setupRetrofit();
     }
 
     @Nullable
@@ -66,7 +69,6 @@ public class MovieListFragment extends Fragment implements
 
         List<Movie> initialData = (popularCallHandler == null) ? null : popularCallHandler.getMovieArrayList();
 
-        adapter = new MovieListAdapter(initialData, this);
         recyclerView = view.findViewById(R.id.rv_movies);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 6);
         gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup());
@@ -74,7 +76,6 @@ public class MovieListFragment extends Fragment implements
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        setupRetrofit();
         if (initialData == null) popularCallHandler.populateAdapter();
 
         MainActivity fragmentActivity = (MainActivity) getActivity();
