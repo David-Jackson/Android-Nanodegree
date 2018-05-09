@@ -22,6 +22,7 @@ public class Movie implements Parcelable {
     int voteCount;
     @SerializedName("release_date")
     String releaseDate;
+    boolean favorite = false;
 
     //    String tagline;
     // optional attributes
@@ -162,5 +163,13 @@ public class Movie implements Parcelable {
 
     public void setBackdropPath(String backdropPath) {
         this.backdropPath = backdropPath;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }
