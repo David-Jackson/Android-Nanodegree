@@ -59,6 +59,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
         ViewCompat.setTransitionName(holder.poster, movie.getTitle());
 
+        holder.favorite.setImageResource(
+                movie.isFavorite() ?
+                        R.drawable.ic_favorite_black_24dp :
+                        R.drawable.ic_favorite_border_black_24dp);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -73,6 +73,10 @@ public class MovieDetailFragment extends Fragment {
         String transitionName = getArguments().getString(EXTRA_TRANSITION_NAME);
 
         fragmentActivity.toolbarLayout.setTitle(movie.getTitle());
+        fragmentActivity.fab.setImageResource(
+                movie.isFavorite() ?
+                        R.drawable.ic_favorite_black_24dp :
+                        R.drawable.ic_favorite_border_black_24dp);
 
         String posterUrl = MovieUtils.buildPosterUrl(movie.getPosterPath(), MovieUtils.API_POSTER_SIZE_W342);
         String backdropUrl = MovieUtils.buildPosterUrl(movie.getBackdropPath(), screenSize.x);
