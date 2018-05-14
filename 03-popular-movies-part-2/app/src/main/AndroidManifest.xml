@@ -21,6 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="fyi.jackson.drew.popularmovies"
+            android:name=".data.MovieProvider"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

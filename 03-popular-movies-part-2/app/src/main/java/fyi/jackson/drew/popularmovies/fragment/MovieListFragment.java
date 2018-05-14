@@ -1,8 +1,14 @@
 package fyi.jackson.drew.popularmovies.fragment;
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +25,7 @@ import java.util.List;
 
 import fyi.jackson.drew.popularmovies.MainActivity;
 import fyi.jackson.drew.popularmovies.R;
+import fyi.jackson.drew.popularmovies.data.MovieContract;
 import fyi.jackson.drew.popularmovies.model.Movie;
 import fyi.jackson.drew.popularmovies.network.MovieApiService;
 import fyi.jackson.drew.popularmovies.recycler.MovieListAdapter;
@@ -30,10 +37,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieListFragment extends Fragment implements
-        MovieItemClickListener {
+        MovieItemClickListener,
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String TAG = MovieListFragment.class.getSimpleName();
     public static final String API_BASE_URL = "https://api.themoviedb.org/3/";
+
+    private static final int ID_POPULAR_MOVIE_LOADER = 473;
+    private static final int ID_TOP_RATED_MOVIE_LOADER = 874;
 
     RecyclerView recyclerView;
     MovieListAdapter adapter;
@@ -86,6 +97,8 @@ public class MovieListFragment extends Fragment implements
         fragmentActivity.toolbarLayout.setTitle(getString(R.string.title_popular_movies));
         fragmentActivity.appBarLayout.setExpanded(false);
         fragmentActivity.disableAppBar();
+
+        getLoaderManager().initLoader(ID_POPULAR_MOVIE_LOADER, null, this);
     }
 
     private void setupRetrofit() {
@@ -94,15 +107,14 @@ public class MovieListFragment extends Fragment implements
         builder.interceptors().add(MovieUtils.apiKeyInterceptor(getContext()));
         OkHttpClient client = builder.build();
 
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
         apiService = retrofit.create(MovieApiService.class);
-        popularCallHandler = new MovieCallHandler(apiService.getPopularMovies(), adapter);
-        topRatedCallHandler = new MovieCallHandler(apiService.getTopRatedMovies(), adapter);
+        popularCallHandler = new MovieCallHandler(getContext(), apiService.getPopularMovies(), adapter);
+        topRatedCallHandler = new MovieCallHandler(getContext(), apiService.getTopRatedMovies(), adapter);
         activeCallHandler = popularCallHandler;
     }
 
@@ -153,5 +165,45 @@ public class MovieListFragment extends Fragment implements
     public void setTitle(int resId) {
         CharSequence title = getString(resId);
         setTitle(title);
+    }
+
+    @NonNull
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        Uri uri;
+        String sortOrder;
+
+        switch (id) {
+            case ID_POPULAR_MOVIE_LOADER:
+                uri = MovieContract.MovieEntry.CONTENT_URI;
+                sortOrder = MovieContract.MovieEntry.COLUMN_POPULARITY + " DESC";
+                break;
+            case ID_TOP_RATED_MOVIE_LOADER:
+                uri = MovieContract.MovieEntry.CONTENT_URI;
+                sortOrder = MovieContract.MovieEntry.COLUMN_VOTE_AVERAGE + " DESC";
+                break;
+            default:
+                throw new RuntimeException("Loader Not Implemented: " + id);
+        }
+
+        return new CursorLoader(getContext(),
+                uri,
+                null,
+                null,
+                null,
+                sortOrder);
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+        List<Movie> movies = MovieUtils.cursorToList(data);
+        Log.d(TAG, "onLoadFinished: Movies Loaded: " + movies.size());
+        adapter.setMovieList(movies);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        Log.d(TAG, "onLoaderReset: ");
     }
 }

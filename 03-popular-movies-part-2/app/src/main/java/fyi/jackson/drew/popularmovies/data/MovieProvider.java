@@ -8,8 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 public class MovieProvider extends ContentProvider {
+
+    public static final String TAG = MovieProvider.class.getSimpleName();
 
     private static final int CODE_MOVIE = 857;
 
@@ -34,7 +37,16 @@ public class MovieProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        throw new RuntimeException("I am not implementing query in PopularMovies.");
+        Log.d(TAG, "query: Querying...");
+        return dbHelper.getReadableDatabase()
+                .query(
+                        MovieContract.MovieEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
     }
 
     @Nullable
@@ -51,6 +63,8 @@ public class MovieProvider extends ContentProvider {
 
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
+        Log.d(TAG, "bulkInsert: Inserting " + values.length);
+
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         switch (uriMatcher.match(uri)) {
@@ -84,6 +98,26 @@ public class MovieProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        throw new RuntimeException("I am not implementing update in PopularMovies.");
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        switch (uriMatcher.match(uri)) {
+            case CODE_MOVIE:
+                db.beginTransaction();
+                int rowsAffected = 0;
+                try {
+                    rowsAffected = db.update(MovieContract.MovieEntry.TABLE_NAME, values, selection, selectionArgs);
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+
+                if (rowsAffected > 0) {
+                    getContext().getContentResolver().notifyChange(uri, null);
+                }
+
+                return rowsAffected;
+            default:
+                throw new RuntimeException("Uri not implemented: " + uri);
+        }
     }
 }

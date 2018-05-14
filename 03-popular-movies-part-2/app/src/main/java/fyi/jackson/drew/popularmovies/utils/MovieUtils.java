@@ -1,10 +1,16 @@
 package fyi.jackson.drew.popularmovies.utils;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import fyi.jackson.drew.popularmovies.R;
+import fyi.jackson.drew.popularmovies.data.MovieContract.MovieEntry;
+import fyi.jackson.drew.popularmovies.model.Movie;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -70,6 +76,27 @@ public class MovieUtils {
                 return chain.proceed(request);
             }
         };
+    }
+
+    public static List<Movie> cursorToList(Cursor cursor) {
+        List<Movie> movies = new ArrayList<>();
+        try {
+            while (cursor.moveToNext()) {
+                movies.add(Movie.fromCursor(cursor));
+            }
+        } finally {
+            cursor.close();
+        }
+        return movies;
+    }
+
+    public static ContentValues[] listToContentValuesArray(List<Movie> movies) {
+        if (movies == null) return null;
+        ContentValues[] contentValues = new ContentValues[movies.size()];
+        for (int i = 0; i < movies.size(); i++) {
+            contentValues[i] = movies.get(i).toContentValues();
+        }
+        return contentValues;
     }
 
 }

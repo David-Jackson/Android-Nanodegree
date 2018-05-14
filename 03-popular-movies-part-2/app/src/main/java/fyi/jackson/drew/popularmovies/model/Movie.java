@@ -1,9 +1,14 @@
 package fyi.jackson.drew.popularmovies.model;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+
+import fyi.jackson.drew.popularmovies.data.MovieContract.MovieEntry;
 
 public class Movie implements Parcelable {
 
@@ -83,6 +88,38 @@ public class Movie implements Parcelable {
         dest.writeDouble(voteAverage);
         dest.writeInt(voteCount);
         dest.writeString(releaseDate);
+    }
+
+    public static Movie fromCursor(Cursor cursor) {
+        Movie movie = new Movie();
+        movie.setId(cursor.getInt(cursor.getColumnIndex(MovieEntry.COLUMN_ID)));
+        movie.setTitle(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_TITLE)));
+        movie.setOverview(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_OVERVIEW)));
+        movie.setPosterPath(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_POSTER)));
+        movie.setBackdropPath(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_BACKDROP)));
+        movie.setPopularity(cursor.getDouble(cursor.getColumnIndex(MovieEntry.COLUMN_POPULARITY)));
+        movie.setVideo(cursor.getInt(cursor.getColumnIndex(MovieEntry.COLUMN_VIDEO)) == 1);
+        movie.setVoteAverage(cursor.getDouble(cursor.getColumnIndex(MovieEntry.COLUMN_VOTE_AVERAGE)));
+        movie.setVoteCount(cursor.getInt(cursor.getColumnIndex(MovieEntry.COLUMN_VOTE_COUNT)));
+        movie.setReleaseDate(cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_RELEASE_DATE)));
+        movie.setFavorite(cursor.getInt(cursor.getColumnIndex(MovieEntry.COLUMN_FAVORITE)) == 1);
+        return movie;
+    }
+
+    public ContentValues toContentValues() {
+        ContentValues cv = new ContentValues();
+        cv.put(MovieEntry.COLUMN_ID, getId());
+        cv.put(MovieEntry.COLUMN_TITLE, getTitle());
+        cv.put(MovieEntry.COLUMN_OVERVIEW, getOverview());
+        cv.put(MovieEntry.COLUMN_POSTER, getPosterPath());
+        cv.put(MovieEntry.COLUMN_BACKDROP, getBackdropPath());
+        cv.put(MovieEntry.COLUMN_POPULARITY, getPopularity());
+        cv.put(MovieEntry.COLUMN_VIDEO, isVideo());
+        cv.put(MovieEntry.COLUMN_VOTE_AVERAGE, getVoteAverage());
+        cv.put(MovieEntry.COLUMN_VOTE_COUNT, getVoteCount());
+        cv.put(MovieEntry.COLUMN_RELEASE_DATE, getReleaseDate());
+        cv.put(MovieEntry.COLUMN_FAVORITE, isFavorite());
+        return cv;
     }
 
     public int getId() {
