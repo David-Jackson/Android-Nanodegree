@@ -1,12 +1,15 @@
 package fyi.jackson.drew.popularmovies.fragment;
 
 import android.graphics.Point;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,10 +22,13 @@ import com.squareup.picasso.Picasso;
 
 import fyi.jackson.drew.popularmovies.MainActivity;
 import fyi.jackson.drew.popularmovies.R;
+import fyi.jackson.drew.popularmovies.data.MovieContract;
 import fyi.jackson.drew.popularmovies.model.Movie;
 import fyi.jackson.drew.popularmovies.utils.MovieUtils;
 
 public class MovieDetailFragment extends Fragment {
+
+    public static final String TAG = MovieDetailFragment.class.getSimpleName();
 
     public static final String EXTRA_MOVIE_ITEM = "EXTRA_MOVIE_ITEM";
     public static final String EXTRA_TRANSITION_NAME = "EXTRA_TRANSITION_NAME";
@@ -69,14 +75,27 @@ public class MovieDetailFragment extends Fragment {
         Point screenSize = new Point();
         fragmentActivity.getWindowManager().getDefaultDisplay().getSize(screenSize);
 
-        Movie movie = getArguments().getParcelable(EXTRA_MOVIE_ITEM);
+        final Movie movie = getArguments().getParcelable(EXTRA_MOVIE_ITEM);
         String transitionName = getArguments().getString(EXTRA_TRANSITION_NAME);
 
         fragmentActivity.toolbarLayout.setTitle(movie.getTitle());
-        fragmentActivity.fab.setImageResource(
+        final FloatingActionButton fab = fragmentActivity.fab;
+        fab.setImageResource(
                 movie.isFavorite() ?
                         R.drawable.ic_favorite_black_24dp :
                         R.drawable.ic_favorite_border_black_24dp);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movie.setFavorite(!movie.isFavorite());
+                updateDb(movie);
+                if (movie.isFavorite()) {
+                    playAvd(fab, R.drawable.avd_heart_border_to_heart_1, R.drawable.ic_favorite_black_24dp);
+                } else {
+                    playAvd(fab, R.drawable.avd_heart_to_heart_border_1, R.drawable.ic_favorite_border_black_24dp);
+                }
+            }
+        });
 
         String posterUrl = MovieUtils.buildPosterUrl(movie.getPosterPath(), MovieUtils.API_POSTER_SIZE_W342);
         String backdropUrl = MovieUtils.buildPosterUrl(movie.getBackdropPath(), screenSize.x);
@@ -139,5 +158,26 @@ public class MovieDetailFragment extends Fragment {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void playAvd(FloatingActionButton fab, int avdRes, int fallbackRes) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) getResources().getDrawable(avdRes);
+            fab.setImageDrawable(avd);
+            avd.start();
+        } else {
+            fab.setImageResource(fallbackRes);
+        }
+    }
+
+    private void updateDb(Movie movie) {
+        int rowsUpdated = getContext()
+                .getContentResolver()
+                .update(
+                        MovieContract.MovieEntry.CONTENT_URI,
+                        movie.toContentValues(),
+                        MovieContract.MovieEntry.getSqlWhereClauseForMovie(movie),
+                        null);
+        Log.d(TAG, "updateDb: Rows changed: " + rowsUpdated);
     }
 }

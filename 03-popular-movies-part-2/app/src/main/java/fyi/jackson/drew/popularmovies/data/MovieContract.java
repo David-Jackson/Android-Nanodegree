@@ -3,6 +3,8 @@ package fyi.jackson.drew.popularmovies.data;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import fyi.jackson.drew.popularmovies.model.Movie;
+
 public class MovieContract {
 
     public static final String CONTENT_AUTHORITY = "fyi.jackson.drew.popularmovies";
@@ -35,6 +37,10 @@ public class MovieContract {
             return CONTENT_URI.buildUpon()
                     .appendPath(Integer.toString(id))
                     .build();
+        }
+
+        public static String getSqlWhereClauseForMovie(Movie movie) {
+            return COLUMN_ID + " = " + movie.getId();
         }
     }
 }
