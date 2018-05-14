@@ -170,14 +170,19 @@ public class MovieDetailFragment extends Fragment {
         }
     }
 
-    private void updateDb(Movie movie) {
-        int rowsUpdated = getContext()
-                .getContentResolver()
-                .update(
-                        MovieContract.MovieEntry.CONTENT_URI,
-                        movie.toContentValues(),
-                        MovieContract.MovieEntry.getSqlWhereClauseForMovie(movie),
-                        null);
-        Log.d(TAG, "updateDb: Rows changed: " + rowsUpdated);
+    private void updateDb(final Movie movie) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int rowsUpdated = getContext()
+                        .getContentResolver()
+                        .update(
+                                MovieContract.MovieEntry.CONTENT_URI,
+                                movie.toContentValues(),
+                                MovieContract.MovieEntry.getSqlWhereClauseForMovie(movie),
+                                null);
+                Log.d(TAG, "updateDb: Rows changed: " + rowsUpdated);
+            }
+        }).start();
     }
 }
