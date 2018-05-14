@@ -80,13 +80,10 @@ public class MovieUtils {
 
     public static List<Movie> cursorToList(Cursor cursor) {
         List<Movie> movies = new ArrayList<>();
-        try {
-            while (cursor.moveToNext()) {
-                movies.add(Movie.fromCursor(cursor));
-            }
-        } finally {
-            cursor.close();
-        }
+        cursor.moveToFirst();
+        do {
+            movies.add(Movie.fromCursor(cursor));
+        } while (cursor.moveToNext());
         return movies;
     }
 

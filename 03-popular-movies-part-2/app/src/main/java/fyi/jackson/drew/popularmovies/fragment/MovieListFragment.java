@@ -1,14 +1,8 @@
 package fyi.jackson.drew.popularmovies.fragment;
 
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,34 +19,23 @@ import java.util.List;
 
 import fyi.jackson.drew.popularmovies.MainActivity;
 import fyi.jackson.drew.popularmovies.R;
-import fyi.jackson.drew.popularmovies.data.MovieContract;
+import fyi.jackson.drew.popularmovies.data.MovieDataCallback;
 import fyi.jackson.drew.popularmovies.model.Movie;
-import fyi.jackson.drew.popularmovies.network.MovieApiService;
 import fyi.jackson.drew.popularmovies.recycler.MovieListAdapter;
-import fyi.jackson.drew.popularmovies.network.MovieCallHandler;
+import fyi.jackson.drew.popularmovies.ui.MovieDataHandler;
 import fyi.jackson.drew.popularmovies.ui.MovieItemClickListener;
-import fyi.jackson.drew.popularmovies.utils.MovieUtils;
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieListFragment extends Fragment implements
-        MovieItemClickListener,
-        LoaderManager.LoaderCallbacks<Cursor> {
+        MovieItemClickListener, MovieDataCallback {
 
     public static final String TAG = MovieListFragment.class.getSimpleName();
-    public static final String API_BASE_URL = "https://api.themoviedb.org/3/";
 
-    private static final int ID_POPULAR_MOVIE_LOADER = 473;
-    private static final int ID_TOP_RATED_MOVIE_LOADER = 874;
 
     RecyclerView recyclerView;
     MovieListAdapter adapter;
-    MovieApiService apiService;
 
-    MovieCallHandler popularCallHandler;
-    MovieCallHandler topRatedCallHandler;
-    MovieCallHandler activeCallHandler;
+    MovieDataHandler dataHandler;
+    List<Movie> movieList;
 
     public MovieListFragment() {}
 
@@ -65,7 +48,8 @@ public class MovieListFragment extends Fragment implements
         super.onCreate(savedInstanceState);
 
         adapter = new MovieListAdapter(null, this);
-        setupRetrofit();
+
+        dataHandler = new MovieDataHandler(getActivity(), this);
     }
 
     @Nullable
@@ -79,10 +63,7 @@ public class MovieListFragment extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
-        List<Movie> initialData =
-                (activeCallHandler == null) ? null : activeCallHandler.getMovieArrayList();
-
-        adapter.setMovieList(initialData);
+        adapter.setMovieList(movieList);
         recyclerView = view.findViewById(R.id.rv_movies);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 6);
         gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup());
@@ -90,32 +71,13 @@ public class MovieListFragment extends Fragment implements
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        if (initialData == null) activeCallHandler.populateAdapter();
+        if (movieList == null) dataHandler.requestActiveData();
 
         MainActivity fragmentActivity = (MainActivity) getActivity();
         fragmentActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         fragmentActivity.toolbarLayout.setTitle(getString(R.string.title_popular_movies));
         fragmentActivity.appBarLayout.setExpanded(false);
         fragmentActivity.disableAppBar();
-
-        getLoaderManager().initLoader(ID_POPULAR_MOVIE_LOADER, null, this);
-    }
-
-    private void setupRetrofit() {
-        // Add the interceptor to OkHttpClient
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.interceptors().add(MovieUtils.apiKeyInterceptor(getContext()));
-        OkHttpClient client = builder.build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-        apiService = retrofit.create(MovieApiService.class);
-        popularCallHandler = new MovieCallHandler(getContext(), apiService.getPopularMovies(), adapter);
-        topRatedCallHandler = new MovieCallHandler(getContext(), apiService.getTopRatedMovies(), adapter);
-        activeCallHandler = popularCallHandler;
     }
 
     @Override
@@ -136,7 +98,10 @@ public class MovieListFragment extends Fragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
-        int activeMenuItemIndex = (activeCallHandler == popularCallHandler) ? 0 : 1;
+        boolean isMethodPopular =
+                (dataHandler.activeDataMethod == MovieDataHandler.METHOD_API_POPULAR) ||
+                (dataHandler.activeDataMethod == MovieDataHandler.METHOD_DB_POPULAR);
+        int activeMenuItemIndex = isMethodPopular ? 0 : 1;
         menu.getItem(activeMenuItemIndex).setChecked(true);
     }
 
@@ -147,14 +112,14 @@ public class MovieListFragment extends Fragment implements
         switch (id) {
             case R.id.menu_sort_by_popularity:
                 setTitle(R.string.title_popular_movies);
-                activeCallHandler = popularCallHandler;
+                dataHandler.setActiveDataMethod(MovieDataHandler.METHOD_API_POPULAR);
                 break;
             case R.id.menu_sort_by_rating:
                 setTitle(R.string.title_rated_movies);
-                activeCallHandler = topRatedCallHandler;
+                dataHandler.setActiveDataMethod(MovieDataHandler.METHOD_API_TOP);
                 break;
         }
-        activeCallHandler.populateAdapter();
+        recyclerView.smoothScrollToPosition(0);
         return super.onOptionsItemSelected(item);
     }
 
@@ -167,43 +132,11 @@ public class MovieListFragment extends Fragment implements
         setTitle(title);
     }
 
-    @NonNull
     @Override
-    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        Uri uri;
-        String sortOrder;
-
-        switch (id) {
-            case ID_POPULAR_MOVIE_LOADER:
-                uri = MovieContract.MovieEntry.CONTENT_URI;
-                sortOrder = MovieContract.MovieEntry.COLUMN_POPULARITY + " DESC";
-                break;
-            case ID_TOP_RATED_MOVIE_LOADER:
-                uri = MovieContract.MovieEntry.CONTENT_URI;
-                sortOrder = MovieContract.MovieEntry.COLUMN_VOTE_AVERAGE + " DESC";
-                break;
-            default:
-                throw new RuntimeException("Loader Not Implemented: " + id);
-        }
-
-        return new CursorLoader(getContext(),
-                uri,
-                null,
-                null,
-                null,
-                sortOrder);
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        List<Movie> movies = MovieUtils.cursorToList(data);
-        Log.d(TAG, "onLoadFinished: Movies Loaded: " + movies.size());
-        adapter.setMovieList(movies);
+    public void onUpdate(List<Movie> movieList) {
+        Log.d(TAG, "onUpdate: Updating RecyclerView");
+        this.movieList = movieList;
+        adapter.setMovieList(movieList);
         adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        Log.d(TAG, "onLoaderReset: ");
     }
 }
