@@ -13,4 +13,11 @@
     <dimen name="trailer_play_button_radius">20dp</dimen>
     <dimen name="trailer_play_button_size">40dp</dimen>
     <dimen name="trailer_play_button_padding">8dp</dimen>
+
+    <dimen name="review_height">200dp</dimen>
+    <dimen name="review_width">300dp</dimen>
+    <dimen name="review_card_margin">8dp</dimen>
+    <dimen name="review_content_text_size">24sp</dimen>
+    <dimen name="review_content_margin">16dp</dimen>
+    <dimen name="review_author_margin">24dp</dimen>
 </resources>
