@@ -115,11 +115,11 @@ public class MovieDetailFragment extends Fragment {
                 updateDb(movie);
                 if (movie.isFavorite()) {
                     playAvd(fab,
-                            R.drawable.avd_heart_border_to_heart_1,
+                            R.drawable.avd_heart_border_to_heart,
                             R.drawable.ic_favorite_black_24dp);
                 } else {
                     playAvd(fab,
-                            R.drawable.avd_heart_to_heart_border_1,
+                            R.drawable.avd_heart_to_heart_border,
                             R.drawable.ic_favorite_border_black_24dp);
                 }
             }
