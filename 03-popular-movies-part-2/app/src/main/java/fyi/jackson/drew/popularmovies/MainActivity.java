@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public ImageView appBarImageView;
     public AppBarLayout appBarLayout;
     public CollapsingToolbarLayout toolbarLayout;
+    public ImageView trailerButton;
     private ScrollControlAppBarLayoutBehavior appBarLayoutBehavior;
 
     @Override
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         appBarLayout = findViewById(R.id.app_bar);
         appBarImageView = findViewById(R.id.app_bar_image);
+        trailerButton = findViewById(R.id.iv_trailer_button);
 
         appBarLayoutBehavior = (ScrollControlAppBarLayoutBehavior)
                 ((CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams()).getBehavior();

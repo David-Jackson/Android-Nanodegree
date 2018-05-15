@@ -104,9 +104,9 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_trailers"
+            android:id="@+id/rv_videos"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="@dimen/review_card_margin"
             app:layout_constraintTop_toBottomOf="@id/rv_reviews"
             app:layout_constraintStart_toStartOf="parent" />

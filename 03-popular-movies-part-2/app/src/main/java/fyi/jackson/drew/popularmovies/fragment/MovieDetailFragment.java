@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatRatingBar;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionInflater;
@@ -30,8 +31,11 @@ import fyi.jackson.drew.popularmovies.data.MovieContract;
 import fyi.jackson.drew.popularmovies.model.Movie;
 import fyi.jackson.drew.popularmovies.model.Review;
 import fyi.jackson.drew.popularmovies.model.ReviewList;
+import fyi.jackson.drew.popularmovies.model.Video;
+import fyi.jackson.drew.popularmovies.model.VideoList;
 import fyi.jackson.drew.popularmovies.network.MovieApiService;
 import fyi.jackson.drew.popularmovies.recycler.ReviewAdapter;
+import fyi.jackson.drew.popularmovies.recycler.VideoAdapter;
 import fyi.jackson.drew.popularmovies.utils.MovieUtils;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -50,6 +54,7 @@ public class MovieDetailFragment extends Fragment {
 
     private MovieApiService apiService;
     private RecyclerView reviewRecycler;
+    private RecyclerView videoRecycler;
 
     public MovieDetailFragment() {}
 
@@ -89,6 +94,7 @@ public class MovieDetailFragment extends Fragment {
         fragmentActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         fragmentActivity.enableAppBar();
         fragmentActivity.appBarLayout.setExpanded(true);
+        fragmentActivity.trailerButton.setVisibility(View.INVISIBLE);
 
         Point screenSize = new Point();
         fragmentActivity.getWindowManager().getDefaultDisplay().getSize(screenSize);
@@ -108,9 +114,13 @@ public class MovieDetailFragment extends Fragment {
                 movie.setFavorite(!movie.isFavorite());
                 updateDb(movie);
                 if (movie.isFavorite()) {
-                    playAvd(fab, R.drawable.avd_heart_border_to_heart_1, R.drawable.ic_favorite_black_24dp);
+                    playAvd(fab,
+                            R.drawable.avd_heart_border_to_heart_1,
+                            R.drawable.ic_favorite_black_24dp);
                 } else {
-                    playAvd(fab, R.drawable.avd_heart_to_heart_border_1, R.drawable.ic_favorite_border_black_24dp);
+                    playAvd(fab,
+                            R.drawable.avd_heart_to_heart_border_1,
+                            R.drawable.ic_favorite_border_black_24dp);
                 }
             }
         });
@@ -147,6 +157,7 @@ public class MovieDetailFragment extends Fragment {
         }
 
         reviewRecycler = view.findViewById(R.id.rv_reviews);
+        videoRecycler = view.findViewById(R.id.rv_videos);
 
         Picasso.get()
                 .load(posterUrl)
@@ -170,6 +181,7 @@ public class MovieDetailFragment extends Fragment {
 
         setupRetrofit();
         loadReviews(movie);
+        loadVideos(movie, fragmentActivity.trailerButton);
 
     }
 
@@ -238,11 +250,43 @@ public class MovieDetailFragment extends Fragment {
         });
     }
 
+    private void loadVideos(Movie movie, final ImageView trailerButton) {
+        Call<VideoList> videoListCall = apiService.getVideos(movie.getId());
+        videoListCall.enqueue(new retrofit2.Callback<VideoList>() {
+            @Override
+            public void onResponse(Call<VideoList> call, final Response<VideoList> response) {
+                if (response.body().getResults().size() > 0) {
+                    trailerButton.setVisibility(View.VISIBLE);
+                    trailerButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            MovieUtils.launchVideo(
+                                    getContext(), response.body().getResults().get(0).getKey());
+                        }
+                    });
+                }
+                setupVideoRecycler(response.body().getResults());
+            }
+
+            @Override
+            public void onFailure(Call<VideoList> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void setupReviewRecycler(List<Review> reviewList) {
         ReviewAdapter reviewAdapter = new ReviewAdapter(reviewList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         reviewRecycler.setLayoutManager(layoutManager);
         reviewRecycler.setAdapter(reviewAdapter);
+    }
+
+    private void setupVideoRecycler(List<Video> videoList) {
+        VideoAdapter videoAdapter = new VideoAdapter(videoList);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        videoRecycler.setLayoutManager(gridLayoutManager);
+        videoRecycler.setAdapter(videoAdapter);
     }
 }
