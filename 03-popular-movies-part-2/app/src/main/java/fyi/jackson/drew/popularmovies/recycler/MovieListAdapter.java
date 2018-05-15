@@ -47,29 +47,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final MovieViewHolder holder, final int position) {
-        final Movie movie = movieList.get(position);
-
-        String posterUrl = MovieUtils.buildPosterUrl(movie.getPosterPath(), MovieUtils.API_POSTER_SIZE_W342);
-
-        Picasso.get()
-                .load(posterUrl)
-                .placeholder(R.drawable.ic_poster_placeholder)
-                .error(R.mipmap.test_poster)
-                .into(holder.poster);
-
-        ViewCompat.setTransitionName(holder.poster, movie.getTitle());
-
-        holder.favorite.setImageResource(
-                movie.isFavorite() ?
-                        R.drawable.ic_favorite_black_24dp :
-                        R.drawable.ic_favorite_border_black_24dp);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                movieItemClickListener.onMovieClicked(holder.getAdapterPosition(), movie, holder.poster);
-            }
-        });
+        Movie movie = movieList.get(position);
+        holder.bindTo(movie, movieItemClickListener);
     }
 
     @Override
