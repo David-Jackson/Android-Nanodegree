@@ -9,4 +9,8 @@
     <dimen name="detail_poster_width">130dp</dimen>
     <dimen name="detail_margin">16dp</dimen>
     <dimen name="detail_text_size">16sp</dimen>
+
+    <dimen name="trailer_play_button_radius">20dp</dimen>
+    <dimen name="trailer_play_button_size">40dp</dimen>
+    <dimen name="trailer_play_button_padding">8dp</dimen>
 </resources>

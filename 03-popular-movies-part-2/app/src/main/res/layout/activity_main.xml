@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_expanded_height"
         app:layout_behavior="fyi.jackson.drew.popularmovies.ui.ScrollControlAppBarLayoutBehavior"
-        app:expanded="false"
+        app:expanded="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -30,6 +30,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/iv_trailer_button"
+                android:layout_width="@dimen/trailer_play_button_size"
+                android:layout_height="@dimen/trailer_play_button_size"
+                android:background="@drawable/background_trailer_button"
+                android:padding="@dimen/trailer_play_button_padding"
+                app:srcCompat="@drawable/ic_play_arrow_black_24dp"
+                android:tint="@android:color/white"
+                android:layout_gravity="center"/>
 
             <View
                 android:id="@+id/app_bar_scrim"

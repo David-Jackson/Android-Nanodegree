@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatRatingBar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,11 +22,24 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import fyi.jackson.drew.popularmovies.MainActivity;
 import fyi.jackson.drew.popularmovies.R;
 import fyi.jackson.drew.popularmovies.data.MovieContract;
 import fyi.jackson.drew.popularmovies.model.Movie;
+import fyi.jackson.drew.popularmovies.model.Review;
+import fyi.jackson.drew.popularmovies.model.ReviewList;
+import fyi.jackson.drew.popularmovies.network.MovieApiService;
+import fyi.jackson.drew.popularmovies.recycler.ReviewAdapter;
 import fyi.jackson.drew.popularmovies.utils.MovieUtils;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static fyi.jackson.drew.popularmovies.MainActivity.API_BASE_URL;
 
 public class MovieDetailFragment extends Fragment {
 
@@ -32,6 +47,9 @@ public class MovieDetailFragment extends Fragment {
 
     public static final String EXTRA_MOVIE_ITEM = "EXTRA_MOVIE_ITEM";
     public static final String EXTRA_TRANSITION_NAME = "EXTRA_TRANSITION_NAME";
+
+    private MovieApiService apiService;
+    private RecyclerView reviewRecycler;
 
     public MovieDetailFragment() {}
 
@@ -128,6 +146,8 @@ public class MovieDetailFragment extends Fragment {
             posterImageView.setTransitionName(transitionName);
         }
 
+        reviewRecycler = view.findViewById(R.id.rv_reviews);
+
         Picasso.get()
                 .load(posterUrl)
                 .noFade()
@@ -147,6 +167,9 @@ public class MovieDetailFragment extends Fragment {
         Picasso.get()
                 .load(backdropUrl)
                 .into(fragmentActivity.appBarImageView);
+
+        setupRetrofit();
+        loadReviews(movie);
 
     }
 
@@ -184,5 +207,42 @@ public class MovieDetailFragment extends Fragment {
                 Log.d(TAG, "updateDb: Rows changed: " + rowsUpdated);
             }
         }).start();
+    }
+
+    private void setupRetrofit() {
+        // Add the interceptor to OkHttpClient
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.interceptors().add(MovieUtils.apiKeyInterceptor(getContext()));
+        OkHttpClient client = builder.build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+        apiService = retrofit.create(MovieApiService.class);
+    }
+
+    private void loadReviews(Movie movie) {
+        Call<ReviewList> reviewListCall = apiService.getReviews(movie.getId());
+        reviewListCall.enqueue(new retrofit2.Callback<ReviewList>() {
+            @Override
+            public void onResponse(Call<ReviewList> call, Response<ReviewList> response) {
+                setupReviewRecycler(response.body().getResults());
+            }
+
+            @Override
+            public void onFailure(Call<ReviewList> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setupReviewRecycler(List<Review> reviewList) {
+        ReviewAdapter reviewAdapter = new ReviewAdapter(reviewList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        reviewRecycler.setLayoutManager(layoutManager);
+        reviewRecycler.setAdapter(reviewAdapter);
     }
 }

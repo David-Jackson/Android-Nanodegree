@@ -96,4 +96,9 @@ public class MovieUtils {
         return contentValues;
     }
 
+    public static String stripMarkdown(String string) {
+        string = string.replaceAll("[*_>#]|(\\r\\n)+", "");
+        return string;
+    }
+
 }

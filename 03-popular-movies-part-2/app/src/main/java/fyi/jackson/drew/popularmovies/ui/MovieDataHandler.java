@@ -16,6 +16,8 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static fyi.jackson.drew.popularmovies.MainActivity.API_BASE_URL;
+
 /*
 * This class handles the retrieval of data (either from web requests or local storage)
 * and passes that data to a callback
@@ -23,7 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MovieDataHandler {
 
     public static final String TAG = MovieDataHandler.class.getSimpleName();
-    public static final String API_BASE_URL = "https://api.themoviedb.org/3/";
 
     public static final int METHOD_DB_POPULAR = 116;
     public static final int METHOD_DB_TOP = 393;

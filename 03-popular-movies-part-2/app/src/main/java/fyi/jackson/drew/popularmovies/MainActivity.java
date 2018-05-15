@@ -15,6 +15,8 @@ import fyi.jackson.drew.popularmovies.ui.ScrollControlAppBarLayoutBehavior;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String API_BASE_URL = "https://api.themoviedb.org/3/";
+
     public FloatingActionButton fab;
     public ImageView appBarImageView;
     public AppBarLayout appBarLayout;

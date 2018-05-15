@@ -14,4 +14,5 @@
         <item quantity="other">%d votes</item>
     </plurals>
     <string name="template_release_date">Released %1$s</string>
+    <string name="template_review_author">- %1$s</string>
 </resources>
