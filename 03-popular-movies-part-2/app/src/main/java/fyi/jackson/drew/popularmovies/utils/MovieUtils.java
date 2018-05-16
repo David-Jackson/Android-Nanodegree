@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import fyi.jackson.drew.popularmovies.BuildConfig;
 import fyi.jackson.drew.popularmovies.R;
 import fyi.jackson.drew.popularmovies.data.MovieContract.MovieEntry;
 import fyi.jackson.drew.popularmovies.model.Movie;
@@ -64,7 +65,7 @@ public class MovieUtils {
     }
 
     public static Interceptor apiKeyInterceptor(Context context) {
-        final String apiKey = context.getString(R.string.api_key);
+        final String apiKey = BuildConfig.API_KEY;
 
         // Define the interceptor, add authentication headers for API key
         return new Interceptor() {

@@ -6,7 +6,7 @@ Here a repository of all work done on projects for Udacity's Android Nanodegree 
 *In this project, you will add to the app you built in Stage 1 by building on the detail view for each movie, allowing users to 'favorite' movies.*
 
 ### NOTE: 
-To run this app, you must also have an [API Key](https://www.themoviedb.org/documentation/api) as a string with the name of `api_key` in a resource file.
+To run this app, you must also have an [API Key](https://www.themoviedb.org/documentation/api) defined as a variable named `API_KEY` in the project's `gradle.properties` file.
 
 ### Features
 - **Animated Vector Drawables**: The favorite floating action button features an animation when clicked (on devices with API 21+)
