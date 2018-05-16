@@ -102,10 +102,12 @@ public class MovieUtils {
 
     public static List<Movie> cursorToList(Cursor cursor) {
         List<Movie> movies = new ArrayList<>();
-        cursor.moveToFirst();
-        do {
-            movies.add(Movie.fromCursor(cursor));
-        } while (cursor.moveToNext());
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                movies.add(Movie.fromCursor(cursor));
+            } while (cursor.moveToNext());
+        }
         return movies;
     }
 
