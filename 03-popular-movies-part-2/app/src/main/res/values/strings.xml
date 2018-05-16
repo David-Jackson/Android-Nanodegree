@@ -5,8 +5,10 @@
 
     <string name="title_popular_movies">Popular Movies</string>
     <string name="title_rated_movies">Top Rated Movies</string>
+    <string name="title_favorite_movies">Favorite Movies</string>
     <string name="action_sort_by_popularity">Sort by Popularity</string>
     <string name="action_sort_by_rating">Sort by Rating</string>
+    <string name="action_sort_by_favorite">Favorites</string>
     <string name="no_network">Unable to connect to network, loading from cache</string>
 
     <string name="template_vote_average">%1$.2f / 5.0</string>

@@ -99,10 +99,17 @@ public class MovieListFragment extends Fragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
-        boolean isMethodPopular =
-                (dataHandler.activeDataMethod == MovieDataHandler.METHOD_API_POPULAR) ||
-                (dataHandler.activeDataMethod == MovieDataHandler.METHOD_DB_POPULAR);
-        int activeMenuItemIndex = isMethodPopular ? 0 : 1;
+
+        int activeMethod = dataHandler.activeDataMethod;
+        int activeMenuItemIndex = 0;
+
+        if (activeMethod == MovieDataHandler.METHOD_DB_FAVORITE) {
+            activeMenuItemIndex = 2;
+        } else if (activeMethod == MovieDataHandler.METHOD_API_TOP ||
+                activeMethod == MovieDataHandler.METHOD_DB_TOP) {
+            activeMenuItemIndex = 1;
+        }
+
         menu.getItem(activeMenuItemIndex).setChecked(true);
     }
 
@@ -119,6 +126,9 @@ public class MovieListFragment extends Fragment implements
                 setTitle(R.string.title_rated_movies);
                 dataHandler.setActiveDataMethod(MovieDataHandler.METHOD_API_TOP);
                 break;
+            case R.id.menu_sort_by_favorite:
+                setTitle(R.string.title_favorite_movies);
+                dataHandler.setActiveDataMethod(MovieDataHandler.METHOD_DB_FAVORITE);
         }
         recyclerView.smoothScrollToPosition(0);
         return super.onOptionsItemSelected(item);

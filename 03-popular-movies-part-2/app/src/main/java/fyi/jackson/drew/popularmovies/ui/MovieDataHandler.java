@@ -28,6 +28,7 @@ public class MovieDataHandler {
 
     public static final int METHOD_DB_POPULAR = 116;
     public static final int METHOD_DB_TOP = 393;
+    public static final int METHOD_DB_FAVORITE = 394;
     public static final int METHOD_API_POPULAR = 665;
     public static final int METHOD_API_TOP = 768;
     public int activeDataMethod = METHOD_API_POPULAR;
@@ -92,6 +93,10 @@ public class MovieDataHandler {
             case METHOD_DB_TOP:
                 Log.d(TAG, "requestActiveData: Getting DB Top Rated");
                 dbHandler.get(MovieDbHandler.ID_TOP_RATED_MOVIE_LOADER);
+                break;
+            case METHOD_DB_FAVORITE:
+                Log.d(TAG, "requestActiveData: Getting DB Favorite");
+                dbHandler.get(MovieDbHandler.ID_FAVORITE_MOVIE_LOADER);
                 break;
             case METHOD_API_POPULAR:
                 Log.d(TAG, "requestActiveData: Getting API Popular");

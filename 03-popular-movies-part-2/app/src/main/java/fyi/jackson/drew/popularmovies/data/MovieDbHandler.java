@@ -25,6 +25,7 @@ public class MovieDbHandler implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final int ID_POPULAR_MOVIE_LOADER = 473;
     public static final int ID_TOP_RATED_MOVIE_LOADER = 874;
+    public static final int ID_FAVORITE_MOVIE_LOADER = 875;
 
     FragmentActivity fragmentActivity;
     LoaderManager loaderManager;
@@ -61,18 +62,24 @@ public class MovieDbHandler implements LoaderManager.LoaderCallbacks<Cursor> {
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         Uri uri;
-        String sortOrder;
+        String sortOrder, selection = null;
 
         switch (id) {
             case ID_POPULAR_MOVIE_LOADER:
-                Log.d(TAG, "onCreateLoader: Setting Popular paramters");
+                Log.d(TAG, "onCreateLoader: Setting Popular parameters");
                 uri = MovieContract.MovieEntry.CONTENT_URI;
                 sortOrder = MovieContract.MovieEntry.COLUMN_POPULARITY + " DESC";
                 break;
             case ID_TOP_RATED_MOVIE_LOADER:
-                Log.d(TAG, "onCreateLoader: Setting Top Rated paramters");
+                Log.d(TAG, "onCreateLoader: Setting Top Rated parameters");
                 uri = MovieContract.MovieEntry.CONTENT_URI;
                 sortOrder = MovieContract.MovieEntry.COLUMN_VOTE_AVERAGE + " DESC";
+                break;
+            case ID_FAVORITE_MOVIE_LOADER:
+                Log.d(TAG, "onCreateLoader: Setting Favorite parameters");
+                uri = MovieContract.MovieEntry.CONTENT_URI;
+                sortOrder = MovieContract.MovieEntry.COLUMN_TITLE + " DESC";
+                selection = MovieContract.MovieEntry.COLUMN_FAVORITE;
                 break;
             default:
                 throw new RuntimeException("Loader Not Implemented: " + id);
@@ -81,7 +88,7 @@ public class MovieDbHandler implements LoaderManager.LoaderCallbacks<Cursor> {
         return new CursorLoader(fragmentActivity,
                 uri,
                 null,
-                null,
+                selection,
                 null,
                 sortOrder);
     }

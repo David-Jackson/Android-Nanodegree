@@ -7,5 +7,7 @@
             android:checked="true"/>
         <item android:id="@+id/menu_sort_by_rating"
             android:title="@string/action_sort_by_rating"/>
+        <item android:id="@+id/menu_sort_by_favorite"
+            android:title="@string/action_sort_by_favorite"/>
     </group>
 </menu>
