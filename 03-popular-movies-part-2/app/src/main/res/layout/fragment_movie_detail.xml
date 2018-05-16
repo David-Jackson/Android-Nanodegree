@@ -27,7 +27,7 @@
                     android:layout_width="@dimen/detail_poster_width"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    tools:src="@mipmap/test_poster"
+                    tools:src="@drawable/ic_poster_placeholder_white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
