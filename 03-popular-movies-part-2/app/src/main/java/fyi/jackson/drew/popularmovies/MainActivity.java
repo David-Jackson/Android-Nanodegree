@@ -1,14 +1,19 @@
 package fyi.jackson.drew.popularmovies;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import fyi.jackson.drew.popularmovies.fragment.MovieListFragment;
 import fyi.jackson.drew.popularmovies.ui.ScrollControlAppBarLayoutBehavior;
@@ -23,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public CollapsingToolbarLayout toolbarLayout;
     public ImageView trailerButton;
     private ScrollControlAppBarLayoutBehavior appBarLayoutBehavior;
+    private Snackbar networkSnackbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +57,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void enableAppBar() {
         appBarLayoutBehavior.setScrollBehavior(true);
+    }
+
+    public void checkNetworkConnection() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        if (isConnected && networkSnackbar != null) {
+            networkSnackbar.dismiss();
+            networkSnackbar = null;
+        } else if (!isConnected && networkSnackbar == null) {
+            networkSnackbar = Snackbar.make(fab, R.string.no_network, Snackbar.LENGTH_INDEFINITE);
+            networkSnackbar.show();
+        }
+
     }
 
 }

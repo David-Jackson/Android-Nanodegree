@@ -78,6 +78,7 @@ public class MovieListFragment extends Fragment implements
         fragmentActivity.toolbarLayout.setTitle(getString(R.string.title_popular_movies));
         fragmentActivity.appBarLayout.setExpanded(false);
         fragmentActivity.disableAppBar();
+        fragmentActivity.checkNetworkConnection();
     }
 
     @Override

@@ -30,7 +30,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
         Picasso.get()
                 .load(posterUrl)
                 .placeholder(R.drawable.ic_poster_placeholder)
-                .error(R.mipmap.test_poster)
+                .error(R.drawable.ic_poster_placeholder)
                 .into(poster);
 
         ViewCompat.setTransitionName(poster, movie.getTitle());

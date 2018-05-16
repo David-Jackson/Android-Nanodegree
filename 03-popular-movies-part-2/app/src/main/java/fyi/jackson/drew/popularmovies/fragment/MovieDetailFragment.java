@@ -179,6 +179,7 @@ public class MovieDetailFragment extends Fragment {
         loadReviews(movie);
         loadVideos(movie, fragmentActivity.trailerButton);
 
+        fragmentActivity.checkNetworkConnection();
     }
 
     @Override
