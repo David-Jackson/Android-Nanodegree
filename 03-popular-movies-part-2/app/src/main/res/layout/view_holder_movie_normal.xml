@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:adjustViewBounds="true"
-            app:srcCompat="@drawable/ic_poster_placeholder"/>
+            app:srcCompat="@drawable/ic_poster_placeholder_white"/>
 
         <ImageView
             android:id="@+id/iv_favorite"
