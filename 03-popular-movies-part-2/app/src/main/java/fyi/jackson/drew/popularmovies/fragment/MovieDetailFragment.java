@@ -11,6 +11,7 @@ import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -133,11 +134,6 @@ public class MovieDetailFragment extends Fragment {
 
         float voteAverage = (float) (movie.getVoteAverage() / 2);
 
-        AppCompatRatingBar ratingBar = view.findViewById(R.id.rb_rating);
-        ratingBar.setIsIndicator(true);
-        ratingBar.setStepSize(0.1f);
-        ratingBar.setRating(voteAverage);
-
         TextView voteAverageTextView = view.findViewById(R.id.tv_vote_average);
         voteAverageTextView.setText(getString(R.string.template_vote_average, voteAverage));
 
@@ -149,7 +145,7 @@ public class MovieDetailFragment extends Fragment {
         voteCountTextView.setText(voteCountString);
 
         TextView releasedDateTextView = view.findViewById(R.id.tv_release_date);
-        releasedDateTextView.setText(getString(R.string.template_release_date, movie.getReleaseDate()));
+        releasedDateTextView.setText(MovieUtils.formatDateString(movie.getReleaseDate()));
 
         ImageView posterImageView = view.findViewById(R.id.iv_poster);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -285,8 +281,9 @@ public class MovieDetailFragment extends Fragment {
 
     private void setupVideoRecycler(List<Video> videoList) {
         VideoAdapter videoAdapter = new VideoAdapter(videoList);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        videoRecycler.setLayoutManager(gridLayoutManager);
+        StaggeredGridLayoutManager layoutManager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        videoRecycler.setLayoutManager(layoutManager);
         videoRecycler.setAdapter(videoAdapter);
     }
 }

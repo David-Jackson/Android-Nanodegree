@@ -12,78 +12,97 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_poster"
-            android:layout_width="0dp"
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_poster"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/detail_margin"
-            android:adjustViewBounds="true"
-            android:src="@mipmap/test_poster"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/rb_rating"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_margin="@dimen/detail_margin">
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_poster"
+                    android:layout_width="@dimen/detail_poster_width"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    tools:src="@mipmap/test_poster"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
+                <ImageView
+                    android:id="@+id/iv_rating"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_margin="8dp"
+                    app:srcCompat="@drawable/ic_star_black_24dp"
+                    android:tint="@android:color/darker_gray"
+                    app:layout_constraintBottom_toTopOf="@id/iv_vote_count"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_poster"/>
 
-        <android.support.v7.widget.AppCompatRatingBar
-            android:id="@+id/rb_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/detail_margin"
-            android:layout_marginLeft="@dimen/detail_margin"
-            android:numStars="5"
-            app:layout_constraintBottom_toTopOf="@id/div_horz_rating"
-            app:layout_constraintRight_toRightOf="parent" />
+                <TextView
+                    android:id="@+id/tv_vote_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    app:layout_constraintTop_toBottomOf="@id/iv_rating"
+                    app:layout_constraintBottom_toTopOf="@id/iv_rating"
+                    app:layout_constraintLeft_toRightOf="@id/iv_rating"
+                    tools:text="4.3/5.0"/>
 
-        <View
-            android:id="@+id/div_horz_rating"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintTop_toTopOf="@id/tv_vote_average"
-            app:layout_constraintBottom_toBottomOf="@id/tv_vote_average"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/iv_poster"/>
+                <ImageView
+                    android:id="@+id/iv_vote_count"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_margin="8dp"
+                    app:srcCompat="@drawable/ic_person_black_24dp"
+                    android:tint="@android:color/darker_gray"
+                    app:layout_constraintTop_toBottomOf="@id/iv_poster"
+                    app:layout_constraintBottom_toTopOf="@id/iv_poster"
+                    app:layout_constraintStart_toEndOf="@id/iv_poster"/>
 
-        <TextView
-            android:id="@+id/tv_vote_average"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/detail_text_size"
-            app:layout_constraintTop_toBottomOf="@id/iv_poster"
-            app:layout_constraintBottom_toTopOf="@id/iv_poster"
-            app:layout_constraintRight_toRightOf="@id/div_horz_rating"
-            app:layout_constraintLeft_toRightOf="@id/iv_poster"
-            tools:text="4.3/5.0"/>
+                <TextView
+                    android:id="@+id/tv_vote_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    app:layout_constraintTop_toBottomOf="@id/iv_vote_count"
+                    app:layout_constraintBottom_toTopOf="@id/iv_vote_count"
+                    app:layout_constraintLeft_toRightOf="@id/iv_vote_count"
+                    tools:text="123 votes"/>
 
-        <TextView
-            android:id="@+id/tv_vote_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/detail_text_size"
-            app:layout_constraintTop_toBottomOf="@id/tv_vote_average"
-            app:layout_constraintBottom_toTopOf="@id/tv_vote_average"
-            app:layout_constraintLeft_toLeftOf="@id/div_horz_rating"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:text="123 votes"/>
+                <ImageView
+                    android:id="@+id/iv_release"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_margin="8dp"
+                    app:srcCompat="@drawable/ic_event_black_24dp"
+                    android:tint="@android:color/darker_gray"
+                    app:layout_constraintTop_toBottomOf="@id/iv_vote_count"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_poster"/>
 
-        <TextView
-            android:id="@+id/tv_release_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textSize="@dimen/detail_text_size"
-            app:layout_constraintTop_toBottomOf="@+id/div_horz_rating"
-            app:layout_constraintStart_toEndOf="@id/iv_poster"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Released Feb 2, 1999" />
-
+                <TextView
+                    android:id="@+id/tv_release_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    app:layout_constraintTop_toBottomOf="@id/iv_release"
+                    app:layout_constraintBottom_toTopOf="@id/iv_release"
+                    app:layout_constraintLeft_toRightOf="@id/iv_release"
+                    tools:text="Feb 2, 1999"/>
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_plot"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/detail_margin"
-            app:layout_constraintTop_toBottomOf="@id/iv_poster"
+            app:layout_constraintTop_toBottomOf="@id/card_poster"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
             <TextView

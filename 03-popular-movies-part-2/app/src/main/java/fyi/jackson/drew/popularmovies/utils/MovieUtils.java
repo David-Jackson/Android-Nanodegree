@@ -9,8 +9,13 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import fyi.jackson.drew.popularmovies.R;
 import fyi.jackson.drew.popularmovies.data.MovieContract.MovieEntry;
@@ -80,6 +85,19 @@ public class MovieUtils {
                 return chain.proceed(request);
             }
         };
+    }
+
+    public static String formatDateString(String unformatted) {
+        try {
+            DateFormat readFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = readFormat.parse(unformatted);
+
+            DateFormat displayFormat = new SimpleDateFormat("LLL d, yyyy", Locale.ENGLISH);
+            return displayFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return unformatted;
+        }
     }
 
     public static List<Movie> cursorToList(Cursor cursor) {
