@@ -110,7 +110,7 @@ public class MovieUtils {
     }
 
     public static ContentValues[] listToContentValuesArray(List<Movie> movies) {
-        if (movies == null) return null;
+        if (movies == null) return new ContentValues[0];
         ContentValues[] contentValues = new ContentValues[movies.size()];
         for (int i = 0; i < movies.size(); i++) {
             contentValues[i] = movies.get(i).toContentValues();

@@ -4,6 +4,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -16,12 +17,14 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
 
     public View itemView;
     public ImageView poster, favorite;
+    public TextView title;
 
     public MovieViewHolder(View v) {
         super(v);
         itemView = v;
         poster = v.findViewById(R.id.iv_poster);
         favorite = v.findViewById(R.id.iv_favorite);
+        title = v.findViewById(R.id.tv_title);
     }
 
     public void bindTo(final Movie movie, final MovieItemClickListener clickListener) {
@@ -46,5 +49,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
                 clickListener.onMovieClicked(getAdapterPosition(), movie, poster);
             }
         });
+
+        title.setText(movie.getTitle());
     }
 }

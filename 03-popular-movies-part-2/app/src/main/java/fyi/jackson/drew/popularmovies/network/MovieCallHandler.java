@@ -52,6 +52,7 @@ public class MovieCallHandler {
             @Override
             public void onFailure(Call<MovieList> call, Throwable t) {
                 Log.e(TAG, "onFailure: Call Failed to execute");
+                callback.onUpdate(null);
             }
         });
     }

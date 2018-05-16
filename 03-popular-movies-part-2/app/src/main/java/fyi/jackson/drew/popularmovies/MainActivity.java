@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         appBarLayoutBehavior.setScrollBehavior(true);
     }
 
-    public void checkNetworkConnection() {
+    public boolean checkNetworkConnection() {
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             networkSnackbar.show();
         }
 
+        return isConnected;
     }
 
 }
