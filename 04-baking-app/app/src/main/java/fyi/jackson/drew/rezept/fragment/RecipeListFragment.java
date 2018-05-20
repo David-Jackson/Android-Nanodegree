@@ -6,15 +6,22 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fyi.jackson.drew.rezept.R;
+import fyi.jackson.drew.rezept.model.Recipe;
 import fyi.jackson.drew.rezept.network.DataHandler;
 import fyi.jackson.drew.rezept.recycler.RecipeListAdapter;
 
 public class RecipeListFragment extends Fragment implements DataHandler.DataCallback {
+
+    public static final String TAG = RecipeListFragment.class.getSimpleName();
 
     RecyclerView recyclerView;
     RecipeListAdapter adapter;
@@ -31,8 +38,8 @@ public class RecipeListFragment extends Fragment implements DataHandler.DataCall
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new RecipeListAdapter();
-        dataHandler = new DataHandler();
+        adapter = new RecipeListAdapter(null);
+        dataHandler = new DataHandler(this);
     }
 
     @Nullable
@@ -50,11 +57,13 @@ public class RecipeListFragment extends Fragment implements DataHandler.DataCall
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
+
+        dataHandler.requestData();
     }
 
-
     @Override
-    public void onUpdate() {
-
+    public void onUpdate(List<Recipe> recipes) {
+        Log.d(TAG, "onUpdate: Updating...");
+        adapter.setRecipes(recipes);
     }
 }
