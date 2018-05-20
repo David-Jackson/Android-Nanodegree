@@ -6,13 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import fyi.jackson.drew.rezept.R;
+import fyi.jackson.drew.rezept.model.Recipe;
 import fyi.jackson.drew.rezept.recycler.holder.RecipeViewHolder;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
-    public RecipeListAdapter() {
+    List<Recipe> recipes;
 
+    public RecipeListAdapter(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 
     @NonNull
@@ -25,11 +30,16 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-
+        holder.bindTo(recipes.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 40;
+        return (recipes == null ? 0 : recipes.size());
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
+        notifyDataSetChanged();
     }
 }
