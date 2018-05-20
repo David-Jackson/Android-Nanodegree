@@ -2,17 +2,17 @@ package fyi.jackson.drew.rezept.model;
 
 class Ingredient {
 
-    int quantity;
+    double quantity;
     String measure;
     String ingredient;
 
     public Ingredient() {}
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
