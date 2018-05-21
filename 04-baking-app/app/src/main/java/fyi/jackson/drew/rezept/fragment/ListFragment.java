@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fyi.jackson.drew.rezept.R;
@@ -19,19 +18,19 @@ import fyi.jackson.drew.rezept.model.Recipe;
 import fyi.jackson.drew.rezept.network.DataHandler;
 import fyi.jackson.drew.rezept.recycler.RecipeListAdapter;
 
-public class RecipeListFragment extends Fragment implements DataHandler.DataCallback {
+public class ListFragment extends Fragment implements DataHandler.DataCallback {
 
-    public static final String TAG = RecipeListFragment.class.getSimpleName();
+    public static final String TAG = ListFragment.class.getSimpleName();
 
     RecyclerView recyclerView;
     RecipeListAdapter adapter;
 
     DataHandler dataHandler;
 
-    public RecipeListFragment() {}
+    public ListFragment() {}
 
-    public static RecipeListFragment newInstance() {
-        return new RecipeListFragment();
+    public static ListFragment newInstance() {
+        return new ListFragment();
     }
 
     @Override
