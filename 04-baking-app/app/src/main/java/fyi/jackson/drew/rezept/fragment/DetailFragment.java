@@ -9,12 +9,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import fyi.jackson.drew.rezept.R;
 import fyi.jackson.drew.rezept.ui.ExpandController;
 
 public class DetailFragment extends Fragment {
 
     ExpandController ingredientsExpander, stepsExpander;
+
+    @BindView(R.id.click_area_ingredients) View clickAreaIngredients;
+    @BindView(R.id.click_area_steps) View clickAreaSteps;
+    @BindView(R.id.iv_expand_ingredients) ImageView expandIngredients;
+    @BindView(R.id.iv_expand_steps) ImageView expandSteps;
+    @BindView(R.id.content_ingredients) View contentIngredients;
+    @BindView(R.id.content_steps) View contentSteps;
+    private Unbinder unbinder;
 
     public DetailFragment() {}
 
@@ -37,14 +48,17 @@ public class DetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ingredientsExpander = new ExpandController(
-                view.findViewById(R.id.click_area_ingredients),
-                (ImageView) view.findViewById(R.id.iv_expand_ingredients),
-                view.findViewById(R.id.content_ingredients));
+        unbinder = ButterKnife.bind(this, view);
 
-        stepsExpander = new ExpandController(
-                view.findViewById(R.id.click_area_steps),
-                (ImageView) view.findViewById(R.id.iv_expand_steps),
-                view.findViewById(R.id.content_steps));
+        ingredientsExpander = new ExpandController(
+                clickAreaIngredients, expandIngredients, contentIngredients);
+
+        stepsExpander = new ExpandController(clickAreaSteps, expandSteps, contentSteps);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }
