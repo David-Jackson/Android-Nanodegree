@@ -1,15 +1,20 @@
 package fyi.jackson.drew.rezept.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -17,8 +22,10 @@ import fyi.jackson.drew.rezept.R;
 import fyi.jackson.drew.rezept.model.Recipe;
 import fyi.jackson.drew.rezept.network.DataHandler;
 import fyi.jackson.drew.rezept.recycler.RecipeListAdapter;
+import fyi.jackson.drew.rezept.recycler.holder.RecipeViewHolder;
+import fyi.jackson.drew.rezept.ui.ItemClickListener;
 
-public class ListFragment extends Fragment implements DataHandler.DataCallback {
+public class ListFragment extends Fragment implements ItemClickListener, DataHandler.DataCallback {
 
     public static final String TAG = ListFragment.class.getSimpleName();
 
@@ -37,7 +44,7 @@ public class ListFragment extends Fragment implements DataHandler.DataCallback {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new RecipeListAdapter(null);
+        adapter = new RecipeListAdapter(null, this);
         dataHandler = new DataHandler(this);
     }
 
@@ -64,5 +71,21 @@ public class ListFragment extends Fragment implements DataHandler.DataCallback {
     public void onUpdate(List<Recipe> recipes) {
         Log.d(TAG, "onUpdate: Updating...");
         adapter.setRecipes(recipes);
+    }
+
+    @Override
+    public void onClick(Recipe recipe, RecipeViewHolder holder) {
+        String imageTransitionName = ViewCompat.getTransitionName(holder.image);
+        String nameTransitionName = ViewCompat.getTransitionName(holder.name);
+
+        DetailFragment detailFragment = DetailFragment.newInstance(recipe, imageTransitionName, nameTransitionName);
+
+        getFragmentManager()
+                .beginTransaction()
+                .addSharedElement(holder.image, imageTransitionName)
+                .addSharedElement(holder.name, nameTransitionName)
+                .addToBackStack(TAG)
+                .replace(R.id.content, detailFragment)
+                .commit();
     }
 }

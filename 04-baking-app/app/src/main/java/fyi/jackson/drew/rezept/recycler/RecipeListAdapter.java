@@ -11,13 +11,16 @@ import java.util.List;
 import fyi.jackson.drew.rezept.R;
 import fyi.jackson.drew.rezept.model.Recipe;
 import fyi.jackson.drew.rezept.recycler.holder.RecipeViewHolder;
+import fyi.jackson.drew.rezept.ui.ItemClickListener;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
     List<Recipe> recipes;
+    ItemClickListener clickListener;
 
-    public RecipeListAdapter(List<Recipe> recipes) {
+    public RecipeListAdapter(List<Recipe> recipes, ItemClickListener clickListener) {
         this.recipes = recipes;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -30,7 +33,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-        holder.bindTo(recipes.get(position));
+        holder.bindTo(recipes.get(position), clickListener);
     }
 
     @Override
