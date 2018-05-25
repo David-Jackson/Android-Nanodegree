@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
         boolean isTablet = detailView != null;
 
         if (isTablet) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.detail, DetailFragment.newInstance())
-                    .commit();
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .add(R.id.detail, DetailFragment.newInstance())
+//                    .commit();
         }
     }
 }
