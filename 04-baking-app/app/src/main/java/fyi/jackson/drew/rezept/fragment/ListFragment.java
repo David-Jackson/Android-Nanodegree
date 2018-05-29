@@ -1,10 +1,12 @@
 package fyi.jackson.drew.rezept.fragment;
 
+import android.animation.Animator;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +16,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.widget.ImageView;
 
 import java.util.List;
 
+import fyi.jackson.drew.rezept.MainActivity;
 import fyi.jackson.drew.rezept.R;
 import fyi.jackson.drew.rezept.model.Recipe;
 import fyi.jackson.drew.rezept.network.DataHandler;
@@ -74,18 +78,33 @@ public class ListFragment extends Fragment implements ItemClickListener, DataHan
     }
 
     @Override
-    public void onClick(Recipe recipe, RecipeViewHolder holder) {
-        String imageTransitionName = ViewCompat.getTransitionName(holder.image);
-        String nameTransitionName = ViewCompat.getTransitionName(holder.name);
+    public void onClick(Recipe recipe, final RecipeViewHolder holder) {
 
-        DetailFragment detailFragment = DetailFragment.newInstance(recipe, imageTransitionName, nameTransitionName);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Log.d(TAG, "onClick: " + holder.itemView.getTranslationZ());
+            int mult = holder.itemView.getTranslationZ() > 10 ? -1 : 1;
+            holder.itemView.animate()
+                    .translationZBy(mult * 30f)
+                    .setDuration(300)
+                    .start();
+        }
 
-        getFragmentManager()
-                .beginTransaction()
-                .addSharedElement(holder.image, imageTransitionName)
-                .addSharedElement(holder.name, nameTransitionName)
-                .addToBackStack(TAG)
-                .replace(R.id.content, detailFragment)
-                .commit();
+
+        String transitionName = ViewCompat.getTransitionName(holder.itemView);
+
+        DetailFragment detailFragment = DetailFragment.newInstance(recipe, transitionName);
+
+        boolean isTablet = ((MainActivity) getActivity()).isTablet();
+        int layoutId = isTablet ? R.id.detail : R.id.content;
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction()
+                .addSharedElement(holder.itemView, transitionName)
+                .replace(layoutId, detailFragment);
+
+        if (!isTablet) {
+            transaction.addToBackStack(TAG);
+        }
+
+        transaction.commit();
     }
 }

@@ -9,6 +9,8 @@ import fyi.jackson.drew.rezept.fragment.ListFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    boolean isTablet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,13 +22,10 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
 
         View detailView = findViewById(R.id.detail);
-        boolean isTablet = detailView != null;
+        isTablet = detailView != null;
+    }
 
-        if (isTablet) {
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .add(R.id.detail, DetailFragment.newInstance())
-//                    .commit();
-        }
+    public boolean isTablet() {
+        return isTablet;
     }
 }

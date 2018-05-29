@@ -29,8 +29,7 @@ public class RecipeViewHolder extends RecyclerView.ViewHolder {
     public void bindTo(final Recipe recipe, final ItemClickListener clickListener) {
         name.setText(recipe.getName());
 
-        ViewCompat.setTransitionName(image, recipe.getName() + "_image");
-        ViewCompat.setTransitionName(name, recipe.getName() + "_name");
+        ViewCompat.setTransitionName(itemView, recipe.getName());
 
         Picasso.get()
                 .load(recipe.getImage())
