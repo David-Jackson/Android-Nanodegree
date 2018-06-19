@@ -110,13 +110,16 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"/>
 
-                    <View
+                    <LinearLayout
                         android:id="@+id/content_ingredients"
+                        android:orientation="vertical"
                         android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"
                         android:background="@android:color/darker_gray"
-                        app:layout_constraintTop_toTopOf="@id/div_ingredients"/>
+                        app:layout_constraintTop_toTopOf="@id/div_ingredients">
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tv_steps_title"
@@ -162,15 +165,17 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"/>
 
-                    <View
+                    <LinearLayout
                         android:id="@+id/content_steps"
+                        android:orientation="vertical"
                         android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"
                         android:layout_marginTop="16dp"
                         android:background="@android:color/darker_gray"
                         app:layout_constraintTop_toBottomOf="@id/tv_steps_title"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent">
+                    </LinearLayout>
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
         </android.support.v4.widget.NestedScrollView>
