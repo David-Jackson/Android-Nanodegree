@@ -4,13 +4,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.CardView;
 import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
@@ -20,7 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import fyi.jackson.drew.rezept.R;
+import fyi.jackson.drew.rezept.model.Ingredient;
 import fyi.jackson.drew.rezept.model.Recipe;
+import fyi.jackson.drew.rezept.model.Step;
 import fyi.jackson.drew.rezept.ui.ExpandController;
 
 public class DetailFragment extends Fragment {
@@ -33,13 +38,14 @@ public class DetailFragment extends Fragment {
 
     @BindView(R.id.iv_main_image) ImageView mainImage;
     @BindView(R.id.tv_name) TextView name;
+    @BindView(R.id.fab) FloatingActionButton fab;
 
     @BindView(R.id.click_area_ingredients) View clickAreaIngredients;
     @BindView(R.id.click_area_steps) View clickAreaSteps;
     @BindView(R.id.iv_expand_ingredients) ImageView expandIngredients;
     @BindView(R.id.iv_expand_steps) ImageView expandSteps;
-    @BindView(R.id.content_ingredients) View contentIngredients;
-    @BindView(R.id.content_steps) View contentSteps;
+    @BindView(R.id.content_ingredients) LinearLayout contentIngredients;
+    @BindView(R.id.content_steps) LinearLayout  contentSteps;
     private Unbinder unbinder;
 
     public DetailFragment() {}
@@ -106,6 +112,19 @@ public class DetailFragment extends Fragment {
                         startPostponedEnterTransition();
                     }
                 });
+
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            AppCompatCheckBox cb = (AppCompatCheckBox)
+                    getLayoutInflater().inflate(R.layout.layout_ingredient, contentIngredients, false);
+            cb.setText(ingredient.toString());
+            contentIngredients.addView(cb);
+        }
+
+        for (Step step : recipe.getSteps()) {
+            TextView tv = (TextView) getLayoutInflater().inflate(R.layout.layout_step, contentSteps, false);
+            tv.setText(step.toShortString());
+            contentSteps.addView(tv);
+        }
     }
 
     @Override

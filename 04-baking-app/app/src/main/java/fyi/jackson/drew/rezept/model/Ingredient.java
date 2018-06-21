@@ -3,7 +3,7 @@ package fyi.jackson.drew.rezept.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class Ingredient implements Parcelable {
+public class Ingredient implements Parcelable {
 
     double quantity;
     String measure;
@@ -63,5 +63,10 @@ class Ingredient implements Parcelable {
         dest.writeDouble(quantity);
         dest.writeString(measure);
         dest.writeString(ingredient);
+    }
+
+    @Override
+    public String toString() {
+        return quantity + " " + measure + " " + ingredient;
     }
 }
