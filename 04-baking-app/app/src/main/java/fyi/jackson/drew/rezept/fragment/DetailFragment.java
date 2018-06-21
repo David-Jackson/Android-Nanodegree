@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.CardView;
 import android.transition.TransitionInflater;
@@ -22,6 +25,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import fyi.jackson.drew.rezept.MainActivity;
 import fyi.jackson.drew.rezept.R;
 import fyi.jackson.drew.rezept.model.Ingredient;
 import fyi.jackson.drew.rezept.model.Recipe;
@@ -30,6 +34,7 @@ import fyi.jackson.drew.rezept.ui.ExpandController;
 
 public class DetailFragment extends Fragment {
 
+    public static final String TAG = DetailFragment.class.getSimpleName();
     public static final String EXTRA_RECIPE_ITEM = "EXTRA_RECIPE_ITEM";
     public static final String EXTRA_TRANSITION_NAME = "EXTRA_TRANSITION_NAME";
     ExpandController ingredientsExpander, stepsExpander;
@@ -92,7 +97,7 @@ public class DetailFragment extends Fragment {
         stepsExpander = new ExpandController(clickAreaSteps, expandSteps, contentSteps);
     }
 
-    private void bindTo(Recipe recipe, String transitionName) {
+    private void bindTo(final Recipe recipe, String transitionName) {
         name.setText(recipe.getName());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -113,23 +118,52 @@ public class DetailFragment extends Fragment {
                     }
                 });
 
+        // Populate Ingredients
         for (Ingredient ingredient : recipe.getIngredients()) {
-            AppCompatCheckBox cb = (AppCompatCheckBox)
-                    getLayoutInflater().inflate(R.layout.layout_ingredient, contentIngredients, false);
-            cb.setText(ingredient.toString());
-            contentIngredients.addView(cb);
+            AppCompatCheckBox ingredientCheckBox = (AppCompatCheckBox) getLayoutInflater()
+                    .inflate(R.layout.layout_ingredient, contentIngredients, false);
+            ingredientCheckBox.setText(ingredient.toString());
+            contentIngredients.addView(ingredientCheckBox);
         }
 
+        // Populate Steps
         for (Step step : recipe.getSteps()) {
-            TextView tv = (TextView) getLayoutInflater().inflate(R.layout.layout_step, contentSteps, false);
-            tv.setText(step.toShortString());
-            contentSteps.addView(tv);
+            TextView stepTextView = (TextView) getLayoutInflater()
+                    .inflate(R.layout.layout_step, contentSteps, false);
+            stepTextView.setText(step.toShortString());
+            contentSteps.addView(stepTextView);
         }
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startCooking(recipe);
+            }
+        });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public void startCooking(Recipe recipe) {
+        String transitionName = ""; //ViewCompat.getTransitionName(holder.itemView);
+
+        CookingFragment cookingFragment = CookingFragment.newInstance(recipe, transitionName);
+
+        boolean isTablet = ((MainActivity) getActivity()).isTablet();
+        int layoutId = isTablet ? R.id.detail : R.id.content;
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction()
+//                .addSharedElement(holder.itemView, transitionName)
+                .replace(layoutId, cookingFragment);
+
+        if (!isTablet) {
+            transaction.addToBackStack(TAG);
+        }
+
+        transaction.commit();
     }
 }
