@@ -3,11 +3,24 @@ package fyi.jackson.drew.rezept.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Ingredient implements Parcelable {
 
     double quantity;
     String measure;
     String ingredient;
+
+    Map<String, String> formattedMeasures = new HashMap<String, String>(){{
+        put("CUP", "cup");
+        put("TBLSP", "tbsp");
+        put("TSP", "tsp");
+        put("K", "kg");
+        put("G", "g");
+        put("OZ", "oz");
+        put("UNIT", "");
+    }};
 
     public Ingredient() {}
 
@@ -65,8 +78,28 @@ public class Ingredient implements Parcelable {
         dest.writeString(ingredient);
     }
 
+    private String getFormattedQuantity() {
+        return String.format("%." + (quantity % 1 == 0 ? "0" : "1") + "f", quantity);
+    }
+
+    private String getFormattedMeasure() {
+        String m = formattedMeasures.get(measure);
+        if (m == null) m = measure;
+        return m;
+    }
+
+    private String getFormattedIngredient() {
+        return ingredient.substring(0, 1).toUpperCase() + ingredient.substring(1);
+    }
+
     @Override
     public String toString() {
-        return quantity + " " + measure + " " + ingredient;
+        return new StringBuilder()
+                .append(getFormattedQuantity())
+                .append(" ")
+                .append(getFormattedMeasure())
+                .append(" ")
+                .append(getFormattedIngredient())
+                .toString();
     }
 }
