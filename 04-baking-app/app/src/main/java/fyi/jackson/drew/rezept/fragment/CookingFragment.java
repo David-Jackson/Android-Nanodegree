@@ -18,6 +18,7 @@ import butterknife.Unbinder;
 import fyi.jackson.drew.rezept.R;
 import fyi.jackson.drew.rezept.model.Recipe;
 import fyi.jackson.drew.rezept.recycler.InstructionListAdapter;
+import fyi.jackson.drew.rezept.recycler.LinePagerIndicatorDecoration;
 
 public class CookingFragment extends Fragment {
 
@@ -62,12 +63,15 @@ public class CookingFragment extends Fragment {
 
     private void bindTo(Recipe recipe, String transitionName) {
         InstructionListAdapter adapter = new InstructionListAdapter(recipe);
-        PagerSnapHelper snapHelper = new PagerSnapHelper();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(
                 getContext(), LinearLayoutManager.HORIZONTAL, false);
         instructionsRecyclerView.setAdapter(adapter);
         instructionsRecyclerView.setLayoutManager(layoutManager);
+
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(instructionsRecyclerView);
+
+        instructionsRecyclerView.addItemDecoration(new LinePagerIndicatorDecoration());
     }
 
     @Override

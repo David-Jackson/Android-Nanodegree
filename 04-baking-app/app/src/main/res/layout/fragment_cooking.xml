@@ -14,25 +14,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <LinearLayout
-        android:id="@+id/progess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/media"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textSize="8dp"
-            android:textColor="@android:color/darker_gray"
-            android:text="●  ●  ●  ●  ●"/>
-    </LinearLayout>
-
-
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_instructions"
         android:layout_width="match_parent"
