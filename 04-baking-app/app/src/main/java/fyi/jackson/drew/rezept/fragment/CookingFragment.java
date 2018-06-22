@@ -1,5 +1,6 @@
 package fyi.jackson.drew.rezept.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,9 +9,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +31,7 @@ public class CookingFragment extends Fragment {
     public static final String EXTRA_RECIPE_ITEM = "EXTRA_RECIPE_ITEM";
     public static final String EXTRA_TRANSITION_NAME = "EXTRA_TRANSITION_NAME";
 
+    @BindView(R.id.media) ImageView mediaImage;
     @BindView(R.id.rv_instructions) RecyclerView instructionsRecyclerView;
     private Unbinder unbinder;
 
@@ -42,6 +49,12 @@ public class CookingFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        postponeEnterTransition();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setSharedElementEnterTransition(
+                    TransitionInflater.from(getContext())
+                            .inflateTransition(android.R.transition.move));
+        }
     }
 
     @Nullable
@@ -62,6 +75,25 @@ public class CookingFragment extends Fragment {
     }
 
     private void bindTo(Recipe recipe, String transitionName) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mediaImage.setTransitionName(transitionName);
+        }
+
+        Picasso.get()
+                .load(recipe.getImage())
+                .into(mediaImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        startPostponedEnterTransition();
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        startPostponedEnterTransition();
+                    }
+                });
+
         InstructionListAdapter adapter = new InstructionListAdapter(recipe);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(
                 getContext(), LinearLayoutManager.HORIZONTAL, false);

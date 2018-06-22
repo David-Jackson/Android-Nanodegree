@@ -97,7 +97,7 @@ public class DetailFragment extends Fragment {
         stepsExpander = new ExpandController(clickAreaSteps, expandSteps, contentSteps);
     }
 
-    private void bindTo(final Recipe recipe, String transitionName) {
+    private void bindTo(final Recipe recipe, final String transitionName) {
         name.setText(recipe.getName());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -149,7 +149,8 @@ public class DetailFragment extends Fragment {
     }
 
     public void startCooking(Recipe recipe) {
-        String transitionName = ""; //ViewCompat.getTransitionName(holder.itemView);
+        String transitionName = "DetailToCookingTransitional";
+        ViewCompat.setTransitionName(mainImage, transitionName);
 
         CookingFragment cookingFragment = CookingFragment.newInstance(recipe, transitionName);
 
@@ -157,7 +158,7 @@ public class DetailFragment extends Fragment {
         int layoutId = isTablet ? R.id.detail : R.id.content;
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction()
-//                .addSharedElement(holder.itemView, transitionName)
+                .addSharedElement(mainImage, transitionName)
                 .replace(layoutId, cookingFragment);
 
         if (!isTablet) {
