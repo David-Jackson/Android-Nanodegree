@@ -6,13 +6,22 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/media"
+        android:id="@+id/iv_media"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@mipmap/img_breakfast_2x"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/media"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="@id/iv_media"
+        app:layout_constraintBottom_toBottomOf="@id/iv_media"
+        app:layout_constraintLeft_toLeftOf="@id/iv_media"
+        app:layout_constraintRight_toRightOf="@id/iv_media"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_instructions"
