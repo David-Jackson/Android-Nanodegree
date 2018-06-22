@@ -22,6 +22,7 @@ public class IngredientsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindTo(final List<Ingredient> ingredients) {
+        ingredientsContainer.removeAllViews();
         // Populate Ingredients
         for (Ingredient ingredient : ingredients) {
             AppCompatCheckBox ingredientCheckBox = new AppCompatCheckBox(itemView.getContext());
