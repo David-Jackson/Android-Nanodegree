@@ -26,6 +26,14 @@
                     app:layout_constraintDimensionRatio="16:9"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"/>
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/media"
+                    app:layout_constraintBottom_toBottomOf="@id/media"
+                    app:layout_constraintLeft_toLeftOf="@id/media"
+                    app:layout_constraintRight_toRightOf="@id/media"/>
                 <TextView
                     android:id="@+id/tv_short_desc"
                     android:layout_width="match_parent"

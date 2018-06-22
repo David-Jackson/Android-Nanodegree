@@ -17,6 +17,7 @@ import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.RenderersFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -37,6 +38,7 @@ import fyi.jackson.drew.rezept.recycler.InstructionListAdapter;
 import fyi.jackson.drew.rezept.recycler.LinePagerIndicatorDecoration;
 import fyi.jackson.drew.rezept.recycler.PagerSnapHelper;
 import fyi.jackson.drew.rezept.recycler.holder.StepViewHolder;
+import fyi.jackson.drew.rezept.ui.PlayerStateChangeEventListener;
 
 public class CookingFragment extends Fragment implements ViewPager.OnPageChangeListener {
 
@@ -149,6 +151,18 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
                     .createMediaSource(mediaUri));
         exoPlayer.prepare(mediaSource);
         exoPlayer.setPlayWhenReady(true);
+        exoPlayer.addListener(new PlayerStateChangeEventListener() {
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                if (previousActivePosition == 0) return;
+                StepViewHolder viewHolder = (StepViewHolder)
+                        instructionsRecyclerView.findViewHolderForAdapterPosition(previousActivePosition);
+                if (viewHolder == null) return;
+                viewHolder.progressBar.setVisibility(
+                        (playWhenReady && playbackState == Player.STATE_READY) ?
+                                View.GONE : View.VISIBLE);
+            }
+        });
     }
 
     private void stopPlayer() {
