@@ -22,6 +22,7 @@ import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.RenderersFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.LoopingMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
@@ -150,9 +151,10 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
             exoPlayer.stop();
         }
         String userAgent = Util.getUserAgent(getContext(), "Rezept");
-        MediaSource mediaSource = new ExtractorMediaSource
-                .Factory(new DefaultDataSourceFactory(getContext(), userAgent))
-                .createMediaSource(mediaUri);
+        MediaSource mediaSource = new LoopingMediaSource(
+                new ExtractorMediaSource
+                    .Factory(new DefaultDataSourceFactory(getContext(), userAgent))
+                    .createMediaSource(mediaUri));
         exoPlayer.prepare(mediaSource);
         exoPlayer.setPlayWhenReady(true);
     }

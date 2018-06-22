@@ -21,7 +21,8 @@
         app:layout_constraintTop_toTopOf="@id/iv_media"
         app:layout_constraintBottom_toBottomOf="@id/iv_media"
         app:layout_constraintLeft_toLeftOf="@id/iv_media"
-        app:layout_constraintRight_toRightOf="@id/iv_media"/>
+        app:layout_constraintRight_toRightOf="@id/iv_media"
+        app:use_controller="false"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_instructions"
