@@ -1,6 +1,9 @@
 package fyi.jackson.drew.rezept.util;
 
+import android.net.Uri;
+
 import fyi.jackson.drew.rezept.R;
+import fyi.jackson.drew.rezept.model.Step;
 
 public class RecipeUtils {
 
@@ -17,6 +20,20 @@ public class RecipeUtils {
         placeHolderImageIndex++;
         placeHolderImageIndex %= placeholderImages.length;
         return placeholderImages[placeHolderImageIndex];
+    }
+
+    public static Uri getMediaUri(Step step) {
+        String uriString;
+        if (step.getVideoUrl().equals("")) {
+            if (step.getThumbnailUrl().equals("")) {
+                return null;
+            } else {
+                uriString = step.getThumbnailUrl();
+            }
+        } else {
+            uriString = step.getVideoUrl();
+        }
+        return Uri.parse(uriString);
     }
 
 }
