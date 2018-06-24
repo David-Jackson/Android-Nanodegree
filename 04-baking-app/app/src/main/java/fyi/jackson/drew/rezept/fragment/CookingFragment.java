@@ -134,6 +134,17 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
         unbinder.unbind();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopPlayer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        playPlayer();
+    }
 
     private void initializePlayer(Uri mediaUri) {
         if (exoPlayer == null) {
@@ -159,15 +170,18 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
                         instructionsRecyclerView.findViewHolderForAdapterPosition(previousActivePosition);
                 if (viewHolder == null) return;
                 viewHolder.progressBar.setVisibility(
-                        (playWhenReady && playbackState == Player.STATE_READY) ?
+                        (playbackState == Player.STATE_READY) ?
                                 View.GONE : View.VISIBLE);
             }
         });
     }
 
     private void stopPlayer() {
-        if (exoPlayer == null) return;
-        exoPlayer.stop();
+        if (exoPlayer != null) exoPlayer.stop();
+    }
+
+    private void playPlayer() {
+        if (exoPlayer != null) setupPlayerView(previousActivePosition);
     }
 
     private void releasePlayer() {
