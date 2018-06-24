@@ -157,14 +157,10 @@ public class DetailFragment extends Fragment {
         boolean isTablet = ((MainActivity) getActivity()).isTablet();
         int layoutId = isTablet ? R.id.detail : R.id.content;
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                 .addSharedElement(mainImage, transitionName)
-                .replace(layoutId, cookingFragment);
-
-        if (!isTablet) {
-            transaction.addToBackStack(TAG);
-        }
-
-        transaction.commit();
+                .replace(layoutId, cookingFragment)
+                .addToBackStack(TAG)
+                .commit();
     }
 }
