@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Rezept</string>
+
+    <string name="error_text">Something went wrong. Make sure you are connected to the internet and try again.</string>
 </resources>

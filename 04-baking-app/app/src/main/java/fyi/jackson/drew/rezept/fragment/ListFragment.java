@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewCompat;
@@ -38,6 +39,8 @@ public class ListFragment extends Fragment implements
     SwipeRefreshLayout refreshLayout;
     RecyclerView recyclerView;
     RecipeListAdapter adapter;
+
+    Snackbar errorSnackbar;
 
     DataHandler dataHandler;
 
@@ -80,6 +83,11 @@ public class ListFragment extends Fragment implements
     @Override
     public void onUpdate(List<Recipe> recipes) {
         Log.d(TAG, "onUpdate: Updating...");
+        if (recipes.size() == 0) {
+            showErrorSnackbar();
+        } else {
+            hideErrorSnackbar();
+        }
         adapter.setRecipes(recipes);
         refreshLayout.setRefreshing(false);
     }
@@ -118,5 +126,16 @@ public class ListFragment extends Fragment implements
     @Override
     public void onRefresh() {
         dataHandler.forceRequest();
+    }
+
+    private void showErrorSnackbar() {
+        errorSnackbar = Snackbar.make(recyclerView, R.string.error_text, Snackbar.LENGTH_INDEFINITE);
+        errorSnackbar.show();
+    }
+
+    private void hideErrorSnackbar() {
+        if (errorSnackbar != null) {
+            errorSnackbar.dismiss();
+        }
     }
 }
