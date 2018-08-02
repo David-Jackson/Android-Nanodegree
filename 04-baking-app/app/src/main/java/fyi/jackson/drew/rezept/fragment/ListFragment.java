@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Explode;
@@ -29,10 +30,12 @@ import fyi.jackson.drew.rezept.recycler.RecipeListAdapter;
 import fyi.jackson.drew.rezept.recycler.holder.RecipeViewHolder;
 import fyi.jackson.drew.rezept.ui.ItemClickListener;
 
-public class ListFragment extends Fragment implements ItemClickListener, DataHandler.DataCallback {
+public class ListFragment extends Fragment implements
+        ItemClickListener, DataHandler.DataCallback, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = ListFragment.class.getSimpleName();
 
+    SwipeRefreshLayout refreshLayout;
     RecyclerView recyclerView;
     RecipeListAdapter adapter;
 
@@ -62,6 +65,9 @@ public class ListFragment extends Fragment implements ItemClickListener, DataHan
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        refreshLayout = view.findViewById(R.id.swipe_container);
+        refreshLayout.setOnRefreshListener(this);
+
         recyclerView = view.findViewById(R.id.rv_recipe_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
@@ -75,6 +81,7 @@ public class ListFragment extends Fragment implements ItemClickListener, DataHan
     public void onUpdate(List<Recipe> recipes) {
         Log.d(TAG, "onUpdate: Updating...");
         adapter.setRecipes(recipes);
+        refreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -106,5 +113,10 @@ public class ListFragment extends Fragment implements ItemClickListener, DataHan
         }
 
         transaction.commit();
+    }
+
+    @Override
+    public void onRefresh() {
+        dataHandler.forceRequest();
     }
 }

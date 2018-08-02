@@ -2,6 +2,7 @@ package fyi.jackson.drew.rezept.network;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fyi.jackson.drew.rezept.model.Recipe;
@@ -26,6 +27,10 @@ public class DataHandler {
 
         this.callback = callback;
 
+        initializeCalls();
+    }
+
+    private void initializeCalls() {
         // Add the interceptor to OkHttpClient
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         OkHttpClient client = builder.build();
@@ -56,11 +61,18 @@ public class DataHandler {
                 public void onFailure(Call<List<Recipe>> call, Throwable t) {
                     Log.d(TAG, "onFailure: Failed");
                     t.printStackTrace();
+                    recipes = new ArrayList<>();
+                    callback.onUpdate(recipes);
                 }
             });
             return;
         }
         callback.onUpdate(recipes);
+    }
+
+    public void forceRequest() {
+        initializeCalls();
+        requestData();
     }
 
     public interface DataCallback {
