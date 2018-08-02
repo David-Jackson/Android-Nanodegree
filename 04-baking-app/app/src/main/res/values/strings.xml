@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Rezept</string>
 
+    <string name="title_recipe_name">Recipe Name</string>
+    <string name="title_ingredients">Ingredients</string>
+    <string name="title_steps">Steps</string>
+    <string name="title_step">Step</string>
+    <string name="title_description">Description</string>
+
     <string name="error_text">Something went wrong. Make sure you are connected to the internet and try again.</string>
 </resources>

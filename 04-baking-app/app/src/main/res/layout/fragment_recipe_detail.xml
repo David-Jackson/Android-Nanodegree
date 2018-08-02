@@ -50,7 +50,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/iv_main_image"
                     app:layout_constraintLeft_toLeftOf="@id/iv_main_image"
                     app:layout_constraintRight_toRightOf="@id/iv_main_image"
-                    android:text="Recipe Name"/>
+                    android:text="@string/title_recipe_name"/>
 
                 <View
                     android:id="@+id/aligner_fab"
@@ -78,7 +78,8 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="32dp"
                     android:layout_marginLeft="16dp"
-                    android:text="Ingredients"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/title_ingredients"
                     app:layout_constraintTop_toBottomOf="@id/iv_main_image"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/iv_expand_ingredients"/>
@@ -131,7 +132,8 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="16dp"
-                    android:text="Steps"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/title_steps"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/iv_expand_steps"
                     app:layout_constraintTop_toBottomOf="@+id/content_ingredients"

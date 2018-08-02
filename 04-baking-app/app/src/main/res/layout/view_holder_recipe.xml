@@ -32,7 +32,7 @@
             android:layout_margin="16dp"
             android:textSize="24sp"
             android:textColor="@android:color/white"
-            android:text="Recipe Name"
+            android:text="@string/title_recipe_name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
