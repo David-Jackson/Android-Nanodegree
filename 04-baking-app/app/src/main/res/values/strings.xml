@@ -8,4 +8,6 @@
     <string name="title_description">Description</string>
 
     <string name="error_text">Something went wrong. Make sure you are connected to the internet and try again.</string>
+    <string name="add_widget">Add widget</string>
+    <string name="widget_placeholder_text">No recipe selected, click to start cooking.</string>
 </resources>

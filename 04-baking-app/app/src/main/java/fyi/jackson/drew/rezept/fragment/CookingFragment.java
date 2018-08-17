@@ -1,5 +1,6 @@
 package fyi.jackson.drew.rezept.fragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import fyi.jackson.drew.rezept.R;
+import fyi.jackson.drew.rezept.widget.RecipeIngredientsWidget;
 import fyi.jackson.drew.rezept.model.Recipe;
 import fyi.jackson.drew.rezept.model.Step;
 import fyi.jackson.drew.rezept.recycler.InstructionListAdapter;
@@ -93,6 +95,7 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
         currentRecipe = recipe;
 
         bindTo(recipe, transitionName);
+        broadcastToWidgets(recipe);
     }
 
     private void bindTo(Recipe recipe, String transitionName) {
@@ -144,6 +147,14 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
     public void onResume() {
         super.onResume();
         playPlayer();
+    }
+
+    private void broadcastToWidgets(Recipe recipe) {
+        Log.d(TAG, "broadcastToWidgets: Attempting to send broadcast to RecipeIngredientsWidget");
+        Intent widgetIntent = new Intent(getContext(), RecipeIngredientsWidget.class);
+        widgetIntent.setAction(RecipeIngredientsWidget.ACTION_UPDATE_WIDGET_RECIPE);
+        widgetIntent.putExtra(RecipeIngredientsWidget.EXTRA_RECIPE, recipe);
+        getActivity().sendBroadcast(widgetIntent);
     }
 
     private void initializePlayer(Uri mediaUri) {
