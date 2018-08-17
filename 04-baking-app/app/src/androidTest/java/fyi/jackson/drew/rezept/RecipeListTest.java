@@ -18,29 +18,27 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class RecipeTest {
+public class RecipeListTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void recipeTest() {
-        ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.rv_recipe_list),
-                        childAtPosition(
-                                withId(R.id.swipe_container),
-                                0)));
+    public void recipeListTest() {
+        ViewInteraction recyclerView = onView(withId(R.id.rv_recipe_list));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
+
+        onView(withId(R.id.tv_name)).check(matches(withText("Nutella Pie")));
 
         ViewInteraction floatingActionButton = onView(
                 allOf(withId(R.id.fab),
@@ -52,24 +50,27 @@ public class RecipeTest {
                         isDisplayed()));
         floatingActionButton.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.exo_pause), withContentDescription("Pause"),
+                allOf(withContentDescription("Navigate up"),
                         childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        0),
-                                5),
+                                allOf(withId(R.id.action_bar),
+                                        childAtPosition(
+                                                withId(R.id.action_bar_container),
+                                                0)),
+                                1),
                         isDisplayed()));
         appCompatImageButton.perform(click());
+
+        ViewInteraction appCompatImageButton2 = onView(
+                allOf(withContentDescription("Navigate up"),
+                        childAtPosition(
+                                allOf(withId(R.id.action_bar),
+                                        childAtPosition(
+                                                withId(R.id.action_bar_container),
+                                                0)),
+                                1),
+                        isDisplayed()));
+        appCompatImageButton2.perform(click());
 
     }
 
