@@ -2,6 +2,17 @@
 
 Here a repository of all work done on projects for Udacity's Android Nanodegree program.
 
+## Project #4: Baking App
+*In this project, you will create an app to view video recipes. You will handle media loading, verify your user interfaces with UI tests, and integrate third party libraries. You'll also provide a complete user experience with a home screen widget.*
+
+### Features
+- Material Design: from shared element transitions, to [animated vector drawables](https://github.com/David-Jackson/Android-Nanodegree/raw/master/04-baking-app/images/navigation_avd.gif), this app was designed from the ground up to incorporate material design principles.
+- Tablet Layouts: this app also incorporates fragments and reusable layouts to provide a much better experience on bigger screens.
+- Video Playback
+- Homescreen Widget
+
+![See the Baking App in action](https://github.com/David-Jackson/Android-Nanodegree/blob/master/04-baking-app/images/device-2018-08-17-163316.gif)
+
 ## Project #3: Popular Movies Part 2
 *In this project, you will add to the app you built in Stage 1 by building on the detail view for each movie, allowing users to 'favorite' movies.*
 
@@ -13,7 +24,7 @@ To run this app, you must also have an [API Key](https://www.themoviedb.org/docu
 - Offline Use: API calls are cached in a SQLite database, and served when offline. This along with Picasso's Image caching enables this app to be usable when offline.
 - Reviews and Videos: The detail screen shows user reviews and videos related to the movie that can be viewed in the browser or YouTube.
 
-![See Popular Movies Part 2 in action](https://github.com/David-Jackson/Android-Nanodegree/blob/master/03-popular-movies-part-2/images/device-2018-05-16-112129.gif)
+[See Popular Movies Part 2 in action](https://github.com/David-Jackson/Android-Nanodegree/blob/master/03-popular-movies-part-2/images/device-2018-05-16-112129.gif)
 
 ## Project #2: Popular Movies Part 1
 *In this project, you will build an app to help users discover popular and recent movies. You will build a clean UI, sync to a server, and present information to the user.*
