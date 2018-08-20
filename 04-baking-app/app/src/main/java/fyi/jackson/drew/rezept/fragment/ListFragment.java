@@ -29,15 +29,15 @@ import fyi.jackson.drew.rezept.ui.ItemClickListener;
 public class ListFragment extends Fragment implements
         ItemClickListener, DataHandler.DataCallback, SwipeRefreshLayout.OnRefreshListener {
 
-    public static final String TAG = ListFragment.class.getSimpleName();
+    private static final String TAG = ListFragment.class.getSimpleName();
 
-    SwipeRefreshLayout refreshLayout;
-    RecyclerView recyclerView;
-    RecipeListAdapter adapter;
+    private SwipeRefreshLayout refreshLayout;
+    private RecyclerView recyclerView;
+    private RecipeListAdapter adapter;
 
-    Snackbar errorSnackbar;
+    private Snackbar errorSnackbar;
 
-    DataHandler dataHandler;
+    private DataHandler dataHandler;
 
     public ListFragment() {}
 

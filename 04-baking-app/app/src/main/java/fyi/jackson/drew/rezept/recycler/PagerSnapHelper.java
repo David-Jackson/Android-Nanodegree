@@ -13,7 +13,7 @@ public class PagerSnapHelper extends android.support.v7.widget.PagerSnapHelper {
 
     private ViewPager.OnPageChangeListener onPageChangeListener;
 
-    public PagerSnapHelper() {
+    private PagerSnapHelper() {
         super();
     }
 

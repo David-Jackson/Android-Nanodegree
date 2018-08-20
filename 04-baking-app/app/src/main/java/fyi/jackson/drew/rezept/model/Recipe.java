@@ -8,16 +8,16 @@ import java.util.List;
 
 public class Recipe implements Parcelable {
 
-    int id;
-    String name;
-    List<Ingredient> ingredients;
-    List<Step> steps;
-    int servings;
-    String image;
+    private int id;
+    private String name;
+    private List<Ingredient> ingredients;
+    private List<Step> steps;
+    private int servings;
+    private String image;
 
     public Recipe() {}
 
-    public Recipe(Parcel in) {
+    private Recipe(Parcel in) {
         setId(in.readInt());
         setName(in.readString());
         ingredients = new ArrayList<>();
@@ -44,7 +44,7 @@ public class Recipe implements Parcelable {
         return id;
     }
 
-    public void setId(int id) {
+    private void setId(int id) {
         this.id = id;
     }
 
@@ -52,7 +52,7 @@ public class Recipe implements Parcelable {
         return name;
     }
 
-    public void setName(String name) {
+    private void setName(String name) {
         this.name = name;
     }
 
@@ -80,7 +80,7 @@ public class Recipe implements Parcelable {
         return servings;
     }
 
-    public void setServings(int servings) {
+    private void setServings(int servings) {
         this.servings = servings;
     }
 
@@ -88,7 +88,7 @@ public class Recipe implements Parcelable {
         return image;
     }
 
-    public void setImage(String image) {
+    private void setImage(String image) {
         this.image = image;
     }
 

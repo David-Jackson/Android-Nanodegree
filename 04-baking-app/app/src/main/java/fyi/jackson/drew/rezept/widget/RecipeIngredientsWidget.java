@@ -10,12 +10,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.zip.CheckedInputStream;
 
 import fyi.jackson.drew.rezept.MainActivity;
 import fyi.jackson.drew.rezept.R;
@@ -27,17 +25,17 @@ import fyi.jackson.drew.rezept.model.Recipe;
  */
 public class RecipeIngredientsWidget extends AppWidgetProvider {
 
-    public static final String TAG = RecipeIngredientsWidget.class.getSimpleName();
+    private static final String TAG = RecipeIngredientsWidget.class.getSimpleName();
 
     public static final String ACTION_UPDATE_WIDGET_RECIPE = "ACTION_UPDATE_WIDGET_RECIPE";
-    public static final String ACTION_CLEAR_WIDGET_RECIPE = "ACTION_CLEAR_WIDGET_RECIPE";
+    private static final String ACTION_CLEAR_WIDGET_RECIPE = "ACTION_CLEAR_WIDGET_RECIPE";
     public static final String EXTRA_RECIPE = "EXTRA_RECIPE";
-    public static final String KEY_INGREGIENT_SET = "KEY_INGREGIENT_SET";
-    public static final String KEY_RECIPE_NAME = "KEY_RECIPE_NAME";
+    private static final String KEY_INGREGIENT_SET = "KEY_INGREGIENT_SET";
+    private static final String KEY_RECIPE_NAME = "KEY_RECIPE_NAME";
 
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId,
-                                Set<String> ingredients, String name) {
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId,
+                                        Set<String> ingredients, String name) {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_recipe_ingredients);
 
@@ -162,8 +160,8 @@ public class RecipeIngredientsWidget extends AppWidgetProvider {
         onUpdateWithData(context, appWidgetManager, appWidgetIds, ingredients, name);
     }
 
-    public void onUpdateWithData(Context context, AppWidgetManager appWidgetManager,
-                                 int[] appWidgetIds, Set<String> ingredients, String name) {
+    private void onUpdateWithData(Context context, AppWidgetManager appWidgetManager,
+                                  int[] appWidgetIds, Set<String> ingredients, String name) {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId, ingredients, name);

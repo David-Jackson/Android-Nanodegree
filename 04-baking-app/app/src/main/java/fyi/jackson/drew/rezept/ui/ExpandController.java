@@ -11,10 +11,10 @@ import fyi.jackson.drew.rezept.R;
 
 public class ExpandController {
 
-    boolean visible = false;
-    View clickView;
-    ImageView imageView;
-    View[] toggleViews;
+    private boolean visible = false;
+    private final View clickView;
+    private final ImageView imageView;
+    private final View[] toggleViews;
 
     public ExpandController(View clickView, ImageView imageView, View... toggleViews) {
         this.clickView = clickView;

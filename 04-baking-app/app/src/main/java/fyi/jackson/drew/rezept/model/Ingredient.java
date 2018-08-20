@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class Ingredient implements Parcelable {
 
-    double quantity;
-    String measure;
-    String ingredient;
+    private double quantity;
+    private String measure;
+    private String ingredient;
 
-    Map<String, String> formattedMeasures = new HashMap<String, String>(){{
+    private final Map<String, String> formattedMeasures = new HashMap<String, String>(){{
         put("CUP", "cup");
         put("TBLSP", "tbsp");
         put("TSP", "tsp");
@@ -24,7 +24,7 @@ public class Ingredient implements Parcelable {
 
     public Ingredient() {}
 
-    public Ingredient(Parcel in) {
+    private Ingredient(Parcel in) {
         setQuantity(in.readDouble());
         setMeasure(in.readString());
         setIngredient(in.readString());
@@ -46,7 +46,7 @@ public class Ingredient implements Parcelable {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    private void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
@@ -54,7 +54,7 @@ public class Ingredient implements Parcelable {
         return measure;
     }
 
-    public void setMeasure(String measure) {
+    private void setMeasure(String measure) {
         this.measure = measure;
     }
 
@@ -62,7 +62,7 @@ public class Ingredient implements Parcelable {
         return ingredient;
     }
 
-    public void setIngredient(String ingredient) {
+    private void setIngredient(String ingredient) {
         this.ingredient = ingredient;
     }
 

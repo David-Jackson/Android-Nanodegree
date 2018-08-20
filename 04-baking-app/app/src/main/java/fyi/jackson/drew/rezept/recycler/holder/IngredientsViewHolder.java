@@ -7,14 +7,12 @@ import android.widget.LinearLayout;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import fyi.jackson.drew.rezept.R;
 import fyi.jackson.drew.rezept.model.Ingredient;
 
 public class IngredientsViewHolder extends RecyclerView.ViewHolder {
 
-    LinearLayout ingredientsContainer;
+    private final LinearLayout ingredientsContainer;
 
     public IngredientsViewHolder(View v) {
         super(v);

@@ -17,7 +17,7 @@ public class InstructionListAdapter extends RecyclerView.Adapter {
     private static final int TYPE_INGREDIENTS = 96;
     private static final int TYPE_STEP = 316;
 
-    private Recipe recipe;
+    private final Recipe recipe;
 
     public InstructionListAdapter(Recipe recipe) {
         this.recipe = recipe;

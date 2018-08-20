@@ -1,6 +1,5 @@
 package fyi.jackson.drew.rezept.widget;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -11,7 +10,7 @@ import fyi.jackson.drew.rezept.R;
 
 public class IngredientsListService extends RemoteViewsService {
     
-    public static final String TAG = IngredientsListService.class.getSimpleName();
+    private static final String TAG = IngredientsListService.class.getSimpleName();
     public static final String EXTRA_INGREDIENTS_LIST = "EXTRA_INGREDIENTS_LIST";
     
     @Override
@@ -24,9 +23,9 @@ public class IngredientsListService extends RemoteViewsService {
 
 class IngredientsListFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    public static final String TAG = IngredientsListService.class.getSimpleName();
-    private String[] ingredients;
-    private Context context;
+    private static final String TAG = IngredientsListService.class.getSimpleName();
+    private final String[] ingredients;
+    private final Context context;
 
     public IngredientsListFactory(Context context, String[] ingredients) {
         Log.d(TAG, "IngredientsListFactory: ");

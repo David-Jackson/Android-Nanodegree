@@ -19,7 +19,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignTop="@id/appwidget_text"
             android:layout_alignBottom="@id/appwidget_text"
-            android:src="@drawable/ic_local_dining_white_24dp"/>
+            android:src="@drawable/ic_local_dining_white_24dp"
+            android:contentDescription="@string/cd_logo_image"/>
         <TextView
             android:id="@+id/appwidget_text"
             android:layout_width="wrap_content"
@@ -27,6 +28,7 @@
             android:layout_margin="8dp"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/iv_logo"
+            android:layout_toEndOf="@id/iv_logo"
             android:textColor="@android:color/primary_text_dark"
             android:textSize="24sp"
             android:textStyle="bold|italic" />
@@ -41,7 +43,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@id/appwidget_text"
             android:layout_alignBottom="@id/appwidget_text"
-            android:src="@drawable/ic_close_white_24dp"/>
+            android:src="@drawable/ic_close_white_24dp"
+            android:contentDescription="@string/cd_clear_recipe"/>
         <ListView
             android:id="@+id/ingredients_list"
             android:layout_width="match_parent"
@@ -65,7 +68,8 @@
             android:layout_above="@id/tv_placeholder"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_local_dining_white_24dp"/>
+            android:src="@drawable/ic_local_dining_white_24dp"
+            android:contentDescription="@string/cd_logo_image"/>
         <TextView
             android:id="@+id/tv_placeholder"
             android:layout_width="match_parent"

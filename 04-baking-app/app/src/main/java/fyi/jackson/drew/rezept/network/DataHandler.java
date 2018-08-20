@@ -15,13 +15,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DataHandler {
 
-    public static final String TAG = DataHandler.class.getSimpleName();
-    public static final String API_BASE_URL = "https://api.myjson.com/bins/";
+    private static final String TAG = DataHandler.class.getSimpleName();
+    private static final String API_BASE_URL = "https://api.myjson.com/bins/";
 
     private Call<List<Recipe>> recipeCall;
     private List<Recipe> recipes;
 
-    private DataCallback callback;
+    private final DataCallback callback;
 
     public DataHandler(DataCallback callback) {
 

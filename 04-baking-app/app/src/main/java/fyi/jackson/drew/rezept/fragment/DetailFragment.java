@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.CardView;
@@ -34,10 +32,11 @@ import fyi.jackson.drew.rezept.ui.ExpandController;
 
 public class DetailFragment extends Fragment {
 
-    public static final String TAG = DetailFragment.class.getSimpleName();
-    public static final String EXTRA_RECIPE_ITEM = "EXTRA_RECIPE_ITEM";
-    public static final String EXTRA_TRANSITION_NAME = "EXTRA_TRANSITION_NAME";
-    ExpandController ingredientsExpander, stepsExpander;
+    private static final String TAG = DetailFragment.class.getSimpleName();
+    private static final String EXTRA_RECIPE_ITEM = "EXTRA_RECIPE_ITEM";
+    private static final String EXTRA_TRANSITION_NAME = "EXTRA_TRANSITION_NAME";
+    private ExpandController ingredientsExpander;
+    private ExpandController stepsExpander;
 
     @BindView(R.id.card_header) CardView cardView;
 
@@ -148,7 +147,7 @@ public class DetailFragment extends Fragment {
         unbinder.unbind();
     }
 
-    public void startCooking(Recipe recipe) {
+    private void startCooking(Recipe recipe) {
         String transitionName = "DetailToCookingTransitional";
         ViewCompat.setTransitionName(mainImage, transitionName);
 

@@ -13,9 +13,10 @@ import fyi.jackson.drew.rezept.fragment.ListFragment;
 public class MainActivity extends AppCompatActivity
         implements FragmentManager.OnBackStackChangedListener {
 
-    boolean isTablet;
-    AnimatedVectorDrawable iconAvd, backAvd;
-    boolean wasInDetailFragment = false;
+    private boolean isTablet;
+    private AnimatedVectorDrawable iconAvd;
+    private AnimatedVectorDrawable backAvd;
+    private boolean wasInDetailFragment = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @SuppressLint("NewApi")
-    public void shouldDisplayHomeUp(){
+    private void shouldDisplayHomeUp(){
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //Enable Up button only  if there are entries in the back stack
         boolean canBack = getSupportFragmentManager().getBackStackEntryCount()>0;

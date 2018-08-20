@@ -8,17 +8,15 @@ import android.widget.TextView;
 
 import com.google.android.exoplayer2.ui.PlayerView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import fyi.jackson.drew.rezept.R;
 import fyi.jackson.drew.rezept.model.Step;
 
 public class StepViewHolder extends RecyclerView.ViewHolder {
 
-    public PlayerView playerView;
-    public ProgressBar progressBar;
-    TextView shortDescription;
-    TextView description;
+    public final PlayerView playerView;
+    public final ProgressBar progressBar;
+    private final TextView shortDescription;
+    private final TextView description;
 
     public StepViewHolder(View v) {
         super(v);

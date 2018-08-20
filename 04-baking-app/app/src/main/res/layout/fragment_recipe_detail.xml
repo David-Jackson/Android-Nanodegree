@@ -29,7 +29,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:src="@mipmap/img_lunch_2x"/>
+                    android:src="@mipmap/img_lunch_2x"
+                    android:contentDescription="@string/cd_recipe_main_image" />
 
                 <View
                     android:layout_width="0dp"
@@ -93,7 +94,8 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_ingredients_title"
                     app:layout_constraintBottom_toTopOf="@id/tv_ingredients_title"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:layout_margin="16dp"/>
+                    android:layout_margin="16dp"
+                    android:contentDescription="@string/cd_expand_ingredients"/>
 
                 <View
                     android:id="@+id/div_ingredients"
@@ -148,7 +150,8 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_steps_title"
                     app:layout_constraintBottom_toTopOf="@id/tv_steps_title"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:layout_margin="16dp"/>
+                    android:layout_margin="16dp"
+                    android:contentDescription="@string/cd_expand_steps"/>
 
                 <View
                     android:id="@+id/div_steps"

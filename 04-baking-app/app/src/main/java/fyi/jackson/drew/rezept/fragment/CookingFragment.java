@@ -45,11 +45,11 @@ import fyi.jackson.drew.rezept.widget.RecipeIngredientsWidget;
 
 public class CookingFragment extends Fragment implements ViewPager.OnPageChangeListener {
 
-    public static final String TAG = CookingFragment.class.getSimpleName();
-    public static final String EXTRA_RECIPE_ITEM = "EXTRA_RECIPE_ITEM";
-    public static final String EXTRA_TRANSITION_NAME = "EXTRA_TRANSITION_NAME";
-    public static final String KEY_PREVIOUS_ACTIVE_POSITION = "KEY_PREVIOUS_ACTIVE_POSITION";
-    public static final String KEY_PLAYER_POSITION = "KEY_PLAYER_POSITION";
+    private static final String TAG = CookingFragment.class.getSimpleName();
+    private static final String EXTRA_RECIPE_ITEM = "EXTRA_RECIPE_ITEM";
+    private static final String EXTRA_TRANSITION_NAME = "EXTRA_TRANSITION_NAME";
+    private static final String KEY_PREVIOUS_ACTIVE_POSITION = "KEY_PREVIOUS_ACTIVE_POSITION";
+    private static final String KEY_PLAYER_POSITION = "KEY_PLAYER_POSITION";
 
     @BindView(R.id.rv_instructions) RecyclerView instructionsRecyclerView;
     private Unbinder unbinder;

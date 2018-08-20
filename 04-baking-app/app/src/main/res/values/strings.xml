@@ -10,4 +10,12 @@
     <string name="error_text">Something went wrong. Make sure you are connected to the internet and try again.</string>
     <string name="add_widget">Add widget</string>
     <string name="widget_placeholder_text">No recipe selected, click to start cooking.</string>
+
+    <!--CONTENT DESCRIPTIONS-->
+    <string name="cd_recipe_main_image">Recipe Image</string>
+    <string name="cd_expand_ingredients">Expand Ingredients</string>
+    <string name="cd_expand_steps">Expand Steps</string>
+    <string name="cd_logo_image">Rezept Logo</string>
+    <string name="cd_clear_recipe">Clear Recipe</string>
+
 </resources>

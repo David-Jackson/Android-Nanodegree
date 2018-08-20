@@ -15,9 +15,9 @@ import fyi.jackson.drew.rezept.util.RecipeUtils;
 
 public class RecipeViewHolder extends RecyclerView.ViewHolder {
 
-    public View itemView;
-    public TextView name;
-    public ImageView image;
+    public final View itemView;
+    private final TextView name;
+    private final ImageView image;
 
     public RecipeViewHolder(View v) {
         super(v);

@@ -15,8 +15,8 @@ import fyi.jackson.drew.rezept.ui.ItemClickListener;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
-    List<Recipe> recipes;
-    ItemClickListener clickListener;
+    private List<Recipe> recipes;
+    private final ItemClickListener clickListener;
 
     public RecipeListAdapter(List<Recipe> recipes, ItemClickListener clickListener) {
         this.recipes = recipes;
