@@ -62,6 +62,7 @@ public class Step implements Parcelable {
     }
 
     public String getVideoUrl() {
+        if (videoUrl.equals("")) return thumbnailUrl;
         return videoUrl;
     }
 
