@@ -41,7 +41,7 @@ public class DetailFragment extends Fragment {
     @BindView(R.id.card_header) CardView cardView;
 
     @BindView(R.id.iv_main_image) ImageView mainImage;
-    @BindView(R.id.tv_name) TextView name;
+    @BindView(R.id.tv_recipe_name) TextView name;
     @BindView(R.id.fab) FloatingActionButton fab;
 
     @BindView(R.id.click_area_ingredients) View clickAreaIngredients;

@@ -42,7 +42,7 @@
                     app:layout_constraintRight_toRightOf="@id/iv_main_image"/>
 
                 <TextView
-                    android:id="@+id/tv_name"
+                    android:id="@+id/tv_recipe_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
