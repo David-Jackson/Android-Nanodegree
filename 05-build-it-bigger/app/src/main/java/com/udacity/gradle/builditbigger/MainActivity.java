@@ -14,10 +14,14 @@ import fyi.jackson.jokeviewer.JokeViewerActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Joker joker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        joker = new Joker();
     }
 
     @Override
@@ -43,6 +47,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Toast.makeText(this, "derp", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, joker.getJoke().toString(), Toast.LENGTH_LONG).show();
     }
 }
