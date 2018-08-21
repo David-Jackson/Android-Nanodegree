@@ -20,3 +20,12 @@ allprojects {
         google()
     }
 }
+
+apply plugin: 'java'
+task("optionalTask") {
+    setGroup("Optional")
+    setDescription("This is the optional task that starts the server, " +
+            "runs the android tests, and then stops the server.")
+    dependsOn(":backend:appengineStart")
+    finalizedBy(":app:connectedCheck", ":backend:appengineStop")
+}
