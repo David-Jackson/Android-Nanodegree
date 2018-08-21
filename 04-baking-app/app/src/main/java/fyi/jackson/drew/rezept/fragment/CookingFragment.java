@@ -50,6 +50,7 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
     private static final String EXTRA_TRANSITION_NAME = "EXTRA_TRANSITION_NAME";
     private static final String KEY_PREVIOUS_ACTIVE_POSITION = "KEY_PREVIOUS_ACTIVE_POSITION";
     private static final String KEY_PLAYER_POSITION = "KEY_PLAYER_POSITION";
+    private static final String KEY_PLAY_WHEN_READY = "KEY_PLAY_WHEN_READY";
 
     @BindView(R.id.rv_instructions) RecyclerView instructionsRecyclerView;
     private Unbinder unbinder;
@@ -58,6 +59,7 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
     private Recipe currentRecipe;
     private int previousActivePosition = 0;
     private long savedPlayerPosition = 0;
+    private boolean savedPlayWhenReady = true;
 
     public CookingFragment() {}
 
@@ -77,6 +79,7 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
         if (savedInstanceState != null) {
             previousActivePosition = savedInstanceState.getInt(KEY_PREVIOUS_ACTIVE_POSITION, 0);
             savedPlayerPosition = savedInstanceState.getLong(KEY_PLAYER_POSITION, 0);
+            savedPlayWhenReady = savedInstanceState.getBoolean(KEY_PLAY_WHEN_READY, true);
         }
     }
 
@@ -115,8 +118,6 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
         instructionsRecyclerView.scrollBy(1, 0);
     }
 
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -148,6 +149,8 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
         if (exoPlayer != null) {
             long playerPosition = exoPlayer.getCurrentPosition();
             outState.putLong(KEY_PLAYER_POSITION, playerPosition);
+
+            outState.putBoolean(KEY_PLAY_WHEN_READY, exoPlayer.getPlayWhenReady());
         }
     }
 
@@ -186,11 +189,12 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
                     .Factory(new DefaultDataSourceFactory(getContext(), userAgent))
                     .createMediaSource(mediaUri));
         exoPlayer.prepare(mediaSource);
-        exoPlayer.setPlayWhenReady(true);
+        exoPlayer.setPlayWhenReady(savedPlayWhenReady);
         exoPlayer.addListener(new PlayerStateChangeEventListener() {
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
                 if (previousActivePosition == 0) return;
+                savedPlayWhenReady = playWhenReady;
                 StepViewHolder viewHolder = (StepViewHolder)
                         instructionsRecyclerView.findViewHolderForAdapterPosition(previousActivePosition);
                 if (viewHolder == null) return;
