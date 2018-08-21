@@ -2,7 +2,6 @@ package com.udacity.gradle.builditbigger;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
 import org.junit.Rule;
 import org.junit.Test;

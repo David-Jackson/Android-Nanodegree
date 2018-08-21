@@ -1,22 +1,20 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
+import fyi.jackson.jokes.Joke;
 import fyi.jackson.jokes.Joker;
-import fyi.jackson.jokeviewer.JokeViewerActivity;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private Joker joker;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         joker = new Joker();
+
+        progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -49,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        new EndpointsAsyncTask().execute(this);
+        progressBar.setVisibility(View.VISIBLE);
+        EndpointsAsyncTask asyncTask = new EndpointsAsyncTask(){
+            @Override
+            protected void onPostExecute(Joke result) {
+                progressBar.setVisibility(View.GONE);
+                super.onPostExecute(result);
+            }
+        };
+        asyncTask.execute(this);
     }
 }
