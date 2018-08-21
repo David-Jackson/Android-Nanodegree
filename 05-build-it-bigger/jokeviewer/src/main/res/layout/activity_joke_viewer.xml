@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:padding="16dp"
     tools:context=".JokeViewerActivity">
-    <LinearLayout
-        android:orientation="vertical"
+
+    <TextView
+        android:id="@+id/tv_setup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:id="@+id/tv_setup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Setup"/>
+    <TextView
+        android:id="@+id/tv_punchline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/tv_punchline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Punchline"/>
-
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+</LinearLayout>

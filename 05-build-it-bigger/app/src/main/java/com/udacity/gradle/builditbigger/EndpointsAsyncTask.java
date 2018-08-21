@@ -3,8 +3,6 @@ package com.udacity.gradle.builditbigger;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Pair;
-import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -15,7 +13,6 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 import java.io.IOException;
 
 import fyi.jackson.jokes.Joke;
-import fyi.jackson.jokes.Joker;
 import fyi.jackson.jokeviewer.JokeViewerActivity;
 
 class EndpointsAsyncTask extends AsyncTask<Context, Void, Joke> {
