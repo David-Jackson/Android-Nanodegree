@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Pair;
 import android.widget.Toast;
@@ -13,12 +14,16 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 
 import java.io.IOException;
 
-class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
+import fyi.jackson.jokes.Joke;
+import fyi.jackson.jokes.Joker;
+import fyi.jackson.jokeviewer.JokeViewerActivity;
+
+class EndpointsAsyncTask extends AsyncTask<Context, Void, Joke> {
     private static MyApi myApiService = null;
     private Context context;
 
     @Override
-    protected String doInBackground(Pair<Context, String>... params) {
+    protected Joke doInBackground(Context... params) {
         if(myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -37,18 +42,23 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
             myApiService = builder.build();
         }
 
-        context = params[0].first;
-        String name = params[0].second;
+        context = params[0];
 
         try {
-            return myApiService.sayHi(name).execute().getData();
+            com.udacity.gradle.builditbigger.backend.myApi.model.Joke joke =
+                    myApiService.tellJoke().execute();
+            return new Joke(joke.getSetup(), joke.getPunchline());
         } catch (IOException e) {
-            return e.getMessage();
+            e.printStackTrace();
+            return null;
         }
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+    protected void onPostExecute(Joke result) {
+        Intent intent = new Intent(context, JokeViewerActivity.class);
+        intent.setAction(JokeViewerActivity.ACTION_DISPLAY_JOKE);
+        intent.putExtra(JokeViewerActivity.EXTRA_JOKE, result);
+        context.startActivity(intent);
     }
 }
