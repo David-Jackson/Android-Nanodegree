@@ -9,10 +9,10 @@ import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
+import com.udacity.gradle.builditbigger.backend.myApi.model.Joke;
 
 import java.io.IOException;
 
-import fyi.jackson.jokes.Joke;
 import fyi.jackson.jokeviewer.JokeViewerActivity;
 
 class EndpointsAsyncTask extends AsyncTask<Context, Void, Joke> {
@@ -42,9 +42,7 @@ class EndpointsAsyncTask extends AsyncTask<Context, Void, Joke> {
         context = params[0];
 
         try {
-            com.udacity.gradle.builditbigger.backend.myApi.model.Joke joke =
-                    myApiService.tellJoke().execute();
-            return new Joke(joke.getSetup(), joke.getPunchline());
+            return myApiService.tellJoke().execute();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -55,7 +53,12 @@ class EndpointsAsyncTask extends AsyncTask<Context, Void, Joke> {
     protected void onPostExecute(Joke result) {
         Intent intent = new Intent(context, JokeViewerActivity.class);
         intent.setAction(JokeViewerActivity.ACTION_DISPLAY_JOKE);
-        intent.putExtra(JokeViewerActivity.EXTRA_JOKE, result);
+
+        // convert backend model joke to Android Library readable Joke
+        fyi.jackson.jokes.Joke joke = (result == null) ? null :
+                new fyi.jackson.jokes.Joke(result.getSetup(), result.getPunchline());
+        intent.putExtra(JokeViewerActivity.EXTRA_JOKE, joke);
+
         context.startActivity(intent);
     }
 }

@@ -12,14 +12,10 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
-
-import fyi.jackson.jokes.Joke;
-import fyi.jackson.jokes.Joker;
-
+import com.udacity.gradle.builditbigger.backend.myApi.model.Joke;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Joker joker;
     private ProgressBar progressBar;
     private InterstitialAd interstitialAd;
 
@@ -27,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        joker = new Joker();
 
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.GONE);
