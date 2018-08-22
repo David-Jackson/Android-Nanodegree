@@ -6,7 +6,4 @@
     <string name="ad_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="interstitial_add_unit_id">ca-app-pub-3940256099942544/1033173712</string>
-    <!--<string name="ad_app_id">ca-app-pub-2330655581235911~3326377782</string>-->
-    <!--<string name="banner_ad_unit_id">ca-app-pub-2330655581235911/1975952886</string>-->
-    <!--<string name="interstitial_add_unit_id">ca-app-pub-2330655581235911/5532054514</string>-->
 </resources>
