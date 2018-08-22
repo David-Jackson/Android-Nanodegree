@@ -189,6 +189,7 @@ public class CookingFragment extends Fragment implements ViewPager.OnPageChangeL
                     .Factory(new DefaultDataSourceFactory(getContext(), userAgent))
                     .createMediaSource(mediaUri));
         exoPlayer.prepare(mediaSource);
+        exoPlayer.seekTo(savedPlayerPosition);
         exoPlayer.setPlayWhenReady(savedPlayWhenReady);
         exoPlayer.addListener(new PlayerStateChangeEventListener() {
             @Override
