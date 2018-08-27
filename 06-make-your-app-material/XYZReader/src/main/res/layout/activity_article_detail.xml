@@ -22,4 +22,12 @@
             android:contentDescription="@string/up"
             android:src="@drawable/ic_arrow_back" />
     </FrameLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/share_fab"
+        android:layout_gravity="bottom|end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_share"
+        android:contentDescription="@string/action_share" />
 </FrameLayout>
