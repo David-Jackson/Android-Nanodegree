@@ -2,6 +2,19 @@
 
 Here a repository of all work done on projects for Udacity's Android Nanodegree program.
 
+## Project #6: Make Your App Material
+*In this project, you will update the look and feel of an app to meet Material Design specifications.*
+
+### Result
+| Before | After |
+|--------|-------|
+|![XYZ Reader before redesign](https://github.com/David-Jackson/Android-Nanodegree/blob/master/06-make-your-app-material/images/device-2018-08-28-130020.gif) | ![XYZ Reader after redesign](https://github.com/David-Jackson/Android-Nanodegree/blob/master/06-make-your-app-material/images/device-2018-08-28-124459.gif) |
+
+## Project #5: Build It Bigger
+*In this project, you will use Gradle to build a joke-telling app, factoring functionality into libraries and flavors to keep the build simple. You'll also configure a Google Cloud Endpoints development server to supply the jokes.*
+
+This app did not leave a lot of room for creative input. It was still very informative, showing how to create free and paid versions of your app, how to create Android and Java Libraries, and briefly showing how to connect to backend services. 
+
 ## Project #4: Baking App
 *In this project, you will create an app to view video recipes. You will handle media loading, verify your user interfaces with UI tests, and integrate third party libraries. You'll also provide a complete user experience with a home screen widget.*
 
@@ -11,7 +24,7 @@ Here a repository of all work done on projects for Udacity's Android Nanodegree 
 - Video Playback
 - Homescreen Widget
 
-![See the Baking App in action](https://github.com/David-Jackson/Android-Nanodegree/blob/master/04-baking-app/images/device-2018-08-17-163316.gif)
+[See the Baking App in action](https://github.com/David-Jackson/Android-Nanodegree/blob/master/04-baking-app/images/device-2018-08-17-163316.gif)
 
 ## Project #3: Popular Movies Part 2
 *In this project, you will add to the app you built in Stage 1 by building on the detail view for each movie, allowing users to 'favorite' movies.*
