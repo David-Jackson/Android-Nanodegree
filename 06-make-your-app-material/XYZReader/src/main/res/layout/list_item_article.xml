@@ -6,6 +6,7 @@
     android:layout_marginRight="4dp"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
+    android:elevation="@dimen/cardview_default_elevation"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?selectableItemBackground">

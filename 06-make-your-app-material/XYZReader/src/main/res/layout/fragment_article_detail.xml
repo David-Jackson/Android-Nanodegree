@@ -11,6 +11,7 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/detail_photo_height"
+        android:elevation="@dimen/appbar_elevation"
         app:expanded="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -66,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:background="#333"
                     android:layout_gravity="bottom"
+                    android:elevation="@dimen/appbar_elevation"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/detail_inner_horiz_margin"
                     android:paddingRight="@dimen/detail_inner_horiz_margin"

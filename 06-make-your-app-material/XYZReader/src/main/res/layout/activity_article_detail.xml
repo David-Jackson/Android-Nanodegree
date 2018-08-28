@@ -13,5 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_share"
+        android:elevation="@dimen/fab_elevation"
         android:contentDescription="@string/action_share" />
 </FrameLayout>
