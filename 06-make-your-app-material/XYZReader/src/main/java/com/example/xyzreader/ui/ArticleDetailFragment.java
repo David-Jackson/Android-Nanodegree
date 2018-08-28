@@ -123,6 +123,12 @@ public class ArticleDetailFragment extends Fragment implements
         getActivityCast().setSupportActionBar(toolbar);
         getActivityCast().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getActivityCast().getSupportActionBar().setHomeButtonEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                getActivityCast().finish();
+            }
+        });
 
         mStatusBarColorDrawable = new ColorDrawable(0);
 
