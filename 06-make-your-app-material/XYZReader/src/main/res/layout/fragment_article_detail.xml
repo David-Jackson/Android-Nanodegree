@@ -86,8 +86,7 @@
                     android:paddingBottom="@dimen/detail_body_bottom_margin"
                     android:textColor="@android:color/primary_text_light"
                     android:textColorLink="@color/secondaryColor"
-                    android:textSize="@dimen/detail_body_text_size"
-                    android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier" />
+                    android:textSize="@dimen/detail_body_text_size" />
 
             </com.example.xyzreader.ui.MaxWidthLinearLayout>
         </FrameLayout>
