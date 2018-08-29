@@ -27,4 +27,6 @@
     <color name="secondaryTextColor">#ffffff</color>
 
     <color name="photo_placeholder">#ccc</color>
+    <color name="byline_text_color">#8fff</color>
+    <color name="meta_bar_background">#333</color>
 </resources>

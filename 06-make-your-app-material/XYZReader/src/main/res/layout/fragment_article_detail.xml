@@ -65,7 +65,7 @@
                     android:id="@+id/meta_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#333"
+                    android:background="@color/meta_bar_background"
                     android:layout_gravity="bottom"
                     android:elevation="@dimen/appbar_elevation"
                     android:orientation="vertical"
@@ -80,7 +80,7 @@
                         style="?android:attr/textAppearanceSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#8fff" />
+                        android:textColor="@color/byline_text_color" />
 
                 </LinearLayout>
 
