@@ -2,6 +2,11 @@
 
 Here a repository of all work done on projects for Udacity's Android Nanodegree program.
 
+## Project #7: Capstone Stage 1 - Design
+*This is your chance to take the skills that you've learned across your Nanodegree journey and apply it to an app idea of your own. You control the vision! In Stage 1, you will design and plan your app, and receive feedback prior to building it in Stage 2.*
+
+I have created UI mockups and a proposal that can be found [here](07-capstone-design)
+
 ## Project #6: Make Your App Material
 *In this project, you will update the look and feel of an app to meet Material Design specifications.*
 
