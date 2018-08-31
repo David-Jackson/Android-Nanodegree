@@ -11,6 +11,11 @@ This app will be intended for people who like to travel or like being outdoors a
 - Allows users to add photos and text during or after the activity.
 - Allows users to import past activities from Google Fit API.
 - Allows users to view past activities.
+- The app will pull static map images with path data from the Google Maps Static API on a per request basis and will use an Intent Service to do so.
+- The app will be solely written in the Java Programming Language.
+- The app will retrieve all hardcoded strings from the strings.xml file.
+- The app will be designed with RTL layout switching to support accessibility on RTL supported languages.
+
 
 ## User Interface Mockups
 
@@ -73,7 +78,16 @@ One edge case for the UX is what to do when the app loses focus while recording 
 
 #### Describe any libraries you’ll be using and share your reasoning for including them.
 
-The app will use Picasso as an image loading library to load images returned by the Google Maps Static API. Butterknife will be used to simplify view binding. Android Jetpack libraries (Room, LiveData, ViewModel) will be used for simplifying boilerplate code
+The app will use Picasso as an image loading library to load images returned by the Google Maps Static API. Butterknife will be used to simplify view binding. Android Jetpack libraries (Room, LiveData, ViewModel) will be used for simplifying boilerplate code. Here is a summary of the library and tool versions that will be used:
+
+| Library/Tool                        | Version |
+|-------------------------------------|---------|
+| Android Studio                      | 3.1.4   |
+| Gradle                              | 3.1.4   |
+| Jetpack (Room, LiveData, ViewModel) | 1.1.1   |
+| Picasso                             | 2.71828 |
+| Butterknife                         | 8.8.1   |
+
 
 #### Describe how you will implement Google Play Services or other external services.
 
