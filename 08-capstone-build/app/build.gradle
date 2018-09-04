@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary true
     }
     buildTypes {
         release {
@@ -25,8 +26,13 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0-rc02'
     implementation 'com.android.support:design:28.0.0-rc01'
 
+    // Butterknife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
     // Room components
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
     androidTestImplementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
 
