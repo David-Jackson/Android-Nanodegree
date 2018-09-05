@@ -3,6 +3,7 @@ package fyi.jackson.activejournal;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import fyi.jackson.activejournal.fragment.ActivityListFragment;
 import fyi.jackson.activejournal.fragment.RecordingFragment;
 
 public class ActivityMain extends AppCompatActivity {
@@ -11,6 +12,11 @@ public class ActivityMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_bottom, ActivityListFragment.newInstance())
+                .commit();
 
         getSupportFragmentManager()
                 .beginTransaction()
