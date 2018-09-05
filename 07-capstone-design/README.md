@@ -96,7 +96,7 @@ The Location API will be used to listen for changes in device location while rec
 ## Next Steps: Required Tasks
 
 ### Task 1: Project Setup
-- [ ] Configure libraries.
+- [x] Configure libraries. (16dd72099b71e6cf0d0eb5bc8c247e0cafa2f1d0)
 - [ ] Create Project/API Keys/google_services.json in Google API Console.
 
 ### Task 2: Implement UI for Each Activity and Fragment
