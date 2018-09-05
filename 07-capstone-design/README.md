@@ -96,17 +96,17 @@ The Location API will be used to listen for changes in device location while rec
 ## Next Steps: Required Tasks
 
 ### Task 1: Project Setup
-- [x] Configure libraries. (16dd72099b71e6cf0d0eb5bc8c247e0cafa2f1d0)
+- [x] Configure libraries.
 - [ ] Create Project/API Keys/google_services.json in Google API Console.
 
 ### Task 2: Implement UI for Each Activity and Fragment
-- [ ] Build UI for MainActivity.
-- [ ] Build UI for Morphing Floating Action Button.
-- [ ] Build UI for List Viewholders.
+- [x] Build UI for MainActivity.
+- [x] Build UI for Morphing Floating Action Button.
+- [x] Build UI for List Viewholders.
 - [ ] Build UI for Detail Activity.
 
 ### Task 3: Build the Backend
-- [ ] Setup the app with ViewModel and LiveData for backend data.
+- [x] Setup the app with ViewModel and LiveData for backend data.
 - [ ] Look into the possibility of using LiveData to connect the foreground service and the UI.
 
 ### Task 4: Build Foreground Service
