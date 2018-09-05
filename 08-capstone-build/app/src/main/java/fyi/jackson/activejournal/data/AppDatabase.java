@@ -1,0 +1,35 @@
+package fyi.jackson.activejournal.data;
+
+import android.arch.persistence.room.Database;
+import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
+import android.content.Context;
+
+import fyi.jackson.activejournal.data.dao.ActivityDao;
+import fyi.jackson.activejournal.data.entities.Activity;
+import fyi.jackson.activejournal.data.entities.Content;
+import fyi.jackson.activejournal.data.entities.Position;
+
+@Database(
+        entities = {Activity.class, Content.class, Position.class},
+        version = 1,
+        exportSchema = false
+)
+public abstract class AppDatabase extends RoomDatabase {
+    public abstract ActivityDao activityDao();
+
+    private static AppDatabase INSTANCE;
+
+    public static AppDatabase getDatabase(final Context context) {
+        if (INSTANCE == null) {
+            synchronized (AppDatabase.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            AppDatabase.class, "activejournal_database")
+                            .build();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+}

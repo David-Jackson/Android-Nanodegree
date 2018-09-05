@@ -2,6 +2,7 @@ package fyi.jackson.activejournal.fragment;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.animation.EndAnimatorListener;
+import fyi.jackson.activejournal.data.AppViewModel;
+import fyi.jackson.activejournal.data.entities.Position;
 
 public class RecordingFragment extends Fragment {
 
@@ -64,10 +67,18 @@ public class RecordingFragment extends Fragment {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetView);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
+        final AppViewModel viewModel = ViewModelProviders.of(this).get(AppViewModel.class);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggleStatus();
+                Position position = new Position();
+                position.setLng(0f);
+                position.setLat(0f);
+                position.setActivityId(0);
+                position.setLegId(1);
+                position.setTs(1234536);
+                viewModel.insert(position);
             }
         });
         bottomSheetView.setOnClickListener(new View.OnClickListener() {
