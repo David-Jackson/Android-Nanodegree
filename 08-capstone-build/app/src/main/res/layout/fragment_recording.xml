@@ -12,7 +12,7 @@
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_sheet_height"
-        android:background="@color/colorAccent"
+        android:background="@color/secondaryColor"
         android:elevation="@dimen/bottom_sheet_elevation"
         app:behavior_peekHeight="@dimen/bottom_sheet_peek_height"
         app:layout_behavior="@string/bottom_sheet_behavior">
