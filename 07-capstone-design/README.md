@@ -96,38 +96,37 @@ The Location API will be used to listen for changes in device location while rec
 ## Next Steps: Required Tasks
 
 ### Task 1: Project Setup
-- Configure libraries.
-- Create Project/API Keys/google_services.json in Google API Console.
+- [ ] Configure libraries.
+- [ ] Create Project/API Keys/google_services.json in Google API Console.
 
-### Task 2: Build the Backend
-- Build UI for MainActivity.
-- Build UI for Morphing Floating Action Button.
-- Build UI for List Viewholders.
-- Build UI for Detail Activity.
+### Task 2: Implement UI for Each Activity and Fragment
+- [ ] Build UI for MainActivity.
+- [ ] Build UI for Morphing Floating Action Button.
+- [ ] Build UI for List Viewholders.
+- [ ] Build UI for Detail Activity.
 
-### Task 3: Implement UI for Each Activity and Fragment
-- Setup the app with ViewModel and LiveData for backend data.
-- Look into the possibility of using LiveData to connect the foreground service and the UI.
+### Task 3: Build the Backend
+- [ ] Setup the app with ViewModel and LiveData for backend data.
+- [ ] Look into the possibility of using LiveData to connect the foreground service and the UI.
 
 ### Task 4: Build Foreground Service
-- Build Foreground Service for recording location.
-- This includes a Foreground Notification.
-- Hook Service to Morphing Floating Action Button when app is visible.
+- [ ] Build Foreground Service for recording location.
+- [ ] This includes a Foreground Notification.
+- [ ] Hook Service to Morphing Floating Action Button when app is visible.
 
 ### Task 5: Implement Main Activity interactions
-- Build logic for displaying activities.
-- Build logic for navigating app.
+- [ ] Build logic for displaying activities.
+- [ ] Build logic for navigating app.
 
 ### Task 6: Implement Edit Activity interactions.
-- Build insert new content (text/image) logic.
-- Build logic for arranging content.
+- [ ] Build insert new content (text/image) logic.
+- [ ] Build logic for arranging content.
 
 ### Task 7: Implement Widgets
-- Build widget for starting activity recording.
-- Build widget for flipping through previous activities.
+- [ ] Build widget for starting activity recording.
+- [ ] Build widget for flipping through previous activities.
 
 ### Task 8: Implement Activity Importing
-- Connect to Google Fit API.
-- Build a converter from the Google Fit format to the app’s data format.
-
+- [ ] Connect to Google Fit API.
+- [ ] Build a converter from the Google Fit format to the app’s data format.
 
