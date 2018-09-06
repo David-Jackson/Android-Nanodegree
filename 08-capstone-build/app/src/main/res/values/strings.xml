@@ -4,4 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="bottom_sheet_recording_label">Recording...</string>
     <string name="activity_title_placeholder">Activity Title</string>
+    <string name="menu_title_import">Import Activity</string>
+    <string name="action_import">Import Action</string>
+    <string name="menu_title_settings">Settings</string>
 </resources>

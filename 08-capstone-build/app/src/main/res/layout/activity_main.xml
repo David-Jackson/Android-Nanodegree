@@ -8,12 +8,12 @@
     tools:context=".ActivityMain">
 
     <FrameLayout
-        android:id="@+id/frame_bottom"
+        android:id="@+id/frame_bottom_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <FrameLayout
-        android:id="@+id/frame_top"
+        android:id="@+id/frame_top_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_dodgeInsetEdges="bottom" />
