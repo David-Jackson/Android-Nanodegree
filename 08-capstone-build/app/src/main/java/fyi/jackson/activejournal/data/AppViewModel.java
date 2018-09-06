@@ -6,22 +6,27 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import java.util.List;
+
+import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.data.entities.Position;
 
 public class AppViewModel extends AndroidViewModel {
 
     private AppDatabase appDatabase;
-    private LiveData<Integer> positionCount;
 
     public AppViewModel(Application application) {
         super(application);
 
         appDatabase = AppDatabase.getDatabase(application);
-        positionCount = appDatabase.activityDao().getLivePositionCount();
+    }
+
+    public LiveData<List<Activity>> getActivities() {
+        return appDatabase.activityDao().getLiveAllActivities();
     }
 
     public LiveData<Integer> getPositionCount() {
-        return positionCount;
+        return appDatabase.activityDao().getLivePositionCount();
     }
 
     @SuppressLint("StaticFieldLeak")

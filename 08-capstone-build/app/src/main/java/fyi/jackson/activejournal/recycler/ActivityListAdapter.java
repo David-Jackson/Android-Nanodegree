@@ -6,9 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import fyi.jackson.activejournal.R;
+import fyi.jackson.activejournal.data.entities.Activity;
 
 public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private List<Activity> activities;
 
     public ActivityListAdapter() {
 
@@ -24,11 +29,15 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-
+        ((ActivityViewHolder) viewHolder).bindTo(activities.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return (activities == null ? 0 : activities.size());
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
     }
 }

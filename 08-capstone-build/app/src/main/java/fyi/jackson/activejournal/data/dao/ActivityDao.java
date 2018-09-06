@@ -17,6 +17,9 @@ public interface ActivityDao {
     @Query("SELECT * FROM activities")
     List<Activity> getAllActivities();
 
+    @Query("SELECT * FROM activities")
+    LiveData<List<Activity>> getLiveAllActivities();
+
     @Query("SELECT * FROM positions WHERE activityId = :activityId")
     List<Position> getPositionsForActivity(int activityId);
 

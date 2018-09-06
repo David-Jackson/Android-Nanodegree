@@ -103,8 +103,8 @@ public class RecordingFragment extends Fragment {
             updateBottomSheetWithReveal();
             updateFabWithReveal();
         } else {
-            bottomSheetView.setVisibility(status == STATUS_ACTIVE ? View.VISIBLE : View.INVISIBLE);
-            fab.setVisibility(status == STATUS_STANDBY ? View.VISIBLE : View.INVISIBLE);
+            bottomSheetView.setVisibility(isActive ? View.VISIBLE : View.INVISIBLE);
+            fab.setVisibility(isActive ? View.INVISIBLE : View.VISIBLE);
         }
     }
 
@@ -124,8 +124,6 @@ public class RecordingFragment extends Fragment {
             startRadius = finalRadius;
             finalRadius = t;
         }
-
-        Log.d(TAG, "updateBottomSheetWithReveal: " + startRadius + " " + finalRadius);
 
         Animator anim =
                 ViewAnimationUtils.createCircularReveal(bottomSheetView, cx, cy, startRadius, finalRadius);
