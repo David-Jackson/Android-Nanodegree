@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,12 +33,13 @@ public class RecordingFragment extends Fragment {
     public static final int STATUS_STANDBY = 0;
     public static final int STATUS_ACTIVE = 1;
 
-    private int status = STATUS_STANDBY;
+    private int status = STATUS_ACTIVE;
 
     private Unbinder unbinder;
 
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.bottom_sheet) View bottomSheetView;
+    @BindView(R.id.iv_pause) ImageView pauseImageView;
 
     private BottomSheetBehavior bottomSheetBehavior;
 
@@ -81,10 +83,17 @@ public class RecordingFragment extends Fragment {
                 viewModel.insert(position);
             }
         });
-        bottomSheetView.setOnClickListener(new View.OnClickListener() {
+        pauseImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggleStatus();
+            }
+        });
+
+        bottomSheetView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleBottomSheet(view);
             }
         });
     }
