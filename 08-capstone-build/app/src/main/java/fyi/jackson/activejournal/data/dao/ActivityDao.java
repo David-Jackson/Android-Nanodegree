@@ -39,5 +39,8 @@ public interface ActivityDao {
     void insertPosition(Position... positions);
 
     @Insert
+    void insertPositionList(List<Position> positions);
+
+    @Insert
     void insertContent(Content... contents);
 }

@@ -10,9 +10,6 @@ public class Position {
     @PrimaryKey(autoGenerate = true)
     private int uid;
 
-    @ColumnInfo(name = "positionId")
-    private int positionId;
-
     @ColumnInfo(name = "activityId")
     private int activityId;
 
@@ -20,13 +17,22 @@ public class Position {
     private int legId;
 
     @ColumnInfo(name = "lat")
-    private float lat;
+    private double lat;
 
     @ColumnInfo(name = "lng")
-    private float lng;
+    private double lng;
 
     @ColumnInfo(name = "ts")
     private long ts;
+
+    @ColumnInfo(name = "acc")
+    private long acc;
+
+    @ColumnInfo(name = "alt")
+    private Integer alt;
+
+    @ColumnInfo(name = "vacc")
+    private Integer vacc;
 
 
     public int getUid() {
@@ -35,14 +41,6 @@ public class Position {
 
     public void setUid(int uid) {
         this.uid = uid;
-    }
-
-    public int getPositionId() {
-        return positionId;
-    }
-
-    public void setPositionId(int positionId) {
-        this.positionId = positionId;
     }
 
     public int getActivityId() {
@@ -61,19 +59,19 @@ public class Position {
         this.legId = legId;
     }
 
-    public float getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(float lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public float getLng() {
+    public double getLng() {
         return lng;
     }
 
-    public void setLng(float lng) {
+    public void setLng(double lng) {
         this.lng = lng;
     }
 
@@ -88,5 +86,29 @@ public class Position {
 
     public void setTs(long ts) {
         this.ts = ts;
+    }
+
+    public long getAcc() {
+        return acc;
+    }
+
+    public void setAcc(long acc) {
+        this.acc = acc;
+    }
+
+    public Integer getAlt() {
+        return alt;
+    }
+
+    public void setAlt(Integer alt) {
+        this.alt = alt;
+    }
+
+    public Integer getVacc() {
+        return vacc;
+    }
+
+    public void setVacc(Integer vacc) {
+        this.vacc = vacc;
     }
 }
