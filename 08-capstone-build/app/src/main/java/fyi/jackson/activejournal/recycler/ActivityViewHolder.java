@@ -22,5 +22,6 @@ public class ActivityViewHolder extends RecyclerView.ViewHolder {
 
     public void bindTo(Activity activity) {
         name.setText(activity.getName());
+        type.setImageResource(activity.getTypeResId());
     }
 }

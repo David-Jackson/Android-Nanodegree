@@ -4,6 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import fyi.jackson.activejournal.R;
+
 @Entity(tableName = "activities")
 public class Activity {
 
@@ -58,5 +60,27 @@ public class Activity {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+
+
+
+    public int getTypeResId() {
+        switch (type) {
+            case Activity.TYPE_WALKING:
+                return R.drawable.ic_directions_walk_black_24dp;
+            case Activity.TYPE_RUNNING:
+                return R.drawable.ic_directions_run_black_24dp;
+            case Activity.TYPE_HIKING:
+                return R.drawable.ic_directions_run_black_24dp;
+            case Activity.TYPE_SAILING:
+                return R.drawable.ic_directions_sail_black_24dp;
+            case Activity.TYPE_BOATING:
+                return R.drawable.ic_directions_boat_black_24dp;
+            case Activity.TYPE_BIKING:
+                return R.drawable.ic_directions_bike_black_24dp;
+            default:
+                return R.drawable.ic_location_on_black_24dp;
+        }
     }
 }
