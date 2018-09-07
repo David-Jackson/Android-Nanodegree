@@ -1,0 +1,13 @@
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:name="vector"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:name="sail"
+        android:pathData="M 20.002 21 C 18.612 21 17.222 20.53 16.002 19.68 C 13.562 21.39 10.442 21.39 8.002 19.68 C 6.782 20.53 5.392 21 4.002 21 L 2.002 21 L 2.002 23 L 4.002 23 C 5.382 23 6.742 22.65 8.002 22.01 C 10.522 23.3 13.482 23.3 16.002 22.01 C 17.262 22.66 18.622 23 20.002 23 L 22.002 23 L 22.002 21 L 20.002 21 Z M 9 1 C 13.5 3 17.5 7 18 12 L 6 13.5 C 9.079 10.914 8.944 6.996 9 1 Z M 4 19 C 5.6 19 7.02 18.12 8 17 C 8.98 18.12 10.4 19 12 19 C 13.6 19 15.02 18.12 16 17 C 16.98 18.12 18.398 19 19.998 19 L 22.002 13.5 L 1.998 16 L 4 19 Z"
+        android:fillColor="#000000"
+        android:strokeWidth="1"/>
+</vector>
