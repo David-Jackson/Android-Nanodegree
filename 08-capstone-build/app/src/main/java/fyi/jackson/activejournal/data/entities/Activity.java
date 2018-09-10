@@ -30,6 +30,9 @@ public class Activity {
     @ColumnInfo(name = "type")
     private int type = TYPE_OTHER;
 
+    @ColumnInfo(name = "thumbnail")
+    private String thumbnail;
+
     public int getUid() {
         return uid;
     }
@@ -62,8 +65,13 @@ public class Activity {
         this.type = type;
     }
 
+    public String getThumbnail() {
+        return thumbnail;
+    }
 
-
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 
     public int getTypeResId() {
         switch (type) {
@@ -72,7 +80,7 @@ public class Activity {
             case Activity.TYPE_RUNNING:
                 return R.drawable.ic_directions_run_black_24dp;
             case Activity.TYPE_HIKING:
-                return R.drawable.ic_directions_run_black_24dp;
+                return R.drawable.ic_directions_hike_black_24dp;
             case Activity.TYPE_SAILING:
                 return R.drawable.ic_directions_sail_black_24dp;
             case Activity.TYPE_BOATING:
