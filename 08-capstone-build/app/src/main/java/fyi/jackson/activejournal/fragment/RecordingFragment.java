@@ -8,15 +8,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +26,6 @@ import butterknife.Unbinder;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.animation.EndAnimatorListener;
 import fyi.jackson.activejournal.data.AppViewModel;
-import fyi.jackson.activejournal.data.entities.Position;
 
 public class RecordingFragment extends Fragment {
 
@@ -33,13 +34,14 @@ public class RecordingFragment extends Fragment {
     public static final int STATUS_STANDBY = 0;
     public static final int STATUS_ACTIVE = 1;
 
-    private int status = STATUS_ACTIVE;
+    private int status = STATUS_STANDBY;
 
     private Unbinder unbinder;
 
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.bottom_sheet) View bottomSheetView;
-    @BindView(R.id.iv_pause) ImageView pauseImageView;
+    @BindView(R.id.iv_pause) ImageView pauseImageButton;
+    @BindView(R.id.iv_stop) ImageView stopImageButton;
 
     private BottomSheetBehavior bottomSheetBehavior;
 
@@ -74,19 +76,23 @@ public class RecordingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 toggleStatus();
-                Position position = new Position();
-                position.setLng(0f);
-                position.setLat(0f);
-                position.setActivityId(0);
-                position.setLegId(1);
-                position.setTs(1234536);
-                viewModel.insert(position);
             }
         });
-        pauseImageView.setOnClickListener(new View.OnClickListener() {
+        pauseImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggleStatus();
+                if (status == STATUS_ACTIVE) {
+                    pauseRecording();
+                } else {
+                    resumeRecording();
+                }
+            }
+        });
+
+        stopImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopRecording();
             }
         });
 
@@ -102,6 +108,45 @@ public class RecordingFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    private void pauseRecording() {
+        Toast.makeText(getContext(), "Pausing", Toast.LENGTH_SHORT).show();
+        setStopButtonVisibility(true);
+        pauseImageButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+
+        status = STATUS_STANDBY;
+    }
+
+    private void resumeRecording() {
+        Toast.makeText(getContext(), "Resuming", Toast.LENGTH_SHORT).show();
+        setStopButtonVisibility(false);
+        pauseImageButton.setImageResource(R.drawable.ic_pause_black_24dp);
+        status = STATUS_ACTIVE;
+    }
+
+    private void stopRecording() {
+        Toast.makeText(getContext(), "Stopping", Toast.LENGTH_SHORT).show();
+
+        status = STATUS_STANDBY;
+        updateVisibilities();
+    }
+
+    private void setStopButtonVisibility(boolean visibile) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            TransitionManager.beginDelayedTransition((ViewGroup) bottomSheetView);
+        }
+
+        stopImageButton.setVisibility(visibile ? View.VISIBLE : View.INVISIBLE);
+
+        int unset = ConstraintLayout.LayoutParams.UNSET;
+        int parentId = ConstraintLayout.LayoutParams.PARENT_ID;
+
+        ConstraintLayout.LayoutParams layoutParams =
+                (ConstraintLayout.LayoutParams) pauseImageButton.getLayoutParams();
+        layoutParams.rightToRight = visibile ? unset : parentId;
+        layoutParams.rightToLeft = visibile ? R.id.iv_stop : unset;
+        pauseImageButton.setLayoutParams(layoutParams);
     }
 
     private void updateVisibilities() {
@@ -120,7 +165,7 @@ public class RecordingFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void updateBottomSheetWithReveal() {
 
-        boolean isClosing = status == STATUS_ACTIVE;
+        boolean isClosing = status == STATUS_STANDBY;
 
         int cx = fab.getLeft() + ((fab.getRight() - fab.getLeft()) / 2);
         int cy = ((fab.getBottom() - fab.getTop()) / 2) + fab.getTop() - bottomSheetView.getTop();
@@ -155,7 +200,7 @@ public class RecordingFragment extends Fragment {
     @SuppressLint("RestrictedApi")
     private void updateFabWithReveal() {
 
-        boolean isClosing = status == STATUS_STANDBY;
+        boolean isClosing = status == STATUS_ACTIVE;
 
         int cx = (fab.getRight() - fab.getLeft()) / 2;
         int cy = (fab.getBottom() - fab.getTop()) / 2;
@@ -199,8 +244,8 @@ public class RecordingFragment extends Fragment {
     }
 
     public void toggleStatus() {
-        status += 1;
-        status %= 2;
+        status = (status == STATUS_STANDBY ? STATUS_ACTIVE : STATUS_STANDBY);
+        Toast.makeText(getContext(), "Status: " + status, Toast.LENGTH_SHORT).show();
         statusUpdated();
     }
 
