@@ -130,6 +130,8 @@ public class RecordingFragment extends Fragment {
 
         status = STATUS_STANDBY;
         updateVisibilities();
+        setStopButtonVisibility(false);
+        pauseImageButton.setImageResource(R.drawable.ic_pause_black_24dp);
     }
 
     private void setStopButtonVisibility(boolean visibile) {
@@ -149,6 +151,7 @@ public class RecordingFragment extends Fragment {
         pauseImageButton.setLayoutParams(layoutParams);
     }
 
+    @SuppressLint("RestrictedApi")
     private void updateVisibilities() {
 
         boolean isActive = status == STATUS_ACTIVE;
