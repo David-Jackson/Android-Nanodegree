@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -99,7 +100,7 @@ public class ActivityMain extends AppCompatActivity {
         Snackbar.make(bottomFrame, item.getTitle() + " selected", Snackbar.LENGTH_LONG).show();
         switch (item.getItemId()) {
             case R.id.action_import:
-                fragmentTransaction(R.id.frame_bottom_layer, ImportActivityFragment.newInstance());
+//                fragmentTransaction(R.id.frame_bottom_layer, ImportActivityFragment.newInstance());
                 break;
             case R.id.action_settings:
                 bulkInsert();
@@ -133,9 +134,14 @@ public class ActivityMain extends AppCompatActivity {
         List<Point> points1 = Data.getClingmansDome();
         List<Position> positions = new ArrayList<>();
         List<Position> positions1 = new ArrayList<>();
+
+        Random r = new Random();
+        int activityId = r.nextInt(10000);
+        int activityId1 = r.nextInt(10000);
+
         for (Point p : points) {
             Position pos = new Position();
-            pos.setActivityId(1234567);
+            pos.setActivityId(activityId);
             pos.setLegId(1);
             pos.setLat(p.lat);
             pos.setLng(p.lng);
@@ -147,7 +153,7 @@ public class ActivityMain extends AppCompatActivity {
         }
         for (Point p : points1) {
             Position pos = new Position();
-            pos.setActivityId(123456);
+            pos.setActivityId(activityId1);
             pos.setLegId(1);
             pos.setLat(p.lat);
             pos.setLng(p.lng);
@@ -162,11 +168,11 @@ public class ActivityMain extends AppCompatActivity {
 
 
         Activity activity = new Activity();
-        activity.setActivityId(1234567);
+        activity.setActivityId(activityId);
         activity.setName("Flying the Spinnaker Solo");
         activity.setType(Activity.TYPE_SAILING);
         Activity activity1 = new Activity();
-        activity1.setActivityId(123456);
+        activity1.setActivityId(activityId1);
         activity1.setName("Hiking to Clingman's Dome");
         activity1.setType(Activity.TYPE_HIKING);
 
