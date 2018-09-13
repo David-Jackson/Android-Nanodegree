@@ -21,6 +21,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:support-media-compat:28.0.0-rc02"
+    implementation "com.android.support:support-compat:28.0.0-rc02"
     implementation 'com.android.support:appcompat-v7:28.0.0-rc02'
     implementation 'com.android.support:support-v4:28.0.0-rc02'
     implementation 'com.android.support:recyclerview-v7:28.0.0-rc02'
@@ -28,17 +30,28 @@ dependencies {
 
     // Butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     // Room components
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
     androidTestImplementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
 
     // ViewModel + LiveData components
     implementation "android.arch.lifecycle:extensions:$rootProject.lifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycleVersion"
+
+    // WorkManager
+    implementation "android.arch.work:work-runtime:$rootProject.workVersion"
+    implementation "android.arch.work:work-firebase:$rootProject.workVersion"
+
+    // Google Maps
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
+
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

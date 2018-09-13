@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface ActivityDao {
     @Query("SELECT * FROM activities")
     LiveData<List<Activity>> getLiveAllActivities();
 
-    @Query("SELECT * FROM positions WHERE activityId = :activityId")
+    @Query("SELECT * FROM positions WHERE activityId = :activityId ORDER BY ts ASC")
     List<Position> getPositionsForActivity(int activityId);
 
     @Query("SELECT * FROM content WHERE activityId = :activityId ORDER BY position ASC")
@@ -43,4 +44,7 @@ public interface ActivityDao {
 
     @Insert
     void insertContent(Content... contents);
+
+    @Query("UPDATE activities SET thumbnail = :thumbnailFileName WHERE activityId = :activityId")
+    void updateThumbail(int activityId, String thumbnailFileName);
 }

@@ -17,6 +17,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 import fyi.jackson.activejournal.data.AppViewModel;
 import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.data.entities.Position;
@@ -25,6 +27,7 @@ import fyi.jackson.activejournal.dummy.Point;
 import fyi.jackson.activejournal.fragment.ActivityListFragment;
 import fyi.jackson.activejournal.fragment.ImportActivityFragment;
 import fyi.jackson.activejournal.fragment.RecordingFragment;
+import fyi.jackson.activejournal.worker.ThumbnailWorker;
 
 public class ActivityMain extends AppCompatActivity {
 
@@ -64,7 +67,24 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void updateThumbnails(List<Activity> activities) {
+        for (Activity activity : activities) {
+            if (activity.getThumbnail() == null) {
+                Log.d(TAG, "updateThumbnails: Starting work request for " + activity.getName());
 
+                androidx.work.Data activityData = new androidx.work.Data.Builder()
+                        .putInt(ThumbnailWorker.KEY_ACTIVITY_ID, activity.getActivityId())
+                        .build();
+
+                OneTimeWorkRequest thumbnailRequest =
+                        new OneTimeWorkRequest.Builder(ThumbnailWorker.class)
+                                .setInputData(activityData)
+                                .build();
+
+                WorkManager.getInstance().enqueue(thumbnailRequest);
+
+                return;
+            }
+        }
     }
 
     @Override
