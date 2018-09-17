@@ -22,7 +22,7 @@ public class Activity {
     private int uid;
 
     @ColumnInfo(name = "activityId")
-    private int activityId;
+    private long activityId;
 
     @ColumnInfo(name = "name")
     private String name;
@@ -41,11 +41,11 @@ public class Activity {
         this.uid = uid;
     }
 
-    public int getActivityId() {
+    public long getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(int activityId) {
+    public void setActivityId(long activityId) {
         this.activityId = activityId;
     }
 

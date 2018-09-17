@@ -11,7 +11,7 @@ public class Position {
     private int uid;
 
     @ColumnInfo(name = "activityId")
-    private int activityId;
+    private long activityId;
 
     @ColumnInfo(name = "legId")
     private int legId;
@@ -43,11 +43,11 @@ public class Position {
         this.uid = uid;
     }
 
-    public int getActivityId() {
+    public long getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(int activityId) {
+    public void setActivityId(long activityId) {
         this.activityId = activityId;
     }
 
