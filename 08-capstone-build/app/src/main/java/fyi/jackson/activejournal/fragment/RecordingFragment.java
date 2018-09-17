@@ -128,10 +128,12 @@ public class RecordingFragment extends Fragment {
     private void stopRecording() {
         Toast.makeText(getContext(), "Stopping", Toast.LENGTH_SHORT).show();
 
-        status = STATUS_STANDBY;
-        updateVisibilities();
         setStopButtonVisibility(false);
         pauseImageButton.setImageResource(R.drawable.ic_pause_black_24dp);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+        status = STATUS_STANDBY;
+        updateVisibilities();
     }
 
     private void setStopButtonVisibility(boolean visibile) {
