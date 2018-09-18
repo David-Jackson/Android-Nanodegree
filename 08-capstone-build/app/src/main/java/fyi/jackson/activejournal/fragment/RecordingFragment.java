@@ -2,7 +2,9 @@ package fyi.jackson.activejournal.fragment;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +20,9 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +30,9 @@ import butterknife.Unbinder;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.animation.EndAnimatorListener;
 import fyi.jackson.activejournal.data.AppViewModel;
+import fyi.jackson.activejournal.data.entities.Stats;
+import fyi.jackson.activejournal.service.RecordingService;
+import fyi.jackson.activejournal.service.ServiceConstants;
 
 public class RecordingFragment extends Fragment {
 
@@ -42,6 +49,9 @@ public class RecordingFragment extends Fragment {
     @BindView(R.id.bottom_sheet) View bottomSheetView;
     @BindView(R.id.iv_pause) ImageView pauseImageButton;
     @BindView(R.id.iv_stop) ImageView stopImageButton;
+    @BindView(R.id.tv_points) TextView pointsTextView;
+    @BindView(R.id.tv_time) TextView durationTextView;
+    @BindView(R.id.tv_speed) TextView speedTextView;
 
     private BottomSheetBehavior bottomSheetBehavior;
 
@@ -72,10 +82,39 @@ public class RecordingFragment extends Fragment {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         final AppViewModel viewModel = ViewModelProviders.of(this).get(AppViewModel.class);
+
+        final Observer<List<Stats>> statsObserver = new Observer<List<Stats>>() {
+            @Override
+            public void onChanged(@Nullable List<Stats> stats) {
+                if (stats.size() == 0) {
+                    if (status == STATUS_ACTIVE) {
+                        status = STATUS_STANDBY;
+                        updateVisibilities();
+                    }
+                } else {
+                    if (status == STATUS_STANDBY) {
+                        status = STATUS_ACTIVE;
+                        updateVisibilities();
+                    } else {
+                        updateStats(stats.get(0));
+                    }
+                }
+            }
+        };
+
+        // We want to observe the Stats after the view has been drawn on the screen,
+        // because we might want to expand the bottom sheet right away
+        bottomSheetView.post(new Runnable() {
+            @Override
+            public void run() {
+                viewModel.getStatistics().observe(RecordingFragment.this, statsObserver);
+            }
+        });
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggleStatus();
+                startRecording();
             }
         });
         pauseImageButton.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +141,7 @@ public class RecordingFragment extends Fragment {
                 toggleBottomSheet(view);
             }
         });
+
     }
 
     @Override
@@ -110,8 +150,26 @@ public class RecordingFragment extends Fragment {
         unbinder.unbind();
     }
 
+    private void updateStats(Stats stats) {
+        pointsTextView.setText(stats.getPointCount() + "");
+        durationTextView.setText(stats.getDuration() + "");
+        speedTextView.setText(stats.getAverageSpeed() + "");
+    }
+
+    private void startRecording() {
+        Intent service = new Intent(getContext(), RecordingService.class);
+        service.setAction(ServiceConstants.ACTION.START_FOREGROUND);
+        getContext().startService(service);
+
+        status = STATUS_ACTIVE;
+        updateVisibilities();
+    }
+
     private void pauseRecording() {
-        Toast.makeText(getContext(), "Pausing", Toast.LENGTH_SHORT).show();
+        Intent service = new Intent(getContext(), RecordingService.class);
+        service.setAction(ServiceConstants.ACTION.PAUSE_FOREGROUND);
+        getContext().startService(service);
+
         setStopButtonVisibility(true);
         pauseImageButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
 
@@ -119,14 +177,19 @@ public class RecordingFragment extends Fragment {
     }
 
     private void resumeRecording() {
-        Toast.makeText(getContext(), "Resuming", Toast.LENGTH_SHORT).show();
+        Intent service = new Intent(getContext(), RecordingService.class);
+        service.setAction(ServiceConstants.ACTION.RESUME_FOREGROUND);
+        getContext().startService(service);
+
         setStopButtonVisibility(false);
         pauseImageButton.setImageResource(R.drawable.ic_pause_black_24dp);
         status = STATUS_ACTIVE;
     }
 
     private void stopRecording() {
-        Toast.makeText(getContext(), "Stopping", Toast.LENGTH_SHORT).show();
+        Intent service = new Intent(getContext(), RecordingService.class);
+        service.setAction(ServiceConstants.ACTION.STOP_FOREGROUND);
+        getContext().startService(service);
 
         setStopButtonVisibility(false);
         pauseImageButton.setImageResource(R.drawable.ic_pause_black_24dp);
@@ -242,24 +305,5 @@ public class RecordingFragment extends Fragment {
         } else {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
-    }
-
-    private void statusUpdated() {
-        updateVisibilities();
-    }
-
-    public void toggleStatus() {
-        status = (status == STATUS_STANDBY ? STATUS_ACTIVE : STATUS_STANDBY);
-        Toast.makeText(getContext(), "Status: " + status, Toast.LENGTH_SHORT).show();
-        statusUpdated();
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-        statusUpdated();
     }
 }
