@@ -3,11 +3,13 @@ package fyi.jackson.activejournal.data.entities;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import fyi.jackson.activejournal.R;
 
 @Entity(tableName = "activities")
-public class Activity {
+public class Activity implements Parcelable {
 
     public static final int TYPE_WALKING = 349;
     public static final int TYPE_RUNNING = 319;
@@ -17,6 +19,8 @@ public class Activity {
     public static final int TYPE_BOATING = 859;
     public static final int TYPE_DRIVING = 740;
     public static final int TYPE_OTHER = 22;
+
+    public Activity() {}
 
     @PrimaryKey(autoGenerate = true)
     private int uid;
@@ -90,5 +94,39 @@ public class Activity {
             default:
                 return R.drawable.ic_location_on_black_24dp;
         }
+    }
+
+    public Activity(Parcel in) {
+        setUid(in.readInt());
+        setActivityId(in.readLong());
+        setName(in.readString());
+        setType(in.readInt());
+        setThumbnail(in.readString());
+    }
+
+    public static final Parcelable.Creator<Activity> CREATOR = new Parcelable.Creator<Activity>() {
+        @Override
+        public Activity createFromParcel(Parcel source) {
+            return new Activity(source);
+        }
+
+        @Override
+        public Activity[] newArray(int size) {
+            return new Activity[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(uid);
+        parcel.writeLong(activityId);
+        parcel.writeString(name);
+        parcel.writeInt(type);
+        parcel.writeString(thumbnail);
     }
 }
