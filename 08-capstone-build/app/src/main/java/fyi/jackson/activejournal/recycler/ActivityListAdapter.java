@@ -10,6 +10,7 @@ import java.util.List;
 
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Activity;
+import fyi.jackson.activejournal.ui.ItemClickListener;
 
 public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -17,9 +18,10 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int VIEW_TYPE_SPACER = 854;
 
     private List<Activity> activities;
+    private ItemClickListener clickListener;
 
-    public ActivityListAdapter() {
-
+    public ActivityListAdapter(ItemClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -44,7 +46,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (position == activities.size()) {
             // Spacer Viewholder
         } else {
-            ((ActivityViewHolder) viewHolder).bindTo(activities.get(position));
+            ((ActivityViewHolder) viewHolder).bindTo(activities.get(position), clickListener);
         }
     }
 

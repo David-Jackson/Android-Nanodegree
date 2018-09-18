@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +24,13 @@ import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.AppViewModel;
 import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.recycler.ActivityListAdapter;
+import fyi.jackson.activejournal.recycler.ActivityViewHolder;
+import fyi.jackson.activejournal.ui.ItemClickListener;
+import fyi.jackson.activejournal.util.ActivityTransitionNames;
 
-public class ActivityListFragment extends Fragment {
+public class ActivityListFragment extends Fragment implements ItemClickListener {
+
+    public static final String TAG = ActivityListFragment.class.getSimpleName();
 
     private Unbinder unbinder;
 
@@ -52,7 +60,7 @@ public class ActivityListFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
 
-        adapter = new ActivityListAdapter();
+        adapter = new ActivityListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -71,5 +79,22 @@ public class ActivityListFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onClick(Activity activity, ActivityViewHolder holder) {
+        ActivityTransitionNames transitionNames =
+                new ActivityTransitionNames(activity.getActivityId());
+
+        DetailFragment detailFragment = DetailFragment.newInstance(activity);
+
+        getFragmentManager().beginTransaction()
+                .addSharedElement(holder.map, transitionNames.map)
+                .addSharedElement(holder.name, transitionNames.title)
+                .addSharedElement(holder.type, transitionNames.type)
+                .addSharedElement(holder.itemView, transitionNames.container)
+                .replace(R.id.frame_bottom_layer, detailFragment)
+                .addToBackStack(TAG)
+                .commit();
     }
 }
