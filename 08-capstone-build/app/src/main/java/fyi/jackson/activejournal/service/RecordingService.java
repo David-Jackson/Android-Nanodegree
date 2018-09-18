@@ -21,10 +21,12 @@ import android.widget.Toast;
 import fyi.jackson.activejournal.ActivityMain;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.AppDatabase;
+import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.data.entities.Position;
 import fyi.jackson.activejournal.data.entities.Stats;
 import fyi.jackson.activejournal.sensor.LocationSensor;
 import fyi.jackson.activejournal.sensor.LocationStatistics;
+import fyi.jackson.activejournal.util.Formatter;
 
 public class RecordingService extends Service {
 
@@ -97,7 +99,14 @@ public class RecordingService extends Service {
                 IS_SERVICE_RUNNING = false;
 
                 clearStats();
-                // TODO: 9/17/2018 Implement creation of new activity for all positions that were just recorded
+
+                Activity activity = new Activity();
+                activity.setActivityId(activityId);
+                // TODO: 9/18/2018 Implement functionality for getting activity type
+                activity.setType(Activity.TYPE_OTHER);
+                // TODO: 9/18/2018 Implement generation of activity name based on time (Sunday Morning Sailing, Friday Afternoon Hiking)
+                activity.setName("Activity " + activityId);
+                insertActivity(activity);
 
                 stopSelf();
 
@@ -152,6 +161,15 @@ public class RecordingService extends Service {
         }).start();
     }
 
+    private void insertActivity(final Activity activity) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                database.activityDao().insertActivity(activity);
+            }
+        }).start();
+    }
+
     private void setupNotification() {
         Intent notificationIntent = new Intent(this, ActivityMain.class);
         notificationIntent.setAction(ServiceConstants.ACTION.MAIN_ACTION);
@@ -189,10 +207,10 @@ public class RecordingService extends Service {
 
     private void updateNotification(Stats stats) {
         notificationBuilder.setContentText(
-                stats.getPointCount() + " points, " +
-                stats.getDuration() + " ms, " +
-                stats.getDistance() + " m, " +
-                stats.getAverageSpeed() + " m/s");
+                        stats.getPointCount() + " points, " +
+                        Formatter.millisToDurationString(stats.getDuration()) + " ms, " +
+                        Formatter.distanceToString(stats.getDistance()) + " m, " +
+                        Formatter.speedToString(stats.getAverageSpeed()) + " m/s");
         notificationManager.notify(NOTIFICATION_ID_RECORDING, notificationBuilder.build());
     }
 

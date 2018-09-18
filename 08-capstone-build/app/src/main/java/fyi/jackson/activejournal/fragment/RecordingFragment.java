@@ -33,6 +33,7 @@ import fyi.jackson.activejournal.data.AppViewModel;
 import fyi.jackson.activejournal.data.entities.Stats;
 import fyi.jackson.activejournal.service.RecordingService;
 import fyi.jackson.activejournal.service.ServiceConstants;
+import fyi.jackson.activejournal.util.Formatter;
 
 public class RecordingFragment extends Fragment {
 
@@ -152,8 +153,8 @@ public class RecordingFragment extends Fragment {
 
     private void updateStats(Stats stats) {
         pointsTextView.setText(stats.getPointCount() + "");
-        durationTextView.setText(stats.getDuration() + "");
-        speedTextView.setText(stats.getAverageSpeed() + "");
+        durationTextView.setText(Formatter.millisToDurationString(stats.getDuration()));
+        speedTextView.setText(Formatter.speedToString(stats.getAverageSpeed()));
     }
 
     private void startRecording() {
