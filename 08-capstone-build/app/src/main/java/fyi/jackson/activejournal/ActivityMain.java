@@ -1,10 +1,14 @@
 package fyi.jackson.activejournal;
 
+import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +37,7 @@ import fyi.jackson.activejournal.worker.ThumbnailWorker;
 public class ActivityMain extends AppCompatActivity {
 
     public static final String TAG = ActivityMain.class.getSimpleName();
+    private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 9468;
 
     AppViewModel viewModel;
 
@@ -51,13 +56,6 @@ public class ActivityMain extends AppCompatActivity {
 
         viewModel = ViewModelProviders.of(this).get(AppViewModel.class);
 
-        viewModel.getPositionCount().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-                updateSnackbar(integer);
-            }
-        });
-
         viewModel.getActivities().observe(this, new Observer<List<Activity>>() {
             @Override
             public void onChanged(@Nullable List<Activity> activities) {
@@ -65,6 +63,19 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
+        checkForPermissions();
+
+    }
+
+    private void checkForPermissions() {
+        boolean permissionGranted = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        if (!permissionGranted) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_FINE_LOCATION);
+        }
     }
 
     private void updateThumbnails(List<Activity> activities) {
@@ -73,7 +84,7 @@ public class ActivityMain extends AppCompatActivity {
                 Log.d(TAG, "updateThumbnails: Starting work request for " + activity.getName());
 
                 androidx.work.Data activityData = new androidx.work.Data.Builder()
-                        .putInt(ThumbnailWorker.KEY_ACTIVITY_ID, activity.getActivityId())
+                        .putLong(ThumbnailWorker.KEY_ACTIVITY_ID, activity.getActivityId())
                         .build();
 
                 OneTimeWorkRequest thumbnailRequest =
@@ -136,8 +147,8 @@ public class ActivityMain extends AppCompatActivity {
         List<Position> positions1 = new ArrayList<>();
 
         Random r = new Random();
-        int activityId = r.nextInt(10000);
-        int activityId1 = r.nextInt(10000);
+        long activityId = r.nextLong();
+        long activityId1 = r.nextLong();
 
         for (Point p : points) {
             Position pos = new Position();
