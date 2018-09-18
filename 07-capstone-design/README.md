@@ -107,15 +107,15 @@ The Location API will be used to listen for changes in device location while rec
 
 ### Task 3: Build the Backend
 - [x] Setup the app with ViewModel and LiveData for backend data.
-- [ ] Look into the possibility of using LiveData to connect the foreground service and the UI.
+- [x] Look into the possibility of using LiveData to connect the foreground service and the UI.
 
 ### Task 4: Build Foreground Service
-- [ ] Build Foreground Service for recording location.
-- [ ] This includes a Foreground Notification.
-- [ ] Hook Service to Morphing Floating Action Button when app is visible.
+- [x] Build Foreground Service for recording location.
+- [x] This includes a Foreground Notification.
+- [x] Hook Service to Morphing Floating Action Button when app is visible.
 
 ### Task 5: Implement Main Activity interactions
-- [ ] Build logic for displaying activities.
+- [x] Build logic for displaying activities.
 - [ ] Build logic for navigating app.
 
 ### Task 6: Implement Edit Activity interactions.
