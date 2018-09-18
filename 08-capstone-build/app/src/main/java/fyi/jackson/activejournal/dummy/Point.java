@@ -6,8 +6,8 @@ public class Point {
     public double lat;
     public double lng;
     public int acc;
-    public Integer alt;
-    public Integer vAcc;
+    public Double alt;
+    public Float vAcc;
 
     public Point(int index, long ts, double lat, double lng, int acc, Integer alt, Integer vAcc) {
         this.index = index;
@@ -15,7 +15,7 @@ public class Point {
         this.lat = lat;
         this.lng = lng;
         this.acc = acc;
-        this.alt = alt;
-        this.vAcc = vAcc;
+        if (alt != null) this.alt = alt * 1.0;
+        if (vAcc != null) this.vAcc = vAcc * 1.0f;
     }
 }

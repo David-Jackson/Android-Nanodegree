@@ -10,6 +10,7 @@ import java.util.List;
 
 import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.data.entities.Position;
+import fyi.jackson.activejournal.data.entities.Stats;
 
 public class AppViewModel extends AndroidViewModel {
 
@@ -27,6 +28,10 @@ public class AppViewModel extends AndroidViewModel {
 
     public LiveData<Integer> getPositionCount() {
         return appDatabase.activityDao().getLivePositionCount();
+    }
+
+    public LiveData<List<Stats>> getStatistics() {
+        return appDatabase.statsDao().getLiveStats();
     }
 
 

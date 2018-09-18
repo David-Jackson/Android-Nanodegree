@@ -22,10 +22,10 @@ public interface ActivityDao {
     LiveData<List<Activity>> getLiveAllActivities();
 
     @Query("SELECT * FROM positions WHERE activityId = :activityId ORDER BY ts ASC")
-    List<Position> getPositionsForActivity(int activityId);
+    List<Position> getPositionsForActivity(long activityId);
 
     @Query("SELECT * FROM content WHERE activityId = :activityId ORDER BY position ASC")
-    List<Content> getContentForActivity(int activityId);
+    List<Content> getContentForActivity(long activityId);
 
     @Query("SELECT COUNT(*) from positions")
     Integer getPositionCount();
@@ -46,5 +46,5 @@ public interface ActivityDao {
     void insertContent(Content... contents);
 
     @Query("UPDATE activities SET thumbnail = :thumbnailFileName WHERE activityId = :activityId")
-    void updateThumbail(int activityId, String thumbnailFileName);
+    void updateThumbail(long activityId, String thumbnailFileName);
 }

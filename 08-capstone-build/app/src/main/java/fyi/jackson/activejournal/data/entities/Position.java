@@ -14,7 +14,7 @@ public class Position {
     private long activityId;
 
     @ColumnInfo(name = "legId")
-    private int legId;
+    private long legId;
 
     @ColumnInfo(name = "lat")
     private double lat;
@@ -26,13 +26,13 @@ public class Position {
     private long ts;
 
     @ColumnInfo(name = "acc")
-    private long acc;
+    private float acc;
 
     @ColumnInfo(name = "alt")
-    private Integer alt;
+    private Double alt;
 
     @ColumnInfo(name = "vacc")
-    private Integer vacc;
+    private Float vacc;
 
 
     public int getUid() {
@@ -51,11 +51,11 @@ public class Position {
         this.activityId = activityId;
     }
 
-    public int getLegId() {
+    public long getLegId() {
         return legId;
     }
 
-    public void setLegId(int legId) {
+    public void setLegId(long legId) {
         this.legId = legId;
     }
 
@@ -88,27 +88,27 @@ public class Position {
         this.ts = ts;
     }
 
-    public long getAcc() {
+    public float getAcc() {
         return acc;
     }
 
-    public void setAcc(long acc) {
+    public void setAcc(float acc) {
         this.acc = acc;
     }
 
-    public Integer getAlt() {
+    public Double getAlt() {
         return alt;
     }
 
-    public void setAlt(Integer alt) {
+    public void setAlt(Double alt) {
         this.alt = alt;
     }
 
-    public Integer getVacc() {
+    public Float getVacc() {
         return vacc;
     }
 
-    public void setVacc(Integer vacc) {
+    public void setVacc(Float vacc) {
         this.vacc = vacc;
     }
 }

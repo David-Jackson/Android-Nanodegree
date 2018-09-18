@@ -7,8 +7,8 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "stats")
 public class Stats {
 
-    @PrimaryKey(autoGenerate = true)
-    private int uid;
+    @PrimaryKey
+    private int uid = 1;
 
     @ColumnInfo(name = "activityId")
     private long activityId;
@@ -19,8 +19,11 @@ public class Stats {
     @ColumnInfo(name = "duration")
     private long duration;
 
+    @ColumnInfo(name = "distance")
+    private double distance;
+
     @ColumnInfo(name = "averageSpeed")
-    private float averageSpeed;
+    private double averageSpeed;
 
     public int getUid() {
         return uid;
@@ -54,11 +57,19 @@ public class Stats {
         this.duration = duration;
     }
 
-    public float getAverageSpeed() {
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public double getAverageSpeed() {
         return averageSpeed;
     }
 
-    public void setAverageSpeed(float averageSpeed) {
+    public void setAverageSpeed(double averageSpeed) {
         this.averageSpeed = averageSpeed;
     }
 }

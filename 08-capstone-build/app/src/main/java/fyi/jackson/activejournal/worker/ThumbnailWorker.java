@@ -34,7 +34,7 @@ public class ThumbnailWorker extends Worker {
     public Result doWork() {
 
         Log.d(TAG, "doWork: Starting work.");
-        int activityId = getInputData().getInt(KEY_ACTIVITY_ID, -1);
+        long activityId = getInputData().getLong(KEY_ACTIVITY_ID, -1);
 
         Log.d(TAG, "doWork: ActivityId: " + activityId);
         if (activityId == -1) return Result.SUCCESS;
