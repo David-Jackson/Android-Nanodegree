@@ -1,5 +1,6 @@
 package fyi.jackson.activejournal.recycler;
 
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private static final int VIEW_TYPE_ACTIVITY = 289;
     private static final int VIEW_TYPE_SPACER = 854;
+    private static final int VIEW_TYPE_EMPTY = 304;
 
     private List<Activity> activities;
     private ItemClickListener clickListener;
@@ -30,22 +32,26 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View v;
         RecyclerView.ViewHolder viewHolder;
-        if (viewType == VIEW_TYPE_SPACER) {
-            // Spacer Viewholder
-            v = inflater.inflate(R.layout.view_holder_spacer, parent, false);
-            viewHolder = new SpacerViewHolder(v);
-        } else {
-            v = inflater.inflate(R.layout.view_holder_activity, parent, false);
-            viewHolder = new ActivityViewHolder(v);
+        switch (viewType) {
+            case VIEW_TYPE_ACTIVITY:
+                v = inflater.inflate(R.layout.view_holder_activity, parent, false);
+                viewHolder = new ActivityViewHolder(v);
+                break;
+            case VIEW_TYPE_SPACER:
+                v = inflater.inflate(R.layout.view_holder_spacer, parent, false);
+                viewHolder = new SpacerViewHolder(v);
+                break;
+            default: // VIEW_TYPE_EMPTY
+                v = inflater.inflate(R.layout.view_holder_empty_list, parent, false);
+                viewHolder = new EmptyListViewHolder(v);
+                break;
         }
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        if (position == activities.size()) {
-            // Spacer Viewholder
-        } else {
+        if (getItemViewType(position) == VIEW_TYPE_ACTIVITY) {
             ((ActivityViewHolder) viewHolder).bindTo(activities.get(position), clickListener);
         }
     }
@@ -57,7 +63,12 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        return (activities.size() == position) ? VIEW_TYPE_SPACER : VIEW_TYPE_ACTIVITY;
+        if (activities.size() == 0) {
+            return VIEW_TYPE_EMPTY;
+        } else if (activities.size() == position) {
+            return VIEW_TYPE_SPACER;
+        }
+        return VIEW_TYPE_ACTIVITY;
     }
 
     public void setActivities(List<Activity> activities) {

@@ -6,6 +6,8 @@ import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Random;
+
 import fyi.jackson.activejournal.R;
 
 @Entity(tableName = "activities")
@@ -79,21 +81,39 @@ public class Activity implements Parcelable {
 
     public int getTypeResId() {
         switch (type) {
-            case Activity.TYPE_WALKING:
+            case TYPE_WALKING:
                 return R.drawable.ic_directions_walk_black_24dp;
-            case Activity.TYPE_RUNNING:
+            case TYPE_RUNNING:
                 return R.drawable.ic_directions_run_black_24dp;
-            case Activity.TYPE_HIKING:
+            case TYPE_HIKING:
                 return R.drawable.ic_directions_hike_black_24dp;
-            case Activity.TYPE_SAILING:
+            case TYPE_SAILING:
                 return R.drawable.ic_directions_sail_black_24dp;
-            case Activity.TYPE_BOATING:
+            case TYPE_BOATING:
                 return R.drawable.ic_directions_boat_black_24dp;
-            case Activity.TYPE_BIKING:
+            case TYPE_BIKING:
                 return R.drawable.ic_directions_bike_black_24dp;
+            case TYPE_DRIVING:
+                return R.drawable.ic_drive_eta_black_24dp;
             default:
                 return R.drawable.ic_location_on_black_24dp;
         }
+    }
+
+    public static int getRandomTypeResId() {
+        int[] types = {
+                R.drawable.ic_directions_walk_black_24dp,
+                R.drawable.ic_directions_run_black_24dp,
+                R.drawable.ic_directions_hike_black_24dp,
+                R.drawable.ic_directions_sail_black_24dp,
+                R.drawable.ic_directions_boat_black_24dp,
+                R.drawable.ic_directions_bike_black_24dp,
+                R.drawable.ic_drive_eta_black_24dp,
+                R.drawable.ic_location_on_black_24dp
+        };
+        Random random = new Random();
+        int randomPos = random.nextInt(types.length);
+        return types[randomPos];
     }
 
     public Activity(Parcel in) {

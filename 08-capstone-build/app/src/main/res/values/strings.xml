@@ -12,4 +12,5 @@
     <string name="recording_notification_action_stop">Stop Recording</string>
     <string name="channel_name">Recording Channel</string>
     <string name="channel_description">This channel is for the foreground notification shown while recording activities.</string>
+    <string name="no_activities_title">No Recorded Activities</string>
 </resources>
