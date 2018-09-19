@@ -22,6 +22,7 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import fyi.jackson.activejournal.ActivityMain;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.util.ActivityTransitionNames;
@@ -71,6 +72,8 @@ public class DetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ((ActivityMain) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         unbinder = ButterKnife.bind(this, view);
 

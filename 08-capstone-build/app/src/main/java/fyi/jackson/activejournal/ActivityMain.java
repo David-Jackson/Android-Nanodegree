@@ -108,18 +108,18 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Snackbar.make(bottomFrame, item.getTitle() + " selected", Snackbar.LENGTH_LONG).show();
         switch (item.getItemId()) {
             case R.id.action_import:
 //                fragmentTransaction(R.id.frame_bottom_layer, ImportActivityFragment.newInstance());
-                break;
+                return true;
             case R.id.action_settings:
                 bulkInsert();
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     private void fragmentTransaction(int parentId, Fragment fragment) {

@@ -20,6 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import fyi.jackson.activejournal.ActivityMain;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.AppViewModel;
 import fyi.jackson.activejournal.data.entities.Activity;
@@ -57,6 +58,8 @@ public class ActivityListFragment extends Fragment implements ItemClickListener 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ((ActivityMain) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         unbinder = ButterKnife.bind(this, view);
 
