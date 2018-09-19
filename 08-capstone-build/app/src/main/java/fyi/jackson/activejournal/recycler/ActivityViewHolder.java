@@ -2,6 +2,7 @@ package fyi.jackson.activejournal.recycler;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import java.io.File;
 
@@ -47,18 +49,22 @@ public class ActivityViewHolder extends RecyclerView.ViewHolder {
         name.setText(activity.getName());
         type.setImageResource(activity.getTypeResId());
 
+        map.setImageResource(R.drawable.image_activity_map_placeholder);
+
         if (activity.getThumbnail() != null) {
             File f = new File(
                     itemView.getContext().getDir("thumbnails", Context.MODE_PRIVATE),
                     activity.getThumbnail());
 
-            Picasso.get()
-                    .load(f)
-                    .placeholder(R.drawable.image_activity_map_placeholder)
-                    .error(R.drawable.image_activity_map_placeholder)
-                    .into(map);
-        } else {
-            map.setImageResource(R.drawable.image_activity_map_placeholder);
+            RequestCreator request = Picasso.get().load(f);
+
+            // Only load vector drawables on API >= 21
+            if (Build.VERSION.SDK_INT >= 21) {
+                request.placeholder(R.drawable.image_activity_map_placeholder)
+                        .error(R.drawable.image_activity_map_placeholder);
+            }
+            
+            request.into(map);
         }
 
         itemView.setOnClickListener(new View.OnClickListener() {
