@@ -115,8 +115,8 @@ The Location API will be used to listen for changes in device location while rec
 - [x] Hook Service to Morphing Floating Action Button when app is visible.
 
 ### Task 5: Implement Main Activity interactions
-- [x] Build logic for displaying activities.
-- [ ] Build logic for navigating app.
+- [x] Build logic for displaying activities. [#f9b86](https://github.com/David-Jackson/Android-Nanodegree/commit/f9b86c8b294d3319a22b3ed86ba144b938c8f1a0)
+- [x] Build logic for navigating app. [b8777](https://github.com/David-Jackson/Android-Nanodegree/commit/b877786224482f2ee24954fce604031d22814cbc)
 
 ### Task 6: Implement Edit Activity interactions.
 - [ ] Build insert new content (text/image) logic.
