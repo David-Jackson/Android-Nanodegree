@@ -63,7 +63,7 @@ public class ActivityViewHolder extends RecyclerView.ViewHolder {
                 request.placeholder(R.drawable.image_activity_map_placeholder)
                         .error(R.drawable.image_activity_map_placeholder);
             }
-            
+
             request.into(map);
         }
 

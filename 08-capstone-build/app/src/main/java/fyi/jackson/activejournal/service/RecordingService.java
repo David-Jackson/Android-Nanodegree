@@ -190,13 +190,13 @@ public class RecordingService extends Service {
                 .setTicker(getString(R.string.app_name))
                 .setContentTitle(getString(R.string.recording_notification_content_title))
                 .setContentText(getString(R.string.recording_notification_content_text))
-                .setSmallIcon(R.drawable.ic_timeline_black_24dp)
+                .setSmallIcon(R.drawable.ic_stat_timeline)
                 .setLargeIcon(icon)
                 .setContentIntent(pendingIntent)
                 .setOngoing(true);
 
             notificationBuilder.addAction(
-                    R.drawable.ic_stop_black_24dp,
+                    R.drawable.ic_stat_stop,
                     getString(R.string.recording_notification_action_stop),
                     pendingStopServiceIntent);
     }
