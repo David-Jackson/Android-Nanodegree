@@ -96,27 +96,27 @@ The Location API will be used to listen for changes in device location while rec
 ## Next Steps: Required Tasks
 
 ### Task 1: Project Setup
-- [x] Configure libraries.
+- [x] Configure libraries. [#16dd7](https://github.com/David-Jackson/Android-Nanodegree/commit/16dd72099b71e6cf0d0eb5bc8c247e0cafa2f1d0)
 - [ ] Create Project/API Keys/google_services.json in Google API Console.
 
 ### Task 2: Implement UI for Each Activity and Fragment
-- [x] Build UI for MainActivity.
-- [x] Build UI for Morphing Floating Action Button.
-- [x] Build UI for List Viewholders.
+- [x] Build UI for MainActivity. [#daaaa](https://github.com/David-Jackson/Android-Nanodegree/commit/daaaa7a2c013833ec6f9fc9a05452f1fb2100191)
+- [x] Build UI for Morphing Floating Action Button. [#255b0](https://github.com/David-Jackson/Android-Nanodegree/commit/255b02c328369be238f967a70d71718671de673d)
+- [x] Build UI for List Viewholders. [#2c525](https://github.com/David-Jackson/Android-Nanodegree/commit/2c525eaa87d282b26b3a38c1250983a26c38bb6c)
 - [ ] Build UI for Detail Activity.
 
 ### Task 3: Build the Backend
-- [x] Setup the app with ViewModel and LiveData for backend data.
-- [x] Look into the possibility of using LiveData to connect the foreground service and the UI.
+- [x] Setup the app with ViewModel and LiveData for backend data. [#782db](https://github.com/David-Jackson/Android-Nanodegree/commit/782dbfffaa95bc33bc428e1ca43b1b6aadf5e5a4)
+- [x] Look into the possibility of using LiveData to connect the foreground service and the UI. [#20be0](https://github.com/David-Jackson/Android-Nanodegree/commit/20be0eddfa00a843569fd1009b48a902d3210cb0)
 
 ### Task 4: Build Foreground Service
-- [x] Build Foreground Service for recording location.
-- [x] This includes a Foreground Notification.
-- [x] Hook Service to Morphing Floating Action Button when app is visible.
+- [x] Build Foreground Service for recording location. [#8f1d9](https://github.com/David-Jackson/Android-Nanodegree/commit/8f1d91ce87dffce8b64380c74d15f8cc4e62946e)
+- [x] This includes a Foreground Notification. [#8f1d9](https://github.com/David-Jackson/Android-Nanodegree/commit/8f1d91ce87dffce8b64380c74d15f8cc4e62946e)
+- [x] Hook Service to Morphing Floating Action Button when app is visible. [#20be0](https://github.com/David-Jackson/Android-Nanodegree/commit/20be0eddfa00a843569fd1009b48a902d3210cb0)
 
 ### Task 5: Implement Main Activity interactions
 - [x] Build logic for displaying activities. [#f9b86](https://github.com/David-Jackson/Android-Nanodegree/commit/f9b86c8b294d3319a22b3ed86ba144b938c8f1a0)
-- [x] Build logic for navigating app. [b8777](https://github.com/David-Jackson/Android-Nanodegree/commit/b877786224482f2ee24954fce604031d22814cbc)
+- [x] Build logic for navigating app. [#b8777](https://github.com/David-Jackson/Android-Nanodegree/commit/b877786224482f2ee24954fce604031d22814cbc)
 
 ### Task 6: Implement Edit Activity interactions.
 - [ ] Build insert new content (text/image) logic.
