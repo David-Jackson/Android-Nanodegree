@@ -13,11 +13,8 @@ public class Content {
     @PrimaryKey(autoGenerate = true)
     private int uid;
 
-    @ColumnInfo(name = "contentId")
-    private int contentId;
-
     @ColumnInfo(name = "activityId")
-    private int activityId;
+    private long activityId;
 
     @ColumnInfo(name = "type")
     private int type;
@@ -36,19 +33,11 @@ public class Content {
         this.uid = uid;
     }
 
-    public int getContentId() {
-        return contentId;
-    }
-
-    public void setContentId(int contentId) {
-        this.contentId = contentId;
-    }
-
-    public int getActivityId() {
+    public long getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(int activityId) {
+    public void setActivityId(long activityId) {
         this.activityId = activityId;
     }
 

@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import fyi.jackson.activejournal.data.entities.Activity;
+import fyi.jackson.activejournal.data.entities.Content;
 import fyi.jackson.activejournal.data.entities.Position;
 import fyi.jackson.activejournal.data.entities.Stats;
 
@@ -28,6 +29,10 @@ public class AppViewModel extends AndroidViewModel {
 
     public LiveData<Integer> getPositionCount() {
         return appDatabase.activityDao().getLivePositionCount();
+    }
+
+    public LiveData<List<Content>> getContentsForActivity(long activityId) {
+        return appDatabase.activityDao().getLiveContentForActivity(activityId);
     }
 
     public LiveData<List<Stats>> getStatistics() {
@@ -70,5 +75,17 @@ public class AppViewModel extends AndroidViewModel {
                 return null;
             }
         }.execute();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public void insertContents(Content... contents) {
+        // AsyncTask won't leak memory when used within the ViewModel
+        new AsyncTask<Content, Void, Void>() {
+            @Override
+            protected Void doInBackground(Content... contents) {
+                appDatabase.activityDao().insertContent(contents);
+                return null;
+            }
+        }.execute(contents);
     }
 }

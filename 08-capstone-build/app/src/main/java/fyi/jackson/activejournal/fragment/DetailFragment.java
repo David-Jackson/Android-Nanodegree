@@ -1,5 +1,7 @@
 package fyi.jackson.activejournal.fragment;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +22,21 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import fyi.jackson.activejournal.ActivityMain;
 import fyi.jackson.activejournal.R;
+import fyi.jackson.activejournal.data.AppViewModel;
 import fyi.jackson.activejournal.data.entities.Activity;
+import fyi.jackson.activejournal.data.entities.Content;
+import fyi.jackson.activejournal.recycler.ContentListAdapter;
+import fyi.jackson.activejournal.ui.ContentClickListener;
 import fyi.jackson.activejournal.util.ActivityTransitionNames;
 
-public class DetailFragment extends Fragment {
+public class DetailFragment extends Fragment implements ContentClickListener {
 
     public static final String TAG = DetailFragment.class.getSimpleName();
 
@@ -35,11 +44,14 @@ public class DetailFragment extends Fragment {
 
     private Unbinder unbinder;
 
-
     @BindView(R.id.iv_activity_map) ImageView mainImageView;
     @BindView(R.id.tv_activity_title) TextView titleTextView;
     @BindView(R.id.iv_activity_type) ImageView typeImageView;
     @BindView(R.id.layout_container) ConstraintLayout containerLayout;
+    @BindView(R.id.rv_content_list) RecyclerView recyclerView;
+    ContentListAdapter adapter;
+
+    Activity currentActivity;
 
     public DetailFragment() {
     }
@@ -61,6 +73,21 @@ public class DetailFragment extends Fragment {
                     TransitionInflater.from(getContext())
                             .inflateTransition(android.R.transition.move));
         }
+
+        currentActivity = getArguments().getParcelable(EXTRA_ACTIVITY);
+
+        adapter = new ContentListAdapter(this);
+
+        AppViewModel appViewModel = ViewModelProviders.of(this).get(AppViewModel.class);
+
+        appViewModel.getContentsForActivity(currentActivity.getActivityId())
+                .observe(this, new Observer<List<Content>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Content> contents) {
+                        adapter.setContents(contents);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     @Nullable
@@ -77,8 +104,10 @@ public class DetailFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
 
-        Activity activity = getArguments().getParcelable(EXTRA_ACTIVITY);
-        bindTo(activity);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        bindTo(currentActivity);
     }
 
     @Override
@@ -116,5 +145,10 @@ public class DetailFragment extends Fragment {
                         startPostponedEnterTransition();
                     }
                 });
+    }
+
+    @Override
+    public void onClick(Content content, RecyclerView.ViewHolder holder) {
+
     }
 }

@@ -37,5 +37,11 @@
             app:layout_constraintBottom_toTopOf="@id/tv_activity_title"
             app:layout_constraintRight_toRightOf="parent"/>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_activity_title"/>
+
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

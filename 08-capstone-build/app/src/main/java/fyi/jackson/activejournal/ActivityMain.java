@@ -3,7 +3,9 @@ package fyi.jackson.activejournal;
 import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -26,6 +28,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import fyi.jackson.activejournal.data.AppViewModel;
 import fyi.jackson.activejournal.data.entities.Activity;
+import fyi.jackson.activejournal.data.entities.Content;
 import fyi.jackson.activejournal.data.entities.Position;
 import fyi.jackson.activejournal.dummy.Data;
 import fyi.jackson.activejournal.dummy.Point;
@@ -68,13 +71,22 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void checkForPermissions() {
-        boolean permissionGranted = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        String[] permissions = new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        };
+
+        boolean permissionGranted = true;
+
+        for (int i = 0; i < permissions.length; i++) {
+            permissionGranted &= ContextCompat.checkSelfPermission(this,
+                    permissions[i]) == PackageManager.PERMISSION_GRANTED;
+        }
+
 
         if (!permissionGranted) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSIONS_REQUEST_FINE_LOCATION);
+                    permissions, PERMISSIONS_REQUEST_FINE_LOCATION);
         }
     }
 
@@ -110,6 +122,7 @@ public class ActivityMain extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_import:
+                performFileSearch();
 //                fragmentTransaction(R.id.frame_bottom_layer, ImportActivityFragment.newInstance());
                 return true;
             case R.id.action_settings:
@@ -187,5 +200,73 @@ public class ActivityMain extends AppCompatActivity {
         activity1.setType(Activity.TYPE_HIKING);
 
         viewModel.insertActivities(activity, activity1);
+
+
+        String longText = "This is a very long string that explains my recent activity in great detail. It was so great. I had so much fun. Here's some Lorem Ipsum: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum tincidunt quam, eu hendrerit mauris blandit vitae. Donec eu laoreet nulla. Cras facilisis tempor eros vel eleifend. Curabitur eros mi, volutpat eget urna in, efficitur tempus leo. Duis non efficitur felis, id posuere magna. Nullam ultrices nisi ac nisi venenatis laoreet. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In hac habitasse platea dictumst. Morbi accumsan volutpat dui eget consectetur.";
+        Content textContent = new Content();
+        textContent.setType(Content.TYPE_TEXT);
+        textContent.setPosition(0);
+        textContent.setActivityId(activityId);
+        textContent.setValue(longText);
+
+        String shortText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum tincidunt quam, eu hendrerit mauris blandit vitae. Donec eu laoreet nulla. Cras facilisis tempor eros vel eleifend.";
+        Content textContent2 = new Content();
+        textContent2.setType(Content.TYPE_TEXT);
+        textContent2.setPosition(2);
+        textContent2.setActivityId(activityId);
+        textContent2.setValue(shortText);
+
+        String imageUri = "/storage/self/primary/DCIM/Camera/IMG_20170715_205901021.jpg";
+        Content imageContent = new Content();
+        imageContent.setType(Content.TYPE_IMAGE);
+        imageContent.setPosition(1);
+        imageContent.setActivityId(activityId);
+        imageContent.setValue(imageUri);
+
+        viewModel.insertContents(textContent, textContent2, imageContent);
+    }
+
+    private static final int READ_REQUEST_CODE = 42;
+
+    /**
+     * Fires an intent to spin up the "file chooser" UI and select an image.
+     */
+    public void performFileSearch() {
+
+        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
+        // browser.
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
+        // Filter to only show results that can be "opened", such as a
+        // file (as opposed to a list of contacts or timezones)
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        // Filter to show only images, using the image MIME data type.
+        // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
+        // To search for all documents available via installed storage providers,
+        // it would be "*/*".
+        intent.setType("image/*");
+
+        startActivityForResult(intent, READ_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+
+        // The ACTION_OPEN_DOCUMENT intent was sent with the request code
+        // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
+        // response to some other intent, and the code below shouldn't run at all.
+
+        if (requestCode == READ_REQUEST_CODE && resultCode == android.app.Activity.RESULT_OK) {
+            // The document selected by the user won't be returned in the intent.
+            // Instead, a URI to that document will be contained in the return intent
+            // provided to this method as a parameter.
+            // Pull that URI using resultData.getData().
+            String uri = null;
+            if (resultData != null) {
+                uri = resultData.getData().getPath();
+                Log.i(TAG, "Uri: " + uri);
+            }
+        }
     }
 }

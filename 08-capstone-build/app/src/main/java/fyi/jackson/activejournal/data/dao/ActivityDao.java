@@ -27,6 +27,9 @@ public interface ActivityDao {
     @Query("SELECT * FROM content WHERE activityId = :activityId ORDER BY position ASC")
     List<Content> getContentForActivity(long activityId);
 
+    @Query("SELECT * FROM content WHERE activityId = :activityId ORDER BY position ASC")
+    LiveData<List<Content>> getLiveContentForActivity(long activityId);
+
     @Query("SELECT COUNT(*) from positions")
     Integer getPositionCount();
 
@@ -47,4 +50,5 @@ public interface ActivityDao {
 
     @Query("UPDATE activities SET thumbnail = :thumbnailFileName WHERE activityId = :activityId")
     void updateThumbail(long activityId, String thumbnailFileName);
+
 }
