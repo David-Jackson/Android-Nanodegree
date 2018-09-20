@@ -54,9 +54,9 @@ public class ActivityViewHolder extends RecyclerView.ViewHolder {
         map.setImageResource(R.drawable.image_activity_map_placeholder);
 
         if (activity.getThumbnail() != null) {
-            File f = new File(
-                    itemView.getContext().getDir("thumbnails", Context.MODE_PRIVATE),
-                    activity.getThumbnail());
+            File f = new File(activity.getThumbnail());
+
+            Log.d(TAG, "bindTo: " + f.toString());
 
             RequestCreator request = Picasso.get().load(f);
 

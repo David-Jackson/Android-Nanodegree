@@ -101,9 +101,7 @@ public class DetailFragment extends Fragment {
         titleTextView.setText(activity.getName());
         typeImageView.setImageResource(activity.getTypeResId());
 
-        File f = new File(
-                getContext().getDir("thumbnails", Context.MODE_PRIVATE),
-                activity.getThumbnail());
+        File f = new File(activity.getThumbnail());
 
         Picasso.get()
                 .load(f)

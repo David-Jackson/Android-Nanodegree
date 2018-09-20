@@ -42,11 +42,14 @@ public class ImageSaver {
         return this;
     }
 
-    public void save(Bitmap bitmapImage) {
+    public String save(Bitmap bitmapImage) {
+        String result = "";
         FileOutputStream fileOutputStream = null;
         try {
-            fileOutputStream = new FileOutputStream(createFile());
+            File f = createFile();
+            fileOutputStream = new FileOutputStream(f);
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+            result = f.getAbsolutePath();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -57,6 +60,7 @@ public class ImageSaver {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            return result;
         }
     }
 

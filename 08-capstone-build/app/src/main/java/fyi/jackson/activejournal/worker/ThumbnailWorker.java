@@ -59,14 +59,14 @@ public class ThumbnailWorker extends Worker {
 
             Log.d(TAG, "doWork: Saving Bitmap");
 
-            new ImageSaver(getApplicationContext())
+            String newFileName = new ImageSaver(getApplicationContext())
                     .setExternal(false)
                     .setDirectoryName("thumbnails")
                     .setFileName(thumbnailFileName)
                     .save(bitmap);
 
             Log.d(TAG, "doWork: Updating activity entry");
-            appDatabase.activityDao().updateThumbail(activityId, thumbnailFileName);
+            appDatabase.activityDao().updateThumbail(activityId, newFileName);
 
             return Result.SUCCESS;
 
