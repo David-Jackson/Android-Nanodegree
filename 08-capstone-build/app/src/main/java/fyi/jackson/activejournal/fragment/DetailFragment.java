@@ -37,8 +37,11 @@ import fyi.jackson.activejournal.recycler.helper.ContentItemTouchHelperCallback;
 import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
 import fyi.jackson.activejournal.ui.ContentClickListener;
 import fyi.jackson.activejournal.util.ActivityTransitionNames;
+import fyi.jackson.activejournal.util.ContentPositionListener;
 
-public class DetailFragment extends Fragment implements ContentClickListener {
+public class DetailFragment
+        extends Fragment
+        implements ContentClickListener {
 
     public static final String TAG = DetailFragment.class.getSimpleName();
 
@@ -55,6 +58,8 @@ public class DetailFragment extends Fragment implements ContentClickListener {
     ItemTouchHelper itemTouchHelper;
 
     Activity currentActivity;
+
+    boolean expectingChange = false;
 
     public DetailFragment() {
     }
@@ -79,19 +84,34 @@ public class DetailFragment extends Fragment implements ContentClickListener {
 
         currentActivity = getArguments().getParcelable(EXTRA_ACTIVITY);
 
-        adapter = new ContentListAdapter(this, new OnStartDragListener() {
+
+        final AppViewModel appViewModel = ViewModelProviders.of(this).get(AppViewModel.class);
+
+        ContentPositionListener contentPositionListener = new ContentPositionListener() {
+            @Override
+            public void onPositionChanged(List<Content> newContents) {
+                expectingChange = true;
+                appViewModel.updateContents(newContents);
+            }
+        };
+
+        OnStartDragListener onStartDragListener = new OnStartDragListener() {
             @Override
             public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
                 itemTouchHelper.startDrag(viewHolder);
             }
-        });
+        };
 
-        AppViewModel appViewModel = ViewModelProviders.of(this).get(AppViewModel.class);
+        adapter = new ContentListAdapter(this, onStartDragListener, contentPositionListener);
 
         appViewModel.getContentsForActivity(currentActivity.getActivityId())
                 .observe(this, new Observer<List<Content>>() {
                     @Override
                     public void onChanged(@Nullable List<Content> contents) {
+                        if (expectingChange) {
+                            expectingChange = false;
+                            return;
+                        }
                         adapter.setContents(contents);
                         adapter.notifyDataSetChanged();
                     }

@@ -2,6 +2,7 @@ package fyi.jackson.activejournal.recycler;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,13 @@ import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
 import fyi.jackson.activejournal.recycler.holder.ContentImageViewHolder;
 import fyi.jackson.activejournal.recycler.holder.ContentTextViewHolder;
 import fyi.jackson.activejournal.ui.ContentClickListener;
+import fyi.jackson.activejournal.util.ContentPositionListener;
 
-public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
+public class ContentListAdapter
+        extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements ItemTouchHelperAdapter {
+
+    public static final String TAG = ContentListAdapter.class.getSimpleName();
 
     private static final int VIEW_TYPE_TEXT_CONTENT = Content.TYPE_TEXT;
     private static final int VIEW_TYPE_IMAGE_CONTENT = Content.TYPE_IMAGE;
@@ -25,10 +31,14 @@ public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<Content> contents;
     private ContentClickListener clickListener;
     private OnStartDragListener onStartDragListener;
+    private ContentPositionListener contentPositionListener;
 
-    public ContentListAdapter(ContentClickListener clickListener, OnStartDragListener onStartDragListener) {
+    public ContentListAdapter(ContentClickListener clickListener,
+                              OnStartDragListener onStartDragListener,
+                              ContentPositionListener contentPositionListener) {
         this.clickListener = clickListener;
         this.onStartDragListener = onStartDragListener;
+        this.contentPositionListener = contentPositionListener;
     }
 
     @NonNull
@@ -81,11 +91,21 @@ public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public boolean onItemMove(int fromPosition, int toPosition) {
         Collections.swap(contents, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
+
+        updateContentPositions();
+        contentPositionListener.onPositionChanged(contents);
+
         return true;
     }
 
     @Override
     public void onItemDismiss(int position) {
 
+    }
+
+    private void updateContentPositions() {
+        for (int i = 0; i < contents.size(); i++) {
+            contents.get(i).setPosition(i);
+        }
     }
 }
