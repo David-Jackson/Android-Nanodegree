@@ -30,12 +30,14 @@ public class ActivityViewHolder extends RecyclerView.ViewHolder {
     public TextView name;
     public ImageView type;
     public ImageView map;
+    public View card;
 
     public ActivityViewHolder(@NonNull View itemView) {
         super(itemView);
         name = itemView.findViewById(R.id.tv_activity_title);
         type = itemView.findViewById(R.id.iv_activity_type);
         map = itemView.findViewById(R.id.iv_activity_map);
+        card = itemView.findViewById(R.id.card_view);
     }
 
     public void bindTo(final Activity activity, final ItemClickListener clickListener) {
@@ -44,7 +46,7 @@ public class ActivityViewHolder extends RecyclerView.ViewHolder {
         ViewCompat.setTransitionName(map, transitionNames.map);
         ViewCompat.setTransitionName(name, transitionNames.title);
         ViewCompat.setTransitionName(type, transitionNames.type);
-        ViewCompat.setTransitionName(itemView, transitionNames.container);
+        ViewCompat.setTransitionName(card, transitionNames.container);
 
         name.setText(activity.getName());
         type.setImageResource(activity.getTypeResId());
