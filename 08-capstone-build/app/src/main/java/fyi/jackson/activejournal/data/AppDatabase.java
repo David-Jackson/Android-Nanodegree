@@ -14,7 +14,7 @@ import fyi.jackson.activejournal.data.entities.Stats;
 
 @Database(
         entities = {Activity.class, Content.class, Position.class, Stats.class},
-        version = 1,
+        version = 2,
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -27,8 +27,10 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
+                    // TODO: 9/19/2018 Implement Migrations
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "activejournal_database")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
