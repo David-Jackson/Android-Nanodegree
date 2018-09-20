@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
+import fyi.jackson.activejournal.recycler.ContentListAdapter;
 import fyi.jackson.activejournal.recycler.holder.ContentImageViewHolder;
 import fyi.jackson.activejournal.recycler.holder.ContentTextViewHolder;
 
@@ -50,13 +51,11 @@ public class ContentItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder source, RecyclerView.ViewHolder target) {
         boolean allowSwap = true;
 
-//        switch (target.getItemViewType()) {
-//            case TaskAdapter.BUCKET_TOP:
-//                allowSwap = source.getAdapterPosition() < target.getAdapterPosition();
-//                break;
-//            case TaskAdapter.BUCKET_BOTTOM:
-//                allowSwap = source.getAdapterPosition() > target.getAdapterPosition();
-//        }
+        switch (target.getItemViewType()) {
+            case ContentListAdapter.VIEW_TYPE_SPACER:
+                allowSwap = false;
+                break;
+        }
 
         if (allowSwap) {
             if (source.getAdapterPosition() < target.getAdapterPosition()) {

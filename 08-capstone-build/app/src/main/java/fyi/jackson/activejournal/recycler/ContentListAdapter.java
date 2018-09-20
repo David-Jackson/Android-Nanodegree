@@ -16,6 +16,8 @@ import fyi.jackson.activejournal.recycler.helper.ItemTouchHelperAdapter;
 import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
 import fyi.jackson.activejournal.recycler.holder.ContentImageViewHolder;
 import fyi.jackson.activejournal.recycler.holder.ContentTextViewHolder;
+import fyi.jackson.activejournal.recycler.holder.EmptyListViewHolder;
+import fyi.jackson.activejournal.recycler.holder.SpacerViewHolder;
 import fyi.jackson.activejournal.ui.ContentClickListener;
 import fyi.jackson.activejournal.util.ContentPositionListener;
 
@@ -25,8 +27,9 @@ public class ContentListAdapter
 
     public static final String TAG = ContentListAdapter.class.getSimpleName();
 
-    private static final int VIEW_TYPE_TEXT_CONTENT = Content.TYPE_TEXT;
-    private static final int VIEW_TYPE_IMAGE_CONTENT = Content.TYPE_IMAGE;
+    public static final int VIEW_TYPE_TEXT_CONTENT = Content.TYPE_TEXT;
+    public static final int VIEW_TYPE_IMAGE_CONTENT = Content.TYPE_IMAGE;
+    public static final int VIEW_TYPE_SPACER = 854;
 
     private List<Content> contents;
     private ContentClickListener clickListener;
@@ -52,9 +55,13 @@ public class ContentListAdapter
                 v = inflater.inflate(R.layout.view_holder_content_text, parent, false);
                 viewHolder = new ContentTextViewHolder(v);
                 break;
-            default: // VIEW_TYPE_IMAGE_CONTENT
+            case VIEW_TYPE_IMAGE_CONTENT:
                 v = inflater.inflate(R.layout.view_holder_content_image, parent, false);
                 viewHolder = new ContentImageViewHolder(v);
+                break;
+            default: // VIEW_TYPE_SPACER
+                v = inflater.inflate(R.layout.view_holder_spacer_card, parent, false);
+                viewHolder = new SpacerViewHolder(v);
                 break;
         }
         return viewHolder;
@@ -67,7 +74,7 @@ public class ContentListAdapter
             case VIEW_TYPE_TEXT_CONTENT:
                 ((ContentTextViewHolder) viewHolder).bindTo(contents.get(position), clickListener, onStartDragListener);
                 break;
-            default: // VIEW_TYPE_IMAGE_CONTENT
+            case VIEW_TYPE_IMAGE_CONTENT:
                 ((ContentImageViewHolder) viewHolder).bindTo(contents.get(position), clickListener, onStartDragListener);
                 break;
         }
@@ -75,12 +82,12 @@ public class ContentListAdapter
 
     @Override
     public int getItemCount() {
-        return (contents == null ? 0 : contents.size());
+        return (contents == null ? 0 : contents.size() + 1);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return contents.get(position).getType();
+        return (position == contents.size() ? VIEW_TYPE_SPACER : contents.get(position).getType());
     }
 
     public void setContents(List<Content> contents) {
