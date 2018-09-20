@@ -103,7 +103,7 @@ The Location API will be used to listen for changes in device location while rec
 - [x] Build UI for MainActivity. [#daaaa](https://github.com/David-Jackson/Android-Nanodegree/commit/daaaa7a2c013833ec6f9fc9a05452f1fb2100191)
 - [x] Build UI for Morphing Floating Action Button. [#255b0](https://github.com/David-Jackson/Android-Nanodegree/commit/255b02c328369be238f967a70d71718671de673d)
 - [x] Build UI for List Viewholders. [#2c525](https://github.com/David-Jackson/Android-Nanodegree/commit/2c525eaa87d282b26b3a38c1250983a26c38bb6c)
-- [ ] Build UI for Detail Activity.
+- [x] Build UI for Detail Activity. [#0e9d4](https://github.com/David-Jackson/Android-Nanodegree/commit/0e9d4e0d7fd025d63ae013ff0509f28863823931)
 
 ### Task 3: Build the Backend
 - [x] Setup the app with ViewModel and LiveData for backend data. [#782db](https://github.com/David-Jackson/Android-Nanodegree/commit/782dbfffaa95bc33bc428e1ca43b1b6aadf5e5a4)
@@ -120,7 +120,7 @@ The Location API will be used to listen for changes in device location while rec
 
 ### Task 6: Implement Edit Activity interactions.
 - [ ] Build insert new content (text/image) logic.
-- [ ] Build logic for arranging content.
+- [x] Build logic for arranging content. [#bc333](https://github.com/David-Jackson/Android-Nanodegree/commit/bc333b33f595d3839b508d1040833f3f4f321582)
 
 ### Task 7: Implement Widgets
 - [ ] Build widget for starting activity recording.
