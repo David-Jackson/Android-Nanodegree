@@ -2,7 +2,6 @@ package fyi.jackson.activejournal.fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +10,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +33,7 @@ import fyi.jackson.activejournal.data.AppViewModel;
 import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.data.entities.Content;
 import fyi.jackson.activejournal.recycler.ContentListAdapter;
+import fyi.jackson.activejournal.recycler.helper.ContentItemTouchHelperCallback;
 import fyi.jackson.activejournal.ui.ContentClickListener;
 import fyi.jackson.activejournal.util.ActivityTransitionNames;
 
@@ -50,6 +51,7 @@ public class DetailFragment extends Fragment implements ContentClickListener {
     @BindView(R.id.layout_container) ConstraintLayout containerLayout;
     @BindView(R.id.rv_content_list) RecyclerView recyclerView;
     ContentListAdapter adapter;
+    ItemTouchHelper itemTouchHelper;
 
     Activity currentActivity;
 
@@ -106,6 +108,10 @@ public class DetailFragment extends Fragment implements ContentClickListener {
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        ItemTouchHelper.Callback callback = new ContentItemTouchHelperCallback(adapter);
+        itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
         bindTo(currentActivity);
     }

@@ -6,15 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Collections;
 import java.util.List;
 
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Content;
+import fyi.jackson.activejournal.recycler.helper.ItemTouchHelperAdapter;
 import fyi.jackson.activejournal.recycler.holder.ContentImageViewHolder;
 import fyi.jackson.activejournal.recycler.holder.ContentTextViewHolder;
 import fyi.jackson.activejournal.ui.ContentClickListener;
 
-public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
 
     private static final int VIEW_TYPE_TEXT_CONTENT = Content.TYPE_TEXT;
     private static final int VIEW_TYPE_IMAGE_CONTENT = Content.TYPE_IMAGE;
@@ -70,5 +72,17 @@ public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public void setContents(List<Content> contents) {
         this.contents = contents;
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        Collections.swap(contents, fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+
     }
 }
