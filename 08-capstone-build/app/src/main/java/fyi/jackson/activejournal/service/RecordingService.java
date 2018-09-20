@@ -105,7 +105,7 @@ public class RecordingService extends Service {
                 // TODO: 9/18/2018 Implement functionality for getting activity type
                 activity.setType(Activity.TYPE_OTHER);
                 // TODO: 9/18/2018 Implement generation of activity name based on time (Sunday Morning Sailing, Friday Afternoon Hiking)
-                activity.setName("Activity " + activityId);
+                activity.setName(Formatter.generateDefaultActivityName(activityId, activity.getTypeName()));
                 insertActivity(activity);
 
                 stopSelf();

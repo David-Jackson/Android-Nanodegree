@@ -79,6 +79,27 @@ public class Activity implements Parcelable {
         this.thumbnail = thumbnail;
     }
 
+    public String getTypeName() {
+        switch (type) {
+            case TYPE_WALKING:
+                return "Walk";
+            case TYPE_RUNNING:
+                return "Run";
+            case TYPE_HIKING:
+                return "Hike";
+            case TYPE_SAILING:
+                return "Sail";
+            case TYPE_BOATING:
+                return "Boat Trip";
+            case TYPE_BIKING:
+                return "Bike Ride";
+            case TYPE_DRIVING:
+                return "Drive";
+            default:
+                return "Activity";
+        }
+    }
+
     public int getTypeResId() {
         switch (type) {
             case TYPE_WALKING:

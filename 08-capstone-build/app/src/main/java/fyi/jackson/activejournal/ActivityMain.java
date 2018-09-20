@@ -146,9 +146,8 @@ public class ActivityMain extends AppCompatActivity {
         List<Position> positions = new ArrayList<>();
         List<Position> positions1 = new ArrayList<>();
 
-        Random r = new Random();
-        long activityId = r.nextLong();
-        long activityId1 = r.nextLong();
+        long activityId = System.currentTimeMillis();
+        long activityId1 = activityId + 10;
 
         for (Point p : points) {
             Position pos = new Position();
