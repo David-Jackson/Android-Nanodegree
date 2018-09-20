@@ -13,6 +13,7 @@ import java.io.File;
 
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Content;
+import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
 import fyi.jackson.activejournal.ui.ContentClickListener;
 
 public class ContentImageViewHolder extends RecyclerView.ViewHolder {
@@ -26,7 +27,8 @@ public class ContentImageViewHolder extends RecyclerView.ViewHolder {
         image = itemView.findViewById(R.id.iv_image_content);
     }
 
-    public void bindTo(Content content, final ContentClickListener clickListener) {
+    public void bindTo(Content content, ContentClickListener clickListener,
+                       final OnStartDragListener onStartDragListener) {
         Log.d(TAG, "bindTo: Attempting to bind " + content.getValue());
 
         File f = new File(content.getValue());
@@ -45,5 +47,13 @@ public class ContentImageViewHolder extends RecyclerView.ViewHolder {
                         e.printStackTrace();
                     }
                 });
+
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                onStartDragListener.onStartDrag(ContentImageViewHolder.this);
+                return false;
+            }
+        });
     }
 }

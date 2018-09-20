@@ -34,6 +34,7 @@ import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.data.entities.Content;
 import fyi.jackson.activejournal.recycler.ContentListAdapter;
 import fyi.jackson.activejournal.recycler.helper.ContentItemTouchHelperCallback;
+import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
 import fyi.jackson.activejournal.ui.ContentClickListener;
 import fyi.jackson.activejournal.util.ActivityTransitionNames;
 
@@ -78,7 +79,12 @@ public class DetailFragment extends Fragment implements ContentClickListener {
 
         currentActivity = getArguments().getParcelable(EXTRA_ACTIVITY);
 
-        adapter = new ContentListAdapter(this);
+        adapter = new ContentListAdapter(this, new OnStartDragListener() {
+            @Override
+            public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+                itemTouchHelper.startDrag(viewHolder);
+            }
+        });
 
         AppViewModel appViewModel = ViewModelProviders.of(this).get(AppViewModel.class);
 

@@ -12,6 +12,7 @@ import java.util.List;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Content;
 import fyi.jackson.activejournal.recycler.helper.ItemTouchHelperAdapter;
+import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
 import fyi.jackson.activejournal.recycler.holder.ContentImageViewHolder;
 import fyi.jackson.activejournal.recycler.holder.ContentTextViewHolder;
 import fyi.jackson.activejournal.ui.ContentClickListener;
@@ -23,9 +24,11 @@ public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private List<Content> contents;
     private ContentClickListener clickListener;
+    private OnStartDragListener onStartDragListener;
 
-    public ContentListAdapter(ContentClickListener clickListener) {
+    public ContentListAdapter(ContentClickListener clickListener, OnStartDragListener onStartDragListener) {
         this.clickListener = clickListener;
+        this.onStartDragListener = onStartDragListener;
     }
 
     @NonNull
@@ -52,10 +55,10 @@ public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         int viewType = getItemViewType(position);
         switch (viewType) {
             case VIEW_TYPE_TEXT_CONTENT:
-                ((ContentTextViewHolder) viewHolder).bindTo(contents.get(position), clickListener);
+                ((ContentTextViewHolder) viewHolder).bindTo(contents.get(position), clickListener, onStartDragListener);
                 break;
             default: // VIEW_TYPE_IMAGE_CONTENT
-                ((ContentImageViewHolder) viewHolder).bindTo(contents.get(position), clickListener);
+                ((ContentImageViewHolder) viewHolder).bindTo(contents.get(position), clickListener, onStartDragListener);
                 break;
         }
     }

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Content;
+import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
 import fyi.jackson.activejournal.ui.ContentClickListener;
 
 public class ContentTextViewHolder extends RecyclerView.ViewHolder {
@@ -20,7 +21,15 @@ public class ContentTextViewHolder extends RecyclerView.ViewHolder {
         text = itemView.findViewById(R.id.tv_text_content);
     }
 
-    public void bindTo(Content content, final ContentClickListener clickListener) {
+    public void bindTo(Content content, final ContentClickListener clickListener, final OnStartDragListener onStartDragListener) {
         text.setText(content.getValue());
+
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                onStartDragListener.onStartDrag(ContentTextViewHolder.this);
+                return false;
+            }
+        });
     }
 }
