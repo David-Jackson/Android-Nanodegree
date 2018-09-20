@@ -1,4 +1,4 @@
-package fyi.jackson.activejournal.recycler;
+package fyi.jackson.activejournal.recycler.holder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Activity;
 
-class EmptyListViewHolder extends RecyclerView.ViewHolder {
+public class EmptyListViewHolder extends RecyclerView.ViewHolder {
     public EmptyListViewHolder(@NonNull View itemView) {
         super(itemView);
 

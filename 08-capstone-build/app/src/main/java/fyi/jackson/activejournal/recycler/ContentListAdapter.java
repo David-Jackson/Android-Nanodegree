@@ -10,6 +10,8 @@ import java.util.List;
 
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Content;
+import fyi.jackson.activejournal.recycler.holder.ContentImageViewHolder;
+import fyi.jackson.activejournal.recycler.holder.ContentTextViewHolder;
 import fyi.jackson.activejournal.ui.ContentClickListener;
 
 public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

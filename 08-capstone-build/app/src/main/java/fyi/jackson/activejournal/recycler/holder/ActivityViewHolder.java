@@ -1,7 +1,5 @@
-package fyi.jackson.activejournal.recycler;
+package fyi.jackson.activejournal.recycler.holder;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
@@ -11,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
@@ -21,7 +18,6 @@ import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.ui.ItemClickListener;
 import fyi.jackson.activejournal.util.ActivityTransitionNames;
-import fyi.jackson.activejournal.worker.ImageSaver;
 
 public class ActivityViewHolder extends RecyclerView.ViewHolder {
 
