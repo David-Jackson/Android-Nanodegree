@@ -76,7 +76,6 @@ public class ActivityListFragment extends Fragment implements ItemClickListener 
         unbinder = ButterKnife.bind(this, view);
 
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
 
