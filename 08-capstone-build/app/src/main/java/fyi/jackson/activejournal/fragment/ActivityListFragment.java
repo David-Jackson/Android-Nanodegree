@@ -47,6 +47,18 @@ public class ActivityListFragment extends Fragment implements ItemClickListener 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        adapter = new ActivityListAdapter(this);
+        
+        AppViewModel appViewModel = ViewModelProviders.of(this).get(AppViewModel.class);
+
+        appViewModel.getActivities().observe(this, new Observer<List<Activity>>() {
+            @Override
+            public void onChanged(@Nullable List<Activity> activities) {
+                adapter.setActivities(activities);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Nullable
@@ -63,19 +75,9 @@ public class ActivityListFragment extends Fragment implements ItemClickListener 
 
         unbinder = ButterKnife.bind(this, view);
 
-        adapter = new ActivityListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        AppViewModel appViewModel = ViewModelProviders.of(this).get(AppViewModel.class);
-
-        appViewModel.getActivities().observe(this, new Observer<List<Activity>>() {
-            @Override
-            public void onChanged(@Nullable List<Activity> activities) {
-                adapter.setActivities(activities);
-                adapter.notifyDataSetChanged();
-            }
-        });
     }
 
     @Override
