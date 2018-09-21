@@ -3,7 +3,6 @@ package fyi.jackson.activejournal.recycler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +18,10 @@ import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
 import fyi.jackson.activejournal.recycler.holder.ContentEditTextViewHolder;
 import fyi.jackson.activejournal.recycler.holder.ContentImageViewHolder;
 import fyi.jackson.activejournal.recycler.holder.ContentTextViewHolder;
-import fyi.jackson.activejournal.recycler.holder.EmptyListViewHolder;
 import fyi.jackson.activejournal.recycler.holder.NewContentViewHolder;
-import fyi.jackson.activejournal.recycler.holder.SpacerViewHolder;
 import fyi.jackson.activejournal.ui.ContentClickListener;
 import fyi.jackson.activejournal.ui.NewContentRowClickListener;
-import fyi.jackson.activejournal.util.ContentPositionListener;
+import fyi.jackson.activejournal.ui.ContentChangeListener;
 
 public class ContentListAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -44,18 +41,18 @@ public class ContentListAdapter
     private List<Content> contents;
     private ContentClickListener clickListener;
     private OnStartDragListener onStartDragListener;
-    private ContentPositionListener contentPositionListener;
+    private ContentChangeListener contentChangeListener;
 
     private boolean editMode = false;
 
     public ContentListAdapter(Activity currentActivity,
                               ContentClickListener clickListener,
                               OnStartDragListener onStartDragListener,
-                              ContentPositionListener contentPositionListener) {
+                              ContentChangeListener contentChangeListener) {
         this.currentActivity = currentActivity;
         this.clickListener = clickListener;
         this.onStartDragListener = onStartDragListener;
-        this.contentPositionListener = contentPositionListener;
+        this.contentChangeListener = contentChangeListener;
     }
 
     @NonNull
@@ -97,7 +94,7 @@ public class ContentListAdapter
                 ((ContentImageViewHolder) viewHolder).bindTo(contents.get(position), clickListener, onStartDragListener);
                 break;
             case VIEW_TYPE_EDIT_TEXT_CONTENT:
-                ((ContentEditTextViewHolder) viewHolder).bindTo(contents.get(position), clickListener, onStartDragListener);
+                ((ContentEditTextViewHolder) viewHolder).bindTo(contents.get(position), contentChangeListener, onStartDragListener);
                 break;
             case VIEW_TYPE_NEW_CONTENT:
                 ((NewContentViewHolder) viewHolder).bindTo(this);
@@ -134,7 +131,7 @@ public class ContentListAdapter
         notifyItemMoved(fromPosition, toPosition);
 
         updateContentPositions();
-        contentPositionListener.onPositionChanged(contents);
+        contentChangeListener.onChange(contents);
 
         return true;
     }
@@ -172,6 +169,7 @@ public class ContentListAdapter
         newContent.setType(Content.TYPE_TEXT);
         newContent.setActivityId(currentActivity.getActivityId());
         contents.add(newContent);
+        contentChangeListener.onInsert(newContent);
     }
 
     private void focusOnContent(int position) {

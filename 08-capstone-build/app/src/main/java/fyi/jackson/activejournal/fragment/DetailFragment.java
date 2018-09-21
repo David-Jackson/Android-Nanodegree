@@ -37,7 +37,7 @@ import fyi.jackson.activejournal.recycler.helper.ContentItemTouchHelperCallback;
 import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
 import fyi.jackson.activejournal.ui.ContentClickListener;
 import fyi.jackson.activejournal.util.ActivityTransitionNames;
-import fyi.jackson.activejournal.util.ContentPositionListener;
+import fyi.jackson.activejournal.ui.ContentChangeListener;
 
 public class DetailFragment
         extends Fragment
@@ -87,11 +87,23 @@ public class DetailFragment
 
         final AppViewModel appViewModel = ViewModelProviders.of(this).get(AppViewModel.class);
 
-        ContentPositionListener contentPositionListener = new ContentPositionListener() {
+        ContentChangeListener contentChangeListener = new ContentChangeListener() {
             @Override
-            public void onPositionChanged(List<Content> newContents) {
+            public void onChange(List<Content> updatedContents) {
                 expectingChange = true;
-                appViewModel.updateContents(newContents);
+                appViewModel.updateContents(updatedContents);
+            }
+
+            @Override
+            public void onChange(Content updatedContent) {
+                expectingChange = true;
+                appViewModel.updateContents(updatedContent);
+            }
+
+            @Override
+            public void onInsert(Content newContent) {
+                expectingChange = true;
+                appViewModel.insertContents(newContent);
             }
         };
 
@@ -106,7 +118,7 @@ public class DetailFragment
                 currentActivity,
                 this,
                 onStartDragListener,
-                contentPositionListener);
+                contentChangeListener);
 
         appViewModel.getContentsForActivity(currentActivity.getActivityId())
                 .observe(this, new Observer<List<Content>>() {

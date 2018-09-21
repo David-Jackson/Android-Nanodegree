@@ -54,4 +54,7 @@ public interface ActivityDao {
 
     @Update
     void updateContents(List<Content> contents);
+
+    @Update
+    void updateContents(Content... contents);
 }

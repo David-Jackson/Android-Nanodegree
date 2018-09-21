@@ -51,6 +51,17 @@ public class AppViewModel extends AndroidViewModel {
             }
         }.execute();
     }
+    @SuppressLint("StaticFieldLeak")
+    public void updateContents(Content... contents) {
+        // AsyncTask won't leak memory when used within the ViewModel
+        new AsyncTask<Content, Void, Void>() {
+            @Override
+            protected Void doInBackground(Content... contents) {
+                appDatabase.activityDao().updateContents(contents);
+                return null;
+            }
+        }.execute(contents);
+    }
 
     @SuppressLint("StaticFieldLeak")
     public void insertActivities(Activity... activities) {
