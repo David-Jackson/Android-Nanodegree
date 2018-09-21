@@ -102,7 +102,11 @@ public class DetailFragment
             }
         };
 
-        adapter = new ContentListAdapter(this, onStartDragListener, contentPositionListener);
+        adapter = new ContentListAdapter(
+                currentActivity,
+                this,
+                onStartDragListener,
+                contentPositionListener);
 
         appViewModel.getContentsForActivity(currentActivity.getActivityId())
                 .observe(this, new Observer<List<Content>>() {

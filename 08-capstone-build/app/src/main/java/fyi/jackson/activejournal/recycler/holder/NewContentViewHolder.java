@@ -10,6 +10,7 @@ import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Content;
 import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
 import fyi.jackson.activejournal.ui.ContentClickListener;
+import fyi.jackson.activejournal.ui.NewContentRowClickListener;
 
 public class NewContentViewHolder extends RecyclerView.ViewHolder {
 
@@ -26,25 +27,25 @@ public class NewContentViewHolder extends RecyclerView.ViewHolder {
         editContentLayout = itemView.findViewById(R.id.layout_edit_content);
     }
 
-    public void bindTo(Content content, final ContentClickListener clickListener, final OnStartDragListener onStartDragListener) {
+    public void bindTo(final NewContentRowClickListener clickListener) {
         addTextLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                clickListener.onClick(NewContentRowClickListener.TYPE_ADD_TEXT);
             }
         });
 
         addImageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                clickListener.onClick(NewContentRowClickListener.TYPE_ADD_IMAGE);
             }
         });
 
         editContentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                clickListener.onClick(NewContentRowClickListener.TYPE_EDIT_CONTENT);
             }
         });
     }
