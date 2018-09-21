@@ -17,6 +17,7 @@ import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
 import fyi.jackson.activejournal.recycler.holder.ContentImageViewHolder;
 import fyi.jackson.activejournal.recycler.holder.ContentTextViewHolder;
 import fyi.jackson.activejournal.recycler.holder.EmptyListViewHolder;
+import fyi.jackson.activejournal.recycler.holder.NewContentViewHolder;
 import fyi.jackson.activejournal.recycler.holder.SpacerViewHolder;
 import fyi.jackson.activejournal.ui.ContentClickListener;
 import fyi.jackson.activejournal.util.ContentPositionListener;
@@ -66,7 +67,7 @@ public class ContentListAdapter
                 break;
             default: // VIEW_TYPE_NEW_CONTENT
                 v = inflater.inflate(R.layout.view_holder_new_content, parent, false);
-                viewHolder = new SpacerViewHolder(v);
+                viewHolder = new NewContentViewHolder(v);
                 break;
         }
         return viewHolder;
