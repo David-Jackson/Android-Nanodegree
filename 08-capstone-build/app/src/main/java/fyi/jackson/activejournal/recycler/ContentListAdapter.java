@@ -29,7 +29,8 @@ public class ContentListAdapter
 
     public static final int VIEW_TYPE_TEXT_CONTENT = Content.TYPE_TEXT;
     public static final int VIEW_TYPE_IMAGE_CONTENT = Content.TYPE_IMAGE;
-    public static final int VIEW_TYPE_SPACER = 854;
+    public static final int VIEW_TYPE_NEW_CONTENT = 418;
+    public static final int VIEW_TYPE_EDIT_TEXT_CONTENT = 370;
 
     private List<Content> contents;
     private ContentClickListener clickListener;
@@ -59,8 +60,12 @@ public class ContentListAdapter
                 v = inflater.inflate(R.layout.view_holder_content_image, parent, false);
                 viewHolder = new ContentImageViewHolder(v);
                 break;
-            default: // VIEW_TYPE_SPACER
-                v = inflater.inflate(R.layout.view_holder_spacer_card, parent, false);
+            case VIEW_TYPE_EDIT_TEXT_CONTENT:
+                v = inflater.inflate(R.layout.view_holder_content_edit_text, parent, false);
+                viewHolder = new ContentImageViewHolder(v);
+                break;
+            default: // VIEW_TYPE_NEW_CONTENT
+                v = inflater.inflate(R.layout.view_holder_new_content, parent, false);
                 viewHolder = new SpacerViewHolder(v);
                 break;
         }
@@ -87,7 +92,7 @@ public class ContentListAdapter
 
     @Override
     public int getItemViewType(int position) {
-        return (position == contents.size() ? VIEW_TYPE_SPACER : contents.get(position).getType());
+        return (position == contents.size() ? VIEW_TYPE_NEW_CONTENT : contents.get(position).getType());
     }
 
     public void setContents(List<Content> contents) {

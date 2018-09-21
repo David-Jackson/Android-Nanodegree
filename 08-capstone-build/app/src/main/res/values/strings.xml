@@ -13,4 +13,8 @@
     <string name="channel_name">Recording Channel</string>
     <string name="channel_description">This channel is for the foreground notification shown while recording activities.</string>
     <string name="no_activities_title">No Recorded Activities</string>
+    <string name="content_save">Save</string>
+    <string name="add_image">Add Image</string>
+    <string name="add_text">Add Text</string>
+    <string name="edit_content">Edit</string>
 </resources>

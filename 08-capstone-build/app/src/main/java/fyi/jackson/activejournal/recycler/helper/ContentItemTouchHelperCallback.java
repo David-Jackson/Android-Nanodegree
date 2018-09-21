@@ -52,7 +52,7 @@ public class ContentItemTouchHelperCallback extends ItemTouchHelper.Callback {
         boolean allowSwap = true;
 
         switch (target.getItemViewType()) {
-            case ContentListAdapter.VIEW_TYPE_SPACER:
+            case ContentListAdapter.VIEW_TYPE_NEW_CONTENT:
                 allowSwap = false;
                 break;
         }
