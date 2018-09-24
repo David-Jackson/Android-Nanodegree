@@ -52,8 +52,6 @@ public class ActivityViewHolder extends RecyclerView.ViewHolder {
         if (activity.getThumbnail() != null) {
             File f = new File(activity.getThumbnail());
 
-            Log.d(TAG, "bindTo: " + f.toString());
-
             RequestCreator request = Picasso.get().load(f);
 
             // Only load vector drawables on API >= 21

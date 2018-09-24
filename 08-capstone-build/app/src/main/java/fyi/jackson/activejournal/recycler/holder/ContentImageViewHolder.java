@@ -29,7 +29,6 @@ public class ContentImageViewHolder extends RecyclerView.ViewHolder {
 
     public void bindTo(Content content, ContentClickListener clickListener,
                        final OnStartDragListener onStartDragListener) {
-        Log.d(TAG, "bindTo: Attempting to bind " + content.getValue());
 
         File f = new File(content.getValue());
 
@@ -43,7 +42,7 @@ public class ContentImageViewHolder extends RecyclerView.ViewHolder {
 
                     @Override
                     public void onError(Exception e) {
-                        Log.d(TAG, "onError: Error loading Content Image");
+                        Log.e(TAG, "onError: Error loading Content Image");
                         e.printStackTrace();
                     }
                 });

@@ -93,8 +93,6 @@ public class ActivityMain extends AppCompatActivity {
     private void updateThumbnails(List<Activity> activities) {
         for (Activity activity : activities) {
             if (activity.getThumbnail() == null) {
-                Log.d(TAG, "updateThumbnails: Starting work request for " + activity.getName());
-
                 androidx.work.Data activityData = new androidx.work.Data.Builder()
                         .putLong(ThumbnailWorker.KEY_ACTIVITY_ID, activity.getActivityId())
                         .build();
@@ -216,14 +214,14 @@ public class ActivityMain extends AppCompatActivity {
         textContent2.setActivityId(activityId);
         textContent2.setValue(shortText);
 
-        String imageUri = "/storage/self/primary/DCIM/Camera/IMG_20170715_205901021.jpg";
-        Content imageContent = new Content();
-        imageContent.setType(Content.TYPE_IMAGE);
-        imageContent.setPosition(1);
-        imageContent.setActivityId(activityId);
-        imageContent.setValue(imageUri);
+//        String imageUri = "/storage/self/primary/DCIM/Camera/IMG_20170715_205901021.jpg";
+//        Content imageContent = new Content();
+//        imageContent.setType(Content.TYPE_IMAGE);
+//        imageContent.setPosition(1);
+//        imageContent.setActivityId(activityId);
+//        imageContent.setValue(imageUri);
 
-        viewModel.insertContents(textContent, textContent2, imageContent);
+        viewModel.insertContents(textContent, textContent2);
     }
 
     private static final int READ_REQUEST_CODE = 42;

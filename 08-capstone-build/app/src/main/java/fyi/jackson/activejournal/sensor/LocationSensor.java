@@ -37,12 +37,6 @@ public abstract class LocationSensor implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d(TAG,
-                "onLocationChanged: Lat: " + location.getLatitude() +
-                        ",  lng: " + location.getLongitude() +
-                        ", alt: " + location.getAltitude() +
-                        ", acc: " + location.getAccuracy()
-        );
         onUpdate(location);
     }
 

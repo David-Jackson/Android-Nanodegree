@@ -33,31 +33,20 @@ public class ThumbnailWorker extends Worker {
     @Override
     public Result doWork() {
 
-        Log.d(TAG, "doWork: Starting work.");
         long activityId = getInputData().getLong(KEY_ACTIVITY_ID, -1);
 
-        Log.d(TAG, "doWork: ActivityId: " + activityId);
         if (activityId == -1) return Result.SUCCESS;
 
         AppDatabase appDatabase  = AppDatabase.getDatabase(getApplicationContext());
 
         List<Position> positions = appDatabase.activityDao().getPositionsForActivity(activityId);
 
-        Log.d(TAG, "doWork: Got positions, size: " + positions.size());
-
         String encodedPath = encodePositions(positions);
         String thumbnailFileName = generateFileName(encodedPath) + ".png";
 
-        Log.d(TAG, "doWork: Encoded Path: " + encodedPath);
-        Log.d(TAG, "doWork: Thumbnail Filename: " + thumbnailFileName);
-
         try {
 
-            Log.d(TAG, "doWork: Loading Bitmap");
-
             Bitmap bitmap = Picasso.get().load(buildStaticMapUrl(encodedPath)).get();
-
-            Log.d(TAG, "doWork: Saving Bitmap");
 
             String newFileName = new ImageSaver(getApplicationContext())
                     .setExternal(false)
@@ -65,7 +54,6 @@ public class ThumbnailWorker extends Worker {
                     .setFileName(thumbnailFileName)
                     .save(bitmap);
 
-            Log.d(TAG, "doWork: Updating activity entry");
             appDatabase.activityDao().updateThumbail(activityId, newFileName);
 
             return Result.SUCCESS;

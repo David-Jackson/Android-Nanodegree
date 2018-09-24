@@ -40,12 +40,9 @@ public class ContentEditTextViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void run() {
                 if (System.currentTimeMillis() > (lastTextEdit + inputFinishDelay - 500)) {
-                    Log.d(TAG, "run: Running");
                     Toast.makeText(itemView.getContext(), "Changing content", Toast.LENGTH_SHORT).show();
                     content.setValue(text.getText().toString());
                     changeListener.onChange(content);
-                } else {
-                    Log.d(TAG, "run: Not running");
                 }
             }
         };
