@@ -178,21 +178,25 @@ public class DetailFragment
         titleTextView.setText(activity.getName());
         typeImageView.setImageResource(activity.getTypeResId());
 
-        File f = new File(activity.getThumbnail());
+        if (activity.getThumbnail() == null) {
+            startPostponedEnterTransition();
+        } else {
+            File f = new File(activity.getThumbnail());
 
-        Picasso.get()
-                .load(f)
-                .into(mainImageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        startPostponedEnterTransition();
-                    }
+            Picasso.get()
+                    .load(f)
+                    .into(mainImageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            startPostponedEnterTransition();
+                        }
 
-                    @Override
-                    public void onError(Exception e) {
-                        startPostponedEnterTransition();
-                    }
-                });
+                        @Override
+                        public void onError(Exception e) {
+                            startPostponedEnterTransition();
+                        }
+                    });
+        }
     }
 
     @Override
