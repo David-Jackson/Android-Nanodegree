@@ -165,6 +165,12 @@ public class ContentListAdapter
         }
     }
 
+    public void onDestroy() {
+        if (editMode) {
+            exitEditMode();
+        }
+    }
+
     private void addTextContent() {
         Log.d(TAG, "addTextContent: TXTDEBUG Adding new Text Content");
         Content newContent = new Content();
@@ -176,12 +182,7 @@ public class ContentListAdapter
     }
 
     private void focusOnContent(int position) {
-        if (editMode) {
-            Content content = contents.get(position);
-            if (content != null && content.getType() == Content.TYPE_TEXT) {
-                // TODO: 9/21/2018 implement functionality that allows keyoard focus on certain veiw holder
-            }
-        }
+        // TODO: 9/21/2018 implement functionality that allows keyoard focus on certain veiw holder
     }
 
     private void toggleEditMode() {

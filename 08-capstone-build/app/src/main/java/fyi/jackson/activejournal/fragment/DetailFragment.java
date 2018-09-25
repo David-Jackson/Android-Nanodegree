@@ -165,6 +165,7 @@ public class DetailFragment
 
     @Override
     public void onDestroyView() {
+        adapter.onDestroy();
         super.onDestroyView();
         unbinder.unbind();
     }
