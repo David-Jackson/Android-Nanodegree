@@ -7,6 +7,6 @@ import fyi.jackson.activejournal.data.entities.Content;
 public interface ContentChangeListener {
     void onChange(List<Content> updatedContents);
     void onChange(Content updatedContent);
-
     void onInsert(Content newContent);
+    void onRemove(Content contentToRemove);
 }

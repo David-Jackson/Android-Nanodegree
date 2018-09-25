@@ -219,6 +219,12 @@ public class DetailFragment
     }
 
     @Override
+    public void onRemove(Content contentToRemove) {
+        expectingChange = true;
+        appViewModel.removeContents(contentToRemove);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult: ");
         if (requestCode == REQUEST_CODE_IMAGE && resultCode == android.app.Activity.RESULT_OK) {

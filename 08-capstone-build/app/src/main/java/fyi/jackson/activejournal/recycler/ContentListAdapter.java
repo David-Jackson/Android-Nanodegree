@@ -139,7 +139,9 @@ public class ContentListAdapter
 
     @Override
     public void onItemDismiss(int position) {
-
+        Content contentToRemove = contents.remove(position);
+        notifyItemRemoved(position);
+        contentChangeListener.onRemove(contentToRemove);
     }
 
     private void updateContentPositions() {
@@ -237,6 +239,11 @@ public class ContentListAdapter
 
     @Override
     public void onInsert(Content newContent) {
+
+    }
+
+    @Override
+    public void onRemove(Content contentToRemove) {
 
     }
 }

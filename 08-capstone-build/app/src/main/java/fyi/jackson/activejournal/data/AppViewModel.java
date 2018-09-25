@@ -46,7 +46,7 @@ public class AppViewModel extends AndroidViewModel {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                appDatabase.activityDao().updateContents(contents);
+                appDatabase.activityDao().updateContent(contents);
                 return null;
             }
         }.execute();
@@ -57,7 +57,7 @@ public class AppViewModel extends AndroidViewModel {
         new AsyncTask<Content, Void, Void>() {
             @Override
             protected Void doInBackground(Content... contents) {
-                appDatabase.activityDao().updateContents(contents);
+                appDatabase.activityDao().updateContent(contents);
                 return null;
             }
         }.execute(contents);
@@ -106,6 +106,17 @@ public class AppViewModel extends AndroidViewModel {
             @Override
             protected Void doInBackground(Content... contents) {
                 appDatabase.activityDao().insertContent(contents);
+                return null;
+            }
+        }.execute(contents);
+    }
+
+    public void removeContents(Content contents) {
+        // AsyncTask won't leak memory when used within the ViewModel
+        new AsyncTask<Content, Void, Void>() {
+            @Override
+            protected Void doInBackground(Content... contents) {
+                appDatabase.activityDao().removeContent(contents);
                 return null;
             }
         }.execute(contents);
