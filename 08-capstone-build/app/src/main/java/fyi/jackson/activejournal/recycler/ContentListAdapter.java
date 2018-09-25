@@ -3,9 +3,11 @@ package fyi.jackson.activejournal.recycler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +27,7 @@ import fyi.jackson.activejournal.ui.ContentChangeListener;
 
 public class ContentListAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements ItemTouchHelperAdapter, NewContentRowClickListener {
+        implements ItemTouchHelperAdapter, NewContentRowClickListener, ContentChangeListener {
 
     public static final String TAG = ContentListAdapter.class.getSimpleName();
 
@@ -94,7 +96,7 @@ public class ContentListAdapter
                 ((ContentImageViewHolder) viewHolder).bindTo(contents.get(position), clickListener, onStartDragListener);
                 break;
             case VIEW_TYPE_EDIT_TEXT_CONTENT:
-                ((ContentEditTextViewHolder) viewHolder).bindTo(contents.get(position), contentChangeListener, onStartDragListener);
+                ((ContentEditTextViewHolder) viewHolder).bindTo(contents.get(position), this, onStartDragListener);
                 break;
             case VIEW_TYPE_NEW_CONTENT:
                 ((NewContentViewHolder) viewHolder).bindTo(this);
@@ -164,11 +166,12 @@ public class ContentListAdapter
     }
 
     private void addTextContent() {
+        Log.d(TAG, "addTextContent: TXTDEBUG Adding new Text Content");
         Content newContent = new Content();
         newContent.setPosition(contents.size());
         newContent.setType(Content.TYPE_TEXT);
         newContent.setActivityId(currentActivity.getActivityId());
-        contents.add(newContent);
+        newContent.setValue("");
         contentChangeListener.onInsert(newContent);
     }
 
@@ -199,6 +202,7 @@ public class ContentListAdapter
         editMode = false;
         notifyDataSetChanged();
         editSnackbar.dismiss();
+        contentChangeListener.onChange(contents);
     }
 
     private void showSnackbar() {
@@ -210,5 +214,28 @@ public class ContentListAdapter
                     }
                 });
         editSnackbar.show();
+    }
+
+    @Override
+    public void onChange(List<Content> updatedContents) {
+        for (Content c : updatedContents) {
+            onChange(c);
+        }
+    }
+
+    @Override
+    public void onChange(Content updatedContent) {
+        for (int i = 0 ; i < contents.size(); i++) {
+            Content c = contents.get(i);
+            if (c.getUid() == updatedContent.getUid()) {
+                contents.set(i, updatedContent);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onInsert(Content newContent) {
+
     }
 }

@@ -21,11 +21,7 @@ public class ContentEditTextViewHolder extends RecyclerView.ViewHolder {
 
     private Content content;
     public EditText text;
-
-    long inputFinishDelay = 1000; // 1 seconds after user stops typing
-    long lastTextEdit = 0;
-    Handler handler;
-    private Runnable inputFinishChecker;
+    private boolean firstChange;
 
     public ContentEditTextViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -33,19 +29,8 @@ public class ContentEditTextViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindTo(final Content content, final ContentChangeListener changeListener, final OnStartDragListener onStartDragListener) {
+        firstChange = true;
         this.content = content;
-
-        handler = new Handler();
-        inputFinishChecker = new Runnable() {
-            @Override
-            public void run() {
-                if (System.currentTimeMillis() > (lastTextEdit + inputFinishDelay - 500)) {
-                    Toast.makeText(itemView.getContext(), "Changing content", Toast.LENGTH_SHORT).show();
-                    content.setValue(text.getText().toString());
-                    changeListener.onChange(content);
-                }
-            }
-        };
 
         text.setText(content.getValue());
 
@@ -57,13 +42,18 @@ public class ContentEditTextViewHolder extends RecyclerView.ViewHolder {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                handler.removeCallbacks(inputFinishChecker);
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                lastTextEdit = System.currentTimeMillis();
-                handler.postDelayed(inputFinishChecker, inputFinishDelay);
+                if (firstChange) {
+                    firstChange = false;
+                    return;
+                }
+                Log.d(TAG, "afterTextChanged: TXTDEBUG : " + content.getUid() + " has changed.");
+                content.setValue(editable.toString());
+                changeListener.onChange(content);
             }
         });
 

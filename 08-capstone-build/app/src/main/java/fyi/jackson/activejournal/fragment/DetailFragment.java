@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +103,7 @@ public class DetailFragment
 
             @Override
             public void onInsert(Content newContent) {
-                expectingChange = true;
+                expectingChange = false;
                 appViewModel.insertContents(newContent);
             }
         };
@@ -124,6 +125,10 @@ public class DetailFragment
                 .observe(this, new Observer<List<Content>>() {
                     @Override
                     public void onChanged(@Nullable List<Content> contents) {
+                        Log.d(TAG, "onChanged: TXTDEBUG Content changed:");
+                        for (Content c : contents) {
+                            Log.d(TAG, "onChanged: TXTDEBUG : " + c.getUid() + " : " + c.getValue());
+                        }
                         if (expectingChange) {
                             expectingChange = false;
                             return;
