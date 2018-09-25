@@ -119,7 +119,7 @@ The Location API will be used to listen for changes in device location while rec
 - [x] Build logic for navigating app. [#b8777](https://github.com/David-Jackson/Android-Nanodegree/commit/b877786224482f2ee24954fce604031d22814cbc)
 
 ### Task 6: Implement Edit Activity interactions.
-- [ ] Build insert new content (text/image) logic.
+- [x] Build insert new content (text/image) logic. [#40dfd](https://github.com/David-Jackson/Android-Nanodegree/commit/40dfd13baf68f3be7f45e5c6a1197390d6c20f57)/[#fd23d](https://github.com/David-Jackson/Android-Nanodegree/commit/fd23dca3f8f45f465998c851c5bdd51067fb2e87)
 - [x] Build logic for arranging content. [#bc333](https://github.com/David-Jackson/Android-Nanodegree/commit/bc333b33f595d3839b508d1040833f3f4f321582)
 
 ### Task 7: Implement Widgets
