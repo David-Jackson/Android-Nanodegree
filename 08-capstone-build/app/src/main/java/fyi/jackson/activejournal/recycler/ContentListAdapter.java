@@ -41,18 +41,15 @@ public class ContentListAdapter
 
     private Activity currentActivity;
     private List<Content> contents;
-    private ContentClickListener clickListener;
     private OnStartDragListener onStartDragListener;
     private ContentChangeListener contentChangeListener;
 
     private boolean editMode = false;
 
     public ContentListAdapter(Activity currentActivity,
-                              ContentClickListener clickListener,
                               OnStartDragListener onStartDragListener,
                               ContentChangeListener contentChangeListener) {
         this.currentActivity = currentActivity;
-        this.clickListener = clickListener;
         this.onStartDragListener = onStartDragListener;
         this.contentChangeListener = contentChangeListener;
     }
@@ -90,10 +87,10 @@ public class ContentListAdapter
         int viewType = getItemViewType(position);
         switch (viewType) {
             case VIEW_TYPE_TEXT_CONTENT:
-                ((ContentTextViewHolder) viewHolder).bindTo(contents.get(position), clickListener, onStartDragListener);
+                ((ContentTextViewHolder) viewHolder).bindTo(contents.get(position), onStartDragListener);
                 break;
             case VIEW_TYPE_IMAGE_CONTENT:
-                ((ContentImageViewHolder) viewHolder).bindTo(contents.get(position), clickListener, onStartDragListener);
+                ((ContentImageViewHolder) viewHolder).bindTo(contents.get(position), onStartDragListener);
                 break;
             case VIEW_TYPE_EDIT_TEXT_CONTENT:
                 ((ContentEditTextViewHolder) viewHolder).bindTo(contents.get(position), this, onStartDragListener);

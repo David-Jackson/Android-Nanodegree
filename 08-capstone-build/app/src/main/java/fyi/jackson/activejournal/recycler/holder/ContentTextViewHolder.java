@@ -21,7 +21,7 @@ public class ContentTextViewHolder extends RecyclerView.ViewHolder {
         text = itemView.findViewById(R.id.tv_text_content);
     }
 
-    public void bindTo(Content content, final ContentClickListener clickListener, final OnStartDragListener onStartDragListener) {
+    public void bindTo(Content content, final OnStartDragListener onStartDragListener) {
         text.setText(content.getValue());
 
         itemView.setOnLongClickListener(new View.OnLongClickListener() {

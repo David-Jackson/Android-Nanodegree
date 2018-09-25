@@ -27,8 +27,7 @@ public class ContentImageViewHolder extends RecyclerView.ViewHolder {
         image = itemView.findViewById(R.id.iv_image_content);
     }
 
-    public void bindTo(Content content, ContentClickListener clickListener,
-                       final OnStartDragListener onStartDragListener) {
+    public void bindTo(Content content, final OnStartDragListener onStartDragListener) {
 
         File f = new File(content.getValue());
 

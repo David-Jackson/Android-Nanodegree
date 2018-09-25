@@ -117,7 +117,6 @@ public class DetailFragment
 
         adapter = new ContentListAdapter(
                 currentActivity,
-                this,
                 onStartDragListener,
                 contentChangeListener);
 
