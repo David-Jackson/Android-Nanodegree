@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +20,7 @@ import fyi.jackson.activejournal.recycler.holder.ContentEditTextViewHolder;
 import fyi.jackson.activejournal.recycler.holder.ContentImageViewHolder;
 import fyi.jackson.activejournal.recycler.holder.ContentTextViewHolder;
 import fyi.jackson.activejournal.recycler.holder.NewContentViewHolder;
-import fyi.jackson.activejournal.ui.ContentClickListener;
+import fyi.jackson.activejournal.ui.ImageRequester;
 import fyi.jackson.activejournal.ui.NewContentRowClickListener;
 import fyi.jackson.activejournal.ui.ContentChangeListener;
 
@@ -43,15 +42,18 @@ public class ContentListAdapter
     private List<Content> contents;
     private OnStartDragListener onStartDragListener;
     private ContentChangeListener contentChangeListener;
+    private ImageRequester imageRequester;
 
     private boolean editMode = false;
 
     public ContentListAdapter(Activity currentActivity,
                               OnStartDragListener onStartDragListener,
-                              ContentChangeListener contentChangeListener) {
+                              ContentChangeListener contentChangeListener,
+                              ImageRequester imageRequester) {
         this.currentActivity = currentActivity;
         this.onStartDragListener = onStartDragListener;
         this.contentChangeListener = contentChangeListener;
+        this.imageRequester = imageRequester;
     }
 
     @NonNull
@@ -155,6 +157,7 @@ public class ContentListAdapter
                 focusOnContent(contents.size() - 1);
                 break;
             case TYPE_ADD_IMAGE:
+                imageRequester.onRequestImage();
                 break;
             case TYPE_EDIT_CONTENT:
                 toggleEditMode();

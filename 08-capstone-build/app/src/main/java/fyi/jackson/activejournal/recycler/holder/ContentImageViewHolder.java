@@ -29,10 +29,8 @@ public class ContentImageViewHolder extends RecyclerView.ViewHolder {
 
     public void bindTo(Content content, final OnStartDragListener onStartDragListener) {
 
-        File f = new File(content.getValue());
-
         Picasso.get()
-                .load(f)
+                .load(content.getValue())
                 .into(image, new Callback() {
                     @Override
                     public void onSuccess() {
