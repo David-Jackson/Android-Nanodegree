@@ -40,6 +40,9 @@ import fyi.jackson.activejournal.worker.ThumbnailWorker;
 public class ActivityMain extends AppCompatActivity {
 
     public static final String TAG = ActivityMain.class.getSimpleName();
+
+    public static final String ACTION_VIEW = "ACTION_VIEW";
+
     private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 9468;
 
     AppViewModel viewModel;

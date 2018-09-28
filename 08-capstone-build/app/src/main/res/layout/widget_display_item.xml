@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_card">
+    <ImageView
+        android:id="@+id/iv_activity_map"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        android:layout_above="@id/tv_activity_title"
+        android:src="@drawable/image_activity_map_placeholder"/>
+    <TextView
+        android:id="@+id/tv_activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Activity Title"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="18sp"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/iv_activity_type"/>
+    <ImageView
+        android:id="@+id/iv_activity_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_location_on_black_24dp"
+        android:layout_alignTop="@id/tv_activity_title"
+        android:layout_alignBottom="@id/tv_activity_title"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

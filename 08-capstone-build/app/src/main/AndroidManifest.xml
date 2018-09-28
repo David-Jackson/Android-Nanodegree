@@ -22,6 +22,18 @@
 
         <service android:name=".service.RecordingService" />
 
-    </application>
+        <receiver android:name=".widget.DisplayWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/display_widget_info" />
+        </receiver>
 
+        <service android:name=".widget.DisplayWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+
+    </application>
 </manifest>

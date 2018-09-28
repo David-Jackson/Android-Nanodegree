@@ -55,7 +55,7 @@ public class DetailFragment
 
     public static final String TAG = DetailFragment.class.getSimpleName();
 
-    private static final String EXTRA_ACTIVITY = "EXTRA_ACTIVITY";
+    public static final String EXTRA_ACTIVITY = "EXTRA_ACTIVITY";
 
     private static final int REQUEST_CODE_IMAGE = 249;
 
