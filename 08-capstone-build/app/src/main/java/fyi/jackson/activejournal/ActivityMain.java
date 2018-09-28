@@ -33,6 +33,7 @@ import fyi.jackson.activejournal.data.entities.Position;
 import fyi.jackson.activejournal.dummy.Data;
 import fyi.jackson.activejournal.dummy.Point;
 import fyi.jackson.activejournal.fragment.ActivityListFragment;
+import fyi.jackson.activejournal.fragment.DetailFragment;
 import fyi.jackson.activejournal.fragment.ImportActivityFragment;
 import fyi.jackson.activejournal.fragment.RecordingFragment;
 import fyi.jackson.activejournal.worker.ThumbnailWorker;
@@ -41,7 +42,8 @@ public class ActivityMain extends AppCompatActivity {
 
     public static final String TAG = ActivityMain.class.getSimpleName();
 
-    public static final String ACTION_VIEW = "ACTION_VIEW";
+    public static final String ACTION_VIEW = "fyi.jackson.activejournal.ACTION_VIEW_DETAIL";
+    public static final String EXTRA_ACTIVITY_ID = "fyi.jackson.activejournal.EXTRA_ACTIVITY_ID";
 
     private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 9468;
 
@@ -49,6 +51,9 @@ public class ActivityMain extends AppCompatActivity {
 
     Snackbar snackbar;
     FrameLayout bottomFrame;
+
+    boolean jumpToDetailFragment = false;
+    long jumpToActivityId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +63,32 @@ public class ActivityMain extends AppCompatActivity {
         bottomFrame = findViewById(R.id.frame_bottom_layer);
 
         fragmentTransaction(R.id.frame_top_layer, RecordingFragment.newInstance());
-        fragmentTransaction(R.id.frame_bottom_layer, ActivityListFragment.newInstance());
+
+        Intent incomingIntent = getIntent();
+        if (incomingIntent == null) {
+            fragmentTransaction(R.id.frame_bottom_layer, ActivityListFragment.newInstance());
+        } else {
+            switch (incomingIntent.getAction()) {
+                case ACTION_VIEW:
+                    jumpToActivityId = incomingIntent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
+                    jumpToDetailFragment = true;
+            }
+        }
 
         viewModel = ViewModelProviders.of(this).get(AppViewModel.class);
 
         viewModel.getActivities().observe(this, new Observer<List<Activity>>() {
             @Override
             public void onChanged(@Nullable List<Activity> activities) {
+                if (jumpToDetailFragment && jumpToActivityId != -1) {
+                    for (Activity activity : activities) {
+                        if (activity.getActivityId() == jumpToActivityId) {
+                            fragmentTransaction(R.id.frame_bottom_layer, DetailFragment.newInstance(activity));
+                        }
+                    }
+                    jumpToDetailFragment = false;
+                    jumpToActivityId = -1;
+                }
                 updateThumbnails(activities);
             }
         });

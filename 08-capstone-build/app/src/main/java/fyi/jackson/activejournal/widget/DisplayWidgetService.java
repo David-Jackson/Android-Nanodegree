@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -65,12 +64,8 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
             e.printStackTrace();
         }
 
-        // Next, we set a fill-intent which will be used to fill-in the pending intent template
-        // which is set on the collection view in StackWidgetProvider.
-        Bundle extras = new Bundle();
-        extras.putLong(DisplayWidgetProvider.EXTRA_ACTIVITY_ID, activity.getActivityId());
         Intent fillInIntent = new Intent();
-        fillInIntent.putExtras(extras);
+        fillInIntent.putExtra(DisplayWidgetProvider.EXTRA_ACTIVITY_ID, activity.getActivityId());
         rv.setOnClickFillInIntent(R.id.widget_item, fillInIntent);
 
         return rv;

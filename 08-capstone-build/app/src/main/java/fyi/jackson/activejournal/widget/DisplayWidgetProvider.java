@@ -7,8 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
+import fyi.jackson.activejournal.ActivityMain;
 import fyi.jackson.activejournal.R;
 
 public class DisplayWidgetProvider extends AppWidgetProvider {
@@ -35,8 +35,14 @@ public class DisplayWidgetProvider extends AppWidgetProvider {
         if (intent.getAction().equals(DETAIL_ACTION)) {
             int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
-            long activityId = intent.getLongExtra(EXTRA_ACTIVITY_ID, 0);
-            Toast.makeText(context, "Touched activity with id " + activityId, Toast.LENGTH_SHORT).show();
+
+            long activityId = intent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
+            if (activityId != -1) {
+                Intent startDetailFragmentIntent = new Intent(context, ActivityMain.class);
+                startDetailFragmentIntent.setAction(ActivityMain.ACTION_VIEW);
+                startDetailFragmentIntent.putExtra(ActivityMain.EXTRA_ACTIVITY_ID, activityId);
+                context.startActivity(startDetailFragmentIntent);
+            }
         }
         super.onReceive(context, intent);
     }
