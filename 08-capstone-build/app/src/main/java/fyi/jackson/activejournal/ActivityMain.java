@@ -65,14 +65,12 @@ public class ActivityMain extends AppCompatActivity {
         fragmentTransaction(R.id.frame_top_layer, RecordingFragment.newInstance());
 
         Intent incomingIntent = getIntent();
-        if (incomingIntent == null) {
-            fragmentTransaction(R.id.frame_bottom_layer, ActivityListFragment.newInstance());
-        } else {
-            switch (incomingIntent.getAction()) {
-                case ACTION_VIEW:
-                    jumpToActivityId = incomingIntent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
-                    jumpToDetailFragment = true;
-            }
+        switch (incomingIntent.getAction()) {
+            case ACTION_VIEW:
+                jumpToActivityId = incomingIntent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
+                jumpToDetailFragment = true;
+            default: // android.intent.action.MAIN
+                fragmentTransaction(R.id.frame_bottom_layer, ActivityListFragment.newInstance());
         }
 
         viewModel = ViewModelProviders.of(this).get(AppViewModel.class);
