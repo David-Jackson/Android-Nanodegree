@@ -256,7 +256,12 @@ public class DetailFragment
     @Override
     public void onRequestImage() {
         Log.d(TAG, "onRequestImage: Requesting Image");
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        Intent intent;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        } else {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        }
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         startActivityForResult(intent, REQUEST_CODE_IMAGE);
