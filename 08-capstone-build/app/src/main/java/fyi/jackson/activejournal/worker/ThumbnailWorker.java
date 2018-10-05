@@ -1,18 +1,15 @@
 package fyi.jackson.activejournal.worker;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,6 +19,7 @@ import java.util.List;
 import androidx.work.Worker;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.AppDatabase;
+import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.data.entities.Position;
 
 public class ThumbnailWorker extends Worker {
@@ -78,8 +76,9 @@ public class ThumbnailWorker extends Worker {
 
     private String buildStaticMapUrl(String encodedPath) {
         String apiKey = getApplicationContext().getString(R.string.google_static_maps_key);
-        int width = 800;
+        int width = getImageWidth();
         int height = width * 9 / 16;
+        Log.d(TAG, "buildStaticMapUrl: getting image " + width + " wide and " + height + " high");
         return new Uri.Builder()
                 .scheme("https")
                 .authority("maps.googleapis.com")
@@ -89,6 +88,7 @@ public class ThumbnailWorker extends Worker {
                 .appendQueryParameter("key", apiKey)
                 .appendQueryParameter("autoscale", "false")
                 .appendQueryParameter("size", width + "x" + height)
+                .appendQueryParameter("scale", "2")
                 .appendQueryParameter("maptype", "roadmap")
                 .appendQueryParameter("format", "png")
                 .appendQueryParameter("visual_refresh", "true")
@@ -115,5 +115,11 @@ public class ThumbnailWorker extends Worker {
             e.printStackTrace();
         }
         return "";
+    }
+
+    private int getImageWidth() {
+        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+        int screenWidth = Math.max(displayMetrics.heightPixels, displayMetrics.widthPixels);
+        return Math.max(screenWidth / 2, 640);
     }
 }
