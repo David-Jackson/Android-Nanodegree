@@ -33,11 +33,14 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public static AppDatabase loadDatabase(final Context context, boolean synchronous) {
-        if (INSTANCE == null || SYNCHRONOUS != synchronous) {
+        if (SYNCHRONOUS != synchronous) {
+            INSTANCE.close();
+            INSTANCE = null;
+            SYNCHRONOUS = synchronous;
+        }
+        if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
-                if (INSTANCE == null || SYNCHRONOUS != synchronous) {
-                    SYNCHRONOUS = synchronous;
-                    if (INSTANCE != null) INSTANCE.close();
+                if (INSTANCE == null) {
                     // TODO: 9/19/2018 Implement Migrations
 
                     Builder<AppDatabase> builder =
