@@ -40,6 +40,19 @@ public class AppViewModel extends AndroidViewModel {
         return appDatabase.statsDao().getLiveStats();
     }
 
+
+    @SuppressLint("StaticFieldLeak")
+    public void updateActivities(Activity... activities) {
+        // AsyncTask won't leak memory when used within the ViewModel
+        new AsyncTask<Activity, Void, Void>() {
+            @Override
+            protected Void doInBackground(Activity... activities) {
+                appDatabase.activityDao().updateActivity(activities);
+                return null;
+            }
+        }.execute(activities);
+    }
+
     @SuppressLint("StaticFieldLeak")
     public void updateContents(final List<Content> contents) {
         // AsyncTask won't leak memory when used within the ViewModel
@@ -109,6 +122,20 @@ public class AppViewModel extends AndroidViewModel {
                 return null;
             }
         }.execute(contents);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public void removeAllWithId(final long activityId) {
+        // AsyncTask won't leak memory when used within the ViewModel
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                appDatabase.activityDao().removeActivityWithId(activityId);
+                appDatabase.activityDao().removePositionsWithId(activityId);
+                appDatabase.activityDao().removeContentsWithId(activityId);
+                return null;
+            }
+        }.execute();
     }
 
     public void removeContents(Content contents) {

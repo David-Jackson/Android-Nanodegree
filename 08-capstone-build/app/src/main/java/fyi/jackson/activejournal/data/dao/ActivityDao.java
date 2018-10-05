@@ -57,12 +57,23 @@ public interface ActivityDao {
     void updateThumbail(long activityId, String thumbnailFileName);
 
     @Update
+    void updateActivity(Activity... activities);
+
+    @Update
     void updateContent(List<Content> contents);
 
     @Update
     void updateContent(Content... contents);
 
+    @Query("DELETE FROM activities WHERE activityId = :activityId")
+    void removeActivityWithId(long activityId);
+
+    @Query("DELETE FROM positions WHERE activityId = :activityId")
+    void removePositionsWithId(long activityId);
+
+    @Query("DELETE FROM content WHERE activityId = :activityId")
+    void removeContentsWithId(long activityId);
+
     @Delete
     void removeContent(Content... contents);
-
 }

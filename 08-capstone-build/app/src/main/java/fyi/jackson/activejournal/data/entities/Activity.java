@@ -145,6 +145,41 @@ public class Activity implements Parcelable {
         setThumbnail(in.readString());
     }
 
+    public static CharSequence[] getAllTypeNames() {
+        return new CharSequence[]{
+            "Walking",
+            "Running",
+            "Hiking",
+            "Biking",
+            "Sailing",
+            "Boating",
+            "Driving",
+            "Other"
+        };
+    }
+
+    public static int getTypeForName(CharSequence name) {
+        switch ((String) name) {
+            case "Walking":
+                return TYPE_WALKING;
+            case "Running":
+                return TYPE_RUNNING;
+            case "Hiking":
+                return TYPE_HIKING;
+            case "Biking":
+                return TYPE_BIKING;
+            case "Sailing":
+                return TYPE_SAILING;
+            case "Boating":
+                return TYPE_BOATING;
+            case "Driving":
+                return TYPE_DRIVING;
+            default:
+                return TYPE_OTHER;
+        }
+    }
+
+
     public static final Parcelable.Creator<Activity> CREATOR = new Parcelable.Creator<Activity>() {
         @Override
         public Activity createFromParcel(Parcel source) {

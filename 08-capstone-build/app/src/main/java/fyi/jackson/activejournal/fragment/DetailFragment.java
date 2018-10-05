@@ -1,36 +1,39 @@
 package fyi.jackson.activejournal.fragment;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.CursorLoader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.InputType;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,6 +51,7 @@ import fyi.jackson.activejournal.ui.ContentClickListener;
 import fyi.jackson.activejournal.ui.ImageRequester;
 import fyi.jackson.activejournal.util.ActivityTransitionNames;
 import fyi.jackson.activejournal.ui.ContentChangeListener;
+import fyi.jackson.activejournal.util.Validator;
 
 public class DetailFragment
         extends Fragment
@@ -89,6 +93,7 @@ public class DetailFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         postponeEnterTransition();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setSharedElementEnterTransition(
@@ -174,6 +179,22 @@ public class DetailFragment
         titleTextView.setText(activity.getName());
         typeImageView.setImageResource(activity.getTypeResId());
 
+        titleTextView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                openRenameDialog();
+                return true;
+            }
+        });
+
+        typeImageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                openChangeTypeDialog();
+                return true;
+            }
+        });
+
         if (activity.getThumbnail() == null) {
             startPostponedEnterTransition();
         } else {
@@ -199,6 +220,24 @@ public class DetailFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_fragment_detail, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_rename:
+                openRenameDialog();
+                break;
+            case R.id.action_set_type:
+                openChangeTypeDialog();
+                break;
+            case R.id.action_delete:
+                openDeleteDialog();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
     @Override
@@ -271,5 +310,64 @@ public class DetailFragment
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         startActivityForResult(intent, REQUEST_CODE_IMAGE);
+    }
+
+    private void openRenameDialog() {
+        final EditText input = new EditText(getContext());
+        input.setText(currentActivity.getName());
+
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.menu_title_rename)
+                .setView(input)
+                .setPositiveButton("Rename", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String newName = input.getText().toString();
+                        if (Validator.checkActivityName(newName)) {
+                            currentActivity.setName(newName);
+                            appViewModel.updateActivities(currentActivity);
+                            bindTo(currentActivity);
+                        } else {
+                            Toast.makeText(getContext(), "Invalid Activity Name", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
+    }
+
+    private void openDeleteDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.menu_title_delete)
+                .setMessage("Are you sure you want to delete this activity? This will delete all location data and journal contents for this activity.")
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        appViewModel.removeAllWithId(currentActivity.getActivityId());
+                        getActivity().onBackPressed();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void openChangeTypeDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.menu_title_set_type)
+                .setItems(Activity.getAllTypeNames(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int newType = Activity.getTypeForName(Activity.getAllTypeNames()[i]);
+                        currentActivity.setType(newType);
+                        appViewModel.updateActivities(currentActivity);
+                        bindTo(currentActivity);
+                    }
+                })
+                .show();
     }
 }
