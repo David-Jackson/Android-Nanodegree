@@ -1,6 +1,7 @@
 package fyi.jackson.activejournal.recycler;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,8 +54,13 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        if (getItemViewType(position) == VIEW_TYPE_ACTIVITY) {
-            ((ActivityViewHolder) viewHolder).bindTo(activities.get(position), clickListener);
+        switch (getItemViewType(position)) {
+            case VIEW_TYPE_ACTIVITY:
+                ((ActivityViewHolder) viewHolder).bindTo(activities.get(position), clickListener);
+                break;
+            case VIEW_TYPE_EMPTY:
+                // TODO: 9/30/2018 set span size of empty view holder on tablet layouts to span the whole row whether this is done in the adapter, xml, or in a setSpanLookup
+                break;
         }
     }
 
