@@ -23,6 +23,9 @@ public interface ActivityDao {
     @Query("SELECT * FROM activities")
     LiveData<List<Activity>> getLiveAllActivities();
 
+    @Query("SELECT * FROM activities ORDER BY activityId DESC LIMIT 1")
+    Activity getLastActivity();
+
     @Query("SELECT * FROM positions WHERE activityId = :activityId ORDER BY ts ASC")
     List<Position> getPositionsForActivity(long activityId);
 
@@ -61,4 +64,5 @@ public interface ActivityDao {
 
     @Delete
     void removeContent(Content... contents);
+
 }
