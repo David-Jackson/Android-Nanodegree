@@ -196,6 +196,12 @@ public class DetailFragment
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_fragment_detail, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public void onClick(Content content, RecyclerView.ViewHolder holder) {
 
     }

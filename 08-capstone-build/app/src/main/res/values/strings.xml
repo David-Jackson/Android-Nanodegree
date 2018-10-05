@@ -17,4 +17,7 @@
     <string name="add_image">Add Image</string>
     <string name="add_text">Add Text</string>
     <string name="edit_content">Edit</string>
+    <string name="menu_title_set_type">Set Activity Type</string>
+    <string name="menu_title_rename">Rename</string>
+    <string name="menu_title_delete">Delete</string>
 </resources>

@@ -136,21 +136,8 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_activity_main, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_import:
-//                fragmentTransaction(R.id.frame_bottom_layer, ImportActivityFragment.newInstance());
-                return true;
-            case R.id.action_settings:
-                bulkInsert();
-                return true;
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -176,76 +163,4 @@ public class ActivityMain extends AppCompatActivity {
         snackbar.show();
     }
 
-    private void bulkInsert() {
-        List<Point> points = Data.getSpinnakerSailing();
-        List<Point> points1 = Data.getClingmansDome();
-        List<Position> positions = new ArrayList<>();
-        List<Position> positions1 = new ArrayList<>();
-
-        long activityId = System.currentTimeMillis();
-        long activityId1 = activityId + 10;
-
-        for (Point p : points) {
-            Position pos = new Position();
-            pos.setActivityId(activityId);
-            pos.setLegId(1);
-            pos.setLat(p.lat);
-            pos.setLng(p.lng);
-            pos.setTs(p.ts);
-            pos.setAcc(p.acc);
-            pos.setAlt(p.alt);
-            pos.setVacc(p.vAcc);
-            positions.add(pos);
-        }
-        for (Point p : points1) {
-            Position pos = new Position();
-            pos.setActivityId(activityId1);
-            pos.setLegId(1);
-            pos.setLat(p.lat);
-            pos.setLng(p.lng);
-            pos.setTs(p.ts);
-            pos.setAcc(p.acc);
-            pos.setAlt(p.alt);
-            pos.setVacc(p.vAcc);
-            positions1.add(pos);
-        }
-        viewModel.insertPositionsList(positions);
-        viewModel.insertPositionsList(positions1);
-
-
-        Activity activity = new Activity();
-        activity.setActivityId(activityId);
-        activity.setName("Flying the Spinnaker Solo");
-        activity.setType(Activity.TYPE_SAILING);
-        Activity activity1 = new Activity();
-        activity1.setActivityId(activityId1);
-        activity1.setName("Hiking to Clingman's Dome");
-        activity1.setType(Activity.TYPE_HIKING);
-
-        viewModel.insertActivities(activity, activity1);
-
-
-        String longText = "This is a very long string that explains my recent activity in great detail. It was so great. I had so much fun. Here's some Lorem Ipsum: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum tincidunt quam, eu hendrerit mauris blandit vitae. Donec eu laoreet nulla. Cras facilisis tempor eros vel eleifend. Curabitur eros mi, volutpat eget urna in, efficitur tempus leo. Duis non efficitur felis, id posuere magna. Nullam ultrices nisi ac nisi venenatis laoreet. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In hac habitasse platea dictumst. Morbi accumsan volutpat dui eget consectetur.";
-        Content textContent = new Content();
-        textContent.setType(Content.TYPE_TEXT);
-        textContent.setPosition(0);
-        textContent.setActivityId(activityId);
-        textContent.setValue(longText);
-
-        String shortText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum tincidunt quam, eu hendrerit mauris blandit vitae. Donec eu laoreet nulla. Cras facilisis tempor eros vel eleifend.";
-        Content textContent2 = new Content();
-        textContent2.setType(Content.TYPE_TEXT);
-        textContent2.setPosition(2);
-        textContent2.setActivityId(activityId);
-        textContent2.setValue(shortText);
-
-//        String imageUri = "/storage/self/primary/DCIM/Camera/IMG_20170715_205901021.jpg";
-//        Content imageContent = new Content();
-//        imageContent.setType(Content.TYPE_IMAGE);
-//        imageContent.setPosition(1);
-//        imageContent.setActivityId(activityId);
-//        imageContent.setValue(imageUri);
-
-        viewModel.insertContents(textContent, textContent2);
-    }
 }
