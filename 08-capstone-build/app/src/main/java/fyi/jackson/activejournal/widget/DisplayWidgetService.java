@@ -55,10 +55,11 @@ public class DisplayWidgetService extends RemoteViewsService {
             rv.setImageViewResource(R.id.iv_activity_type, activity.getTypeResId());
 
             try {
+                if (activity.getThumbnail() == null) throw new NullPointerException("Thumbnail not set");
                 File f = new File(activity.getThumbnail());
                 Bitmap bitmap = Picasso.get().load(f).get();
                 rv.setImageViewBitmap(R.id.iv_activity_map, bitmap);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 rv.setImageViewResource(R.id.iv_activity_map, R.drawable.image_activity_map_placeholder);
                 e.printStackTrace();
             }

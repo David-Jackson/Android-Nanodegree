@@ -43,6 +43,7 @@ public class ActivityMain extends AppCompatActivity {
     public static final String TAG = ActivityMain.class.getSimpleName();
 
     public static final String ACTION_VIEW = "fyi.jackson.activejournal.ACTION_VIEW_DETAIL";
+    public static final String ACTION_LIST = "fyi.jackson.activejournal.ACTION_LIST";
     public static final String EXTRA_ACTIVITY_ID = "fyi.jackson.activejournal.EXTRA_ACTIVITY_ID";
 
     private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 9468;

@@ -10,9 +10,11 @@ import android.widget.RemoteViews;
 
 import fyi.jackson.activejournal.ActivityMain;
 import fyi.jackson.activejournal.R;
+import fyi.jackson.activejournal.data.entities.Activity;
 
 public class DisplayWidgetProvider extends AppWidgetProvider {
-    public static final String DETAIL_ACTION = "fyi.jackson.activejournal.widget.DETAIL_ACTION";
+    public static final String ACTION_DETAIL = "fyi.jackson.activejournal.widget.ACTION_DETAIL";
+    public static final String ACTION_LIST = "fyi.jackson.activejournal.widget.ACTION_LIST";
     public static final String EXTRA_ACTIVITY_ID = "fyi.jackson.activejournal.widget.EXTRA_ACTIVITY_ID";
 
     @Override
@@ -32,17 +34,21 @@ public class DisplayWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals(DETAIL_ACTION)) {
-            int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
-
-            long activityId = intent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
-            if (activityId != -1) {
-                Intent startDetailFragmentIntent = new Intent(context, ActivityMain.class);
-                startDetailFragmentIntent.setAction(ActivityMain.ACTION_VIEW);
-                startDetailFragmentIntent.putExtra(ActivityMain.EXTRA_ACTIVITY_ID, activityId);
-                context.startActivity(startDetailFragmentIntent);
-            }
+        switch (intent.getAction()) {
+            case ACTION_DETAIL:
+                long activityId = intent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
+                if (activityId != -1) {
+                    Intent startDetailFragmentIntent = new Intent(context, ActivityMain.class);
+                    startDetailFragmentIntent.setAction(ActivityMain.ACTION_VIEW);
+                    startDetailFragmentIntent.putExtra(ActivityMain.EXTRA_ACTIVITY_ID, activityId);
+                    context.startActivity(startDetailFragmentIntent);
+                }
+                break;
+            case ACTION_LIST:
+                Intent startListFragmentIntent = new Intent(context, ActivityMain.class);
+                startListFragmentIntent.setAction(ActivityMain.ACTION_LIST);
+                context.startActivity(startListFragmentIntent);
+                break;
         }
         super.onReceive(context, intent);
     }
@@ -58,16 +64,27 @@ public class DisplayWidgetProvider extends AppWidgetProvider {
             rv.setRemoteAdapter(appWidgetIds[i], R.id.stack_view, intent);
             rv.setEmptyView(R.id.stack_view, R.id.empty_view);
 
-            Intent toastIntent = new Intent(context, DisplayWidgetProvider.class);
-            toastIntent.setAction(DisplayWidgetProvider.DETAIL_ACTION);
-            toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
-            intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-            PendingIntent toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-            rv.setPendingIntentTemplate(R.id.stack_view, toastPendingIntent);
+            rv.setImageViewResource(R.id.iv_activity_type, Activity.getRandomTypeResId());
+            rv.setOnClickPendingIntent(R.id.empty_view, getOpenAppPendingIntent(context));
+
+            rv.setPendingIntentTemplate(R.id.stack_view, getTemplatePendingIntent(context));
 
             appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+    }
+
+    private PendingIntent getTemplatePendingIntent(Context context) {
+        Intent detailIntent = new Intent(context, DisplayWidgetProvider.class);
+        detailIntent.setAction(DisplayWidgetProvider.ACTION_DETAIL);
+        return PendingIntent.getBroadcast(context, 0, detailIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private PendingIntent getOpenAppPendingIntent(Context context) {
+        Intent openAppIntent = new Intent(context, DisplayWidgetProvider.class);
+        openAppIntent.setAction(DisplayWidgetProvider.ACTION_LIST);
+        return PendingIntent.getBroadcast(context, 0, openAppIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }
