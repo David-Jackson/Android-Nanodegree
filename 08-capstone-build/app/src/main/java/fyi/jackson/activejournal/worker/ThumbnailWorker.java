@@ -120,6 +120,6 @@ public class ThumbnailWorker extends Worker {
     private int getImageWidth() {
         DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
         int screenWidth = Math.max(displayMetrics.heightPixels, displayMetrics.widthPixels);
-        return Math.max(screenWidth / 2, 640);
+        return Math.min(screenWidth / 2, 640);
     }
 }
