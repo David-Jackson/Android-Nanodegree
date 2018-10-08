@@ -23,6 +23,7 @@ import fyi.jackson.activejournal.recycler.holder.NewContentViewHolder;
 import fyi.jackson.activejournal.ui.ImageRequester;
 import fyi.jackson.activejournal.ui.NewContentRowClickListener;
 import fyi.jackson.activejournal.ui.ContentChangeListener;
+import fyi.jackson.activejournal.util.Validator;
 
 public class ContentListAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -205,6 +206,7 @@ public class ContentListAdapter
         editMode = false;
         notifyDataSetChanged();
         editSnackbar.dismiss();
+        validateContents();
         contentChangeListener.onChange(contents);
     }
 
@@ -217,6 +219,14 @@ public class ContentListAdapter
                     }
                 });
         editSnackbar.show();
+    }
+
+    private void validateContents() {
+        for (int i = 0; i < contents.size(); i++) {
+            if (!Validator.checkContent(contents.get(i))) {
+                onItemDismiss(i);
+            }
+        }
     }
 
     @Override
