@@ -313,12 +313,22 @@ public class DetailFragment
     }
 
     private void openRenameDialog() {
-        final EditText input = new EditText(getContext());
+        android.app.Activity appActivity = getActivity();
+        final EditText input = new EditText(appActivity);
+
+        FrameLayout container = new FrameLayout(appActivity);
+        int editTextMargins = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = editTextMargins;
+        params.rightMargin = editTextMargins;
+        input.setLayoutParams(params);
         input.setText(currentActivity.getName());
+        container.addView(input);
 
         new AlertDialog.Builder(getContext())
                 .setTitle(R.string.menu_title_rename)
-                .setView(input)
+                .setView(container)
                 .setPositiveButton("Rename", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
