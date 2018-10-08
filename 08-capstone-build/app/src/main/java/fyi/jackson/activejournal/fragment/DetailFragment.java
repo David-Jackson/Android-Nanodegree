@@ -332,7 +332,7 @@ public class DetailFragment
                 .setPositiveButton("Rename", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String newName = input.getText().toString();
+                        String newName = input.getText().toString().trim();
                         if (Validator.checkActivityName(newName)) {
                             currentActivity.setName(newName);
                             appViewModel.updateActivities(currentActivity);

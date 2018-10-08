@@ -5,36 +5,24 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import fyi.jackson.activejournal.data.AppViewModel;
 import fyi.jackson.activejournal.data.entities.Activity;
-import fyi.jackson.activejournal.data.entities.Content;
-import fyi.jackson.activejournal.data.entities.Position;
-import fyi.jackson.activejournal.dummy.Data;
-import fyi.jackson.activejournal.dummy.Point;
 import fyi.jackson.activejournal.fragment.ActivityListFragment;
 import fyi.jackson.activejournal.fragment.DetailFragment;
-import fyi.jackson.activejournal.fragment.ImportActivityFragment;
 import fyi.jackson.activejournal.fragment.RecordingFragment;
 import fyi.jackson.activejournal.worker.ThumbnailWorker;
 
@@ -151,16 +139,4 @@ public class ActivityMain extends AppCompatActivity {
                 .replace(parentId, fragment)
                 .commit();
     }
-
-    private void updateSnackbar(Integer value) {
-        if (snackbar == null) {
-            snackbar = Snackbar.make(
-                    bottomFrame,
-                    "Beep boop",
-                    Snackbar.LENGTH_SHORT);
-        }
-        snackbar.setText(value + " positions in database.");
-        snackbar.show();
-    }
-
 }

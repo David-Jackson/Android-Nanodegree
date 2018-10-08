@@ -106,8 +106,9 @@ public class ActivityListFragment extends Fragment implements ItemClickListener 
             case R.id.action_import:
 //                fragmentTransaction(R.id.frame_bottom_layer, ImportActivityFragment.newInstance());
                 break;
-            case R.id.action_settings:
+            case R.id.action_add_sample_data:
                 bulkInsert();
+            case R.id.action_settings:
                 break;
             default:
                 return super.onOptionsItemSelected(item);
