@@ -5,6 +5,6 @@
     android:minHeight="10dp"
     android:updatePeriodMillis="1800000"
     android:initialLayout="@layout/widget_record_layout"
-    android:previewImage="@mipmap/ic_launcher"
+    android:previewImage="@mipmap/widget_record_preview"
     android:resizeMode="horizontal|vertical">
 </appwidget-provider>

@@ -21,4 +21,6 @@
     <string name="menu_title_rename">Rename</string>
     <string name="menu_title_delete">Delete</string>
     <string name="menu_title_add_sample_data">Add Sample Activities</string>
+    <string name="widget_recording_name">Recording Shortcut</string>
+    <string name="widget_display_name">Activity List</string>
 </resources>

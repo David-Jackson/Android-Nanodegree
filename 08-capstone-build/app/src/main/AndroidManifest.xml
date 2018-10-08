@@ -22,7 +22,8 @@
 
         <service android:name=".service.RecordingService" />
 
-        <receiver android:name=".widget.DisplayWidgetProvider">
+        <receiver android:name=".widget.DisplayWidgetProvider"
+            android:label="@string/widget_display_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -35,7 +36,8 @@
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
 
-        <receiver android:name=".widget.RecordWidgetProvider">
+        <receiver android:name=".widget.RecordWidgetProvider"
+            android:label="@string/widget_recording_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
