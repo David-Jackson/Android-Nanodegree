@@ -15,7 +15,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.InputType;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -61,6 +61,10 @@ public class DetailFragment
 
     public static final String EXTRA_ACTIVITY = "EXTRA_ACTIVITY";
 
+    private static final String EVENT_CONTENT_INSERTED = "content_inserted";
+    private static final String EVENT_CONTENT_REMOVED = "content_removed";
+    private static final String EVENT_CONTENT_CHANGED = "content_changed";
+
     private static final int REQUEST_CODE_IMAGE = 249;
 
     private Unbinder unbinder;
@@ -76,6 +80,8 @@ public class DetailFragment
     AppViewModel appViewModel;
 
     Activity currentActivity;
+
+    private FirebaseAnalytics firebaseAnalytics;
 
     boolean expectingChange = false;
 
@@ -95,6 +101,9 @@ public class DetailFragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         postponeEnterTransition();
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setSharedElementEnterTransition(
                     TransitionInflater.from(getContext())
@@ -249,24 +258,28 @@ public class DetailFragment
     public void onChange(List<Content> updatedContents) {
         expectingChange = true;
         appViewModel.updateContents(updatedContents);
+        logChange();
     }
 
     @Override
     public void onChange(Content updatedContent) {
         expectingChange = true;
         appViewModel.updateContents(updatedContent);
+        logChange();
     }
 
     @Override
     public void onInsert(Content newContent) {
         expectingChange = false;
         appViewModel.insertContents(newContent);
+        logInsert(newContent);
     }
 
     @Override
     public void onRemove(Content contentToRemove) {
         expectingChange = true;
         appViewModel.removeContents(contentToRemove);
+        logRemove(contentToRemove);
     }
 
     @Override
@@ -379,5 +392,25 @@ public class DetailFragment
                     }
                 })
                 .show();
+    }
+
+    private void logInsert(Content content) {
+        Bundle analyticsData = new Bundle();
+        analyticsData.putLong("activityId", content.getActivityId());
+        analyticsData.putInt("contentType", content.getType());
+        firebaseAnalytics.logEvent(EVENT_CONTENT_INSERTED, analyticsData);
+    }
+
+    private void logRemove(Content content) {
+        Bundle analyticsData = new Bundle();
+        analyticsData.putLong("activityId", content.getActivityId());
+        analyticsData.putInt("contentType", content.getType());
+        firebaseAnalytics.logEvent(EVENT_CONTENT_REMOVED, analyticsData);
+    }
+
+    private void logChange() {
+        Bundle analyticsData = new Bundle();
+        analyticsData.putLong("activityId", currentActivity.getActivityId());
+        firebaseAnalytics.logEvent(EVENT_CONTENT_CHANGED, analyticsData);
     }
 }
