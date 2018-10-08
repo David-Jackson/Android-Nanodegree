@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.location.Location;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -17,6 +18,8 @@ import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import fyi.jackson.activejournal.ActivityMain;
 import fyi.jackson.activejournal.R;
@@ -36,6 +39,10 @@ public class RecordingService extends Service {
     private static final String NOTIFICATION_CHANNEL_RECORDING = "ActiveJournalRecordingChannel";
     private static final int NOTIFICATION_ID_RECORDING = 658;
 
+    private static final String EVENT_START_RECORDING = "start_recording";
+    private static final String EVENT_STOP_RECORDING = "stop_recording";
+    private static final String EVENT_NOTIFICATION_CLICKED = "notification_clicked";
+
     private LocationSensor locationSensor;
 
     private AppDatabase database;
@@ -48,9 +55,13 @@ public class RecordingService extends Service {
     private NotificationManagerCompat notificationManager;
     private NotificationCompat.Builder notificationBuilder;
 
+    private FirebaseAnalytics firebaseAnalytics;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         setupNotification();
 
@@ -82,6 +93,8 @@ public class RecordingService extends Service {
                 Toast.makeText(this, "Starting Service", Toast.LENGTH_SHORT).show();
                 activityId = System.currentTimeMillis();
 
+                logStart();
+
                 locationStatistics = new LocationStatistics(activityId);
                 insertStats(locationStatistics.getStatistics());
 
@@ -94,6 +107,8 @@ public class RecordingService extends Service {
 
             case ServiceConstants.ACTION.STOP_FOREGROUND:
                 Toast.makeText(this, "Stopping Service", Toast.LENGTH_SHORT).show();
+
+                logStop();
 
                 stopForeground(true);
                 IS_SERVICE_RUNNING = false;
@@ -259,5 +274,19 @@ public class RecordingService extends Service {
             position.setVacc(location.getVerticalAccuracyMeters());
         }
         return position;
+    }
+
+    private void logStart() {
+        Bundle analyticsData = new Bundle();
+        analyticsData.putLong("id", activityId);
+        firebaseAnalytics.logEvent(EVENT_START_RECORDING, analyticsData);
+    }
+
+    private void logStop() {
+        Bundle analyticsData = new Bundle();
+        analyticsData.putLong("id", activityId);
+        analyticsData.putLong("endTime", System.currentTimeMillis());
+        analyticsData.putInt("count", locationStatistics.getStatistics().getPointCount());
+        firebaseAnalytics.logEvent(EVENT_STOP_RECORDING, analyticsData);
     }
 }

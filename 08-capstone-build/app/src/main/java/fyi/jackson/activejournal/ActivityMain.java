@@ -10,10 +10,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -26,7 +29,8 @@ import fyi.jackson.activejournal.fragment.DetailFragment;
 import fyi.jackson.activejournal.fragment.RecordingFragment;
 import fyi.jackson.activejournal.worker.ThumbnailWorker;
 
-public class ActivityMain extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity
+        implements FragmentManager.OnBackStackChangedListener {
 
     public static final String TAG = ActivityMain.class.getSimpleName();
 
@@ -35,6 +39,8 @@ public class ActivityMain extends AppCompatActivity {
     public static final String EXTRA_ACTIVITY_ID = "fyi.jackson.activejournal.EXTRA_ACTIVITY_ID";
 
     private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 9468;
+
+    private FirebaseAnalytics firebaseAnalytics;
 
     AppViewModel viewModel;
 
@@ -48,6 +54,9 @@ public class ActivityMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
 
         bottomFrame = findViewById(R.id.frame_bottom_layer);
 
@@ -82,6 +91,12 @@ public class ActivityMain extends AppCompatActivity {
 
         checkForPermissions();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getSupportFragmentManager().removeOnBackStackChangedListener(this);
     }
 
     private void checkForPermissions() {
@@ -138,5 +153,13 @@ public class ActivityMain extends AppCompatActivity {
                 .beginTransaction()
                 .replace(parentId, fragment)
                 .commit();
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        Fragment currentFragment = getSupportFragmentManager()
+                .findFragmentById(R.id.frame_bottom_layer);
+        firebaseAnalytics.setCurrentScreen(
+                this, currentFragment.getClass().getSimpleName(), null);
     }
 }
