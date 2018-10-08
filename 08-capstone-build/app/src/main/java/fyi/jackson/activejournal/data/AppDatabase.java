@@ -22,39 +22,21 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract StatsDao statsDao();
 
     private static AppDatabase INSTANCE;
-    private static boolean SYNCHRONOUS = false;
 
     public static AppDatabase getDatabase(final Context context) {
-        return loadDatabase(context, false);
-    }
-
-    public static AppDatabase getSynchronousDatabase(final Context context) {
-        return loadDatabase(context, true);
-    }
-
-    public static AppDatabase loadDatabase(final Context context, boolean synchronous) {
-        if (SYNCHRONOUS != synchronous) {
-            INSTANCE.close();
-            INSTANCE = null;
-            SYNCHRONOUS = synchronous;
-        }
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     // TODO: 9/19/2018 Implement Migrations
 
-                    Builder<AppDatabase> builder =
-                            Room.databaseBuilder(context.getApplicationContext(),
-                                    AppDatabase.class, "activejournal_database");
-                    builder.fallbackToDestructiveMigration();
-                    if (SYNCHRONOUS) {
-                        builder.allowMainThreadQueries();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                                    AppDatabase.class, "activejournal_database")
+                            .fallbackToDestructiveMigration()
+                            .allowMainThreadQueries()
+                            .build();
                     }
-
-                    INSTANCE = builder.build();
                 }
             }
-        }
         return INSTANCE;
     }
 }

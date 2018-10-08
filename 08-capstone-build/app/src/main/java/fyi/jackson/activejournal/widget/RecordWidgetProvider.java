@@ -50,7 +50,7 @@ public class RecordWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        Activity lastActivity = AppDatabase.getSynchronousDatabase(context).activityDao().getLastActivity();
+        Activity lastActivity = AppDatabase.getDatabase(context).activityDao().getLastActivity();
 
         for (int i = 0; i < appWidgetIds.length; ++i) {
             updateWidget(context, appWidgetManager, appWidgetIds[i], lastActivity);
