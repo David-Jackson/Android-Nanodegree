@@ -38,6 +38,8 @@ public class ActivityMain extends AppCompatActivity
     public static final String ACTION_LIST = "fyi.jackson.activejournal.ACTION_LIST";
     public static final String EXTRA_ACTIVITY_ID = "fyi.jackson.activejournal.EXTRA_ACTIVITY_ID";
 
+    private static final String USER_PROPERTY_ACTIVITY_COUNT = "activity_count";
+
     private static final int PERMISSIONS_REQUEST_FINE_LOCATION = 9468;
 
     private FirebaseAnalytics firebaseAnalytics;
@@ -86,6 +88,8 @@ public class ActivityMain extends AppCompatActivity
                     jumpToActivityId = -1;
                 }
                 updateThumbnails(activities);
+                firebaseAnalytics.setUserProperty(
+                        USER_PROPERTY_ACTIVITY_COUNT, String.valueOf(activities.size()));
             }
         });
 
