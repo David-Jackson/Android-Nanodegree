@@ -1,18 +1,29 @@
 package fyi.jackson.activejournal.widget;
 
+import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import java.util.Iterator;
+import java.util.List;
+
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.AppDatabase;
 import fyi.jackson.activejournal.data.entities.Activity;
+import fyi.jackson.activejournal.data.entities.Content;
+import fyi.jackson.activejournal.service.RecordingService;
+import fyi.jackson.activejournal.service.ServiceConstants;
+
+import static android.content.Context.ACTIVITY_SERVICE;
 
 public class RecordWidgetProvider extends AppWidgetProvider {
     public static final String TAG = RecordWidgetProvider.class.getSimpleName();
@@ -20,6 +31,8 @@ public class RecordWidgetProvider extends AppWidgetProvider {
     public static final String ACTION_START = "fyi.jackson.activejournal.widget.ACTION_START";
     public static final String ACTION_UPDATE = "fyi.jackson.activejournal.widget.ACTION_UPDATE";
     public static final String EXTRA_ACTIVITY_TYPE = "fyi.jackson.activejournal.widget.EXTRA_ACTIVITY_TYPE";
+
+    private static boolean userHasBeenWarned = false;
 
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
@@ -39,10 +52,12 @@ public class RecordWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(ACTION_START)) {
-            int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
-
-            Toast.makeText(context, "Recording Widget Clicked: " + appWidgetId, Toast.LENGTH_SHORT).show();
+            boolean serviceRunning = isServiceRunning(context, RecordingService.class.getName());
+            if (serviceRunning) {
+                askToStopRecording(context);
+            } else {
+                startRecording(context);
+            }
         }
         super.onReceive(context, intent);
     }
@@ -81,5 +96,35 @@ public class RecordWidgetProvider extends AppWidgetProvider {
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         return PendingIntent.getBroadcast(context, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private boolean isServiceRunning(Context context, String serviceName){
+        ActivityManager am = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> l = am.getRunningServices(50);
+        Iterator<ActivityManager.RunningServiceInfo> i = l.iterator();
+        while (i.hasNext()) {
+            ActivityManager.RunningServiceInfo runningServiceInfo = i.next();
+            if(runningServiceInfo.service.getClassName().equals(serviceName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void startRecording(Context context) {
+        Intent service = new Intent(context, RecordingService.class);
+        service.setAction(ServiceConstants.ACTION.START_FOREGROUND);
+        context.startService(service);
+    }
+
+    private void askToStopRecording(Context context) {
+        if (userHasBeenWarned) {
+            Intent service = new Intent(context, RecordingService.class);
+            service.setAction(ServiceConstants.ACTION.STOP_FOREGROUND);
+            context.startService(service);
+        } else {
+            Toast.makeText(context, "Recording currently active. Press again to stop recording.", Toast.LENGTH_LONG).show();
+        }
+        userHasBeenWarned = !userHasBeenWarned;
     }
 }

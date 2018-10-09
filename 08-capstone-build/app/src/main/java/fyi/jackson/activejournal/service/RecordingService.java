@@ -90,7 +90,7 @@ public class RecordingService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         switch (intent.getAction()) {
             case ServiceConstants.ACTION.START_FOREGROUND:
-                Toast.makeText(this, "Starting Service", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Recording Started", Toast.LENGTH_SHORT).show();
                 activityId = System.currentTimeMillis();
 
                 logStart();
@@ -106,7 +106,7 @@ public class RecordingService extends Service {
                 break;
 
             case ServiceConstants.ACTION.STOP_FOREGROUND:
-                Toast.makeText(this, "Stopping Service", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Recording Stopped", Toast.LENGTH_SHORT).show();
 
                 logStop();
 
@@ -119,7 +119,6 @@ public class RecordingService extends Service {
                 activity.setActivityId(activityId);
                 // TODO: 9/18/2018 Implement functionality for getting activity type
                 activity.setType(Activity.TYPE_OTHER);
-                // TODO: 9/18/2018 Implement generation of activity name based on time (Sunday Morning Sailing, Friday Afternoon Hiking)
                 activity.setName(Formatter.generateDefaultActivityName(activityId, activity.getTypeName()));
                 insertActivity(activity);
 
