@@ -19,7 +19,6 @@ import fyi.jackson.activejournal.ui.ItemClickListener;
 public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int VIEW_TYPE_ACTIVITY = 289;
-    private static final int VIEW_TYPE_SPACER = 854;
     private static final int VIEW_TYPE_EMPTY = 304;
 
     private List<Activity> activities;
@@ -39,10 +38,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case VIEW_TYPE_ACTIVITY:
                 v = inflater.inflate(R.layout.view_holder_activity, parent, false);
                 viewHolder = new ActivityViewHolder(v);
-                break;
-            case VIEW_TYPE_SPACER:
-                v = inflater.inflate(R.layout.view_holder_spacer, parent, false);
-                viewHolder = new SpacerViewHolder(v);
                 break;
             default: // VIEW_TYPE_EMPTY
                 v = inflater.inflate(R.layout.view_holder_empty_list, parent, false);
@@ -66,15 +61,13 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return (activities == null ? 0 : activities.size() + 1);
+        return (activities == null ? 0 : activities.size());
     }
 
     @Override
     public int getItemViewType(int position) {
         if (activities.size() == 0) {
             return VIEW_TYPE_EMPTY;
-        } else if (activities.size() == position) {
-            return VIEW_TYPE_SPACER;
         }
         return VIEW_TYPE_ACTIVITY;
     }
