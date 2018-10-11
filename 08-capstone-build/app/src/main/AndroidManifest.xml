@@ -46,5 +46,9 @@
                 android:resource="@xml/record_widget_info" />
         </receiver>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key"/>
+
     </application>
 </manifest>

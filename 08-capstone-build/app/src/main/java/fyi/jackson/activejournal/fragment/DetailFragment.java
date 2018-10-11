@@ -189,6 +189,13 @@ public class DetailFragment
         typeImageView.setImageResource(activity.getTypeResId());
         typeImageView.setContentDescription(getString(R.string.access_activity_type, activity.getTypeName()));
 
+        mainImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMapFragment();
+            }
+        });
+
         titleTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -413,5 +420,12 @@ public class DetailFragment
         Bundle analyticsData = new Bundle();
         analyticsData.putLong("activityId", currentActivity.getActivityId());
         firebaseAnalytics.logEvent(EVENT_CONTENT_CHANGED, analyticsData);
+    }
+
+    private void openMapFragment() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.frame_bottom_layer, MapFragment.newInstance(currentActivity))
+                .addToBackStack(TAG)
+                .commit();
     }
 }

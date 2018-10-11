@@ -32,6 +32,10 @@ public class AppViewModel extends AndroidViewModel {
         return appDatabase.activityDao().getLivePositionCount();
     }
 
+    public LiveData<List<Position>> getPositionsForActivity(long activityId) {
+        return appDatabase.activityDao().getLivePositionsForActivity(activityId);
+    }
+
     public LiveData<List<Content>> getContentsForActivity(long activityId) {
         return appDatabase.activityDao().getLiveContentForActivity(activityId);
     }

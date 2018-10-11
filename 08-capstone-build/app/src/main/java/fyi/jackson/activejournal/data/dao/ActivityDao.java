@@ -29,6 +29,9 @@ public interface ActivityDao {
     @Query("SELECT * FROM positions WHERE activityId = :activityId ORDER BY ts ASC")
     List<Position> getPositionsForActivity(long activityId);
 
+    @Query("SELECT * FROM positions WHERE activityId = :activityId ORDER BY ts ASC")
+    LiveData<List<Position>> getLivePositionsForActivity(long activityId);
+
     @Query("SELECT * FROM content WHERE activityId = :activityId ORDER BY position ASC")
     List<Content> getContentForActivity(long activityId);
 
