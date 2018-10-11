@@ -82,6 +82,7 @@ public class RecordWidgetProvider extends AppWidgetProvider {
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_record_layout);
         rv.setOnClickPendingIntent(R.id.fab, clickPendingIntent);
         rv.setImageViewResource(R.id.fab_icon, fabIconRes);
+        rv.setContentDescription(R.id.fab, context.getString(R.string.access_widget_recording_start));
 
         appWidgetManager.updateAppWidget(appWidgetId, rv);
     }

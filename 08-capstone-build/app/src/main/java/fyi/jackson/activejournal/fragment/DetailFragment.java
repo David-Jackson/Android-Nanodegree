@@ -187,6 +187,7 @@ public class DetailFragment
 
         titleTextView.setText(activity.getName());
         typeImageView.setImageResource(activity.getTypeResId());
+        typeImageView.setContentDescription(getString(R.string.access_activity_type, activity.getTypeName()));
 
         titleTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

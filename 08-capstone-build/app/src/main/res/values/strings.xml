@@ -23,4 +23,10 @@
     <string name="menu_title_add_sample_data">Add Sample Activities</string>
     <string name="widget_recording_name">Recording Shortcut</string>
     <string name="widget_display_name">Activity List</string>
+    <string name="access_fab">Start Recording New Activity</string>
+    <string name="access_pause">Pause Recording</string>
+    <string name="access_stop">Stop Recording and Save Activity</string>
+    <string name="access_play">Resume Recording</string>
+    <string name="access_activity_type">Activity Type: %s</string>
+    <string name="access_widget_recording_start">Active Journal widget: Start recording new activity</string>
 </resources>

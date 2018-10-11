@@ -143,6 +143,10 @@ public class RecordingFragment extends Fragment {
             }
         });
 
+        fab.setContentDescription(getString(R.string.access_fab));
+        pauseImageButton.setContentDescription(getString(R.string.access_pause));
+        stopImageButton.setContentDescription(getString(R.string.access_stop));
+
     }
 
     @Override
@@ -173,6 +177,7 @@ public class RecordingFragment extends Fragment {
 
         setStopButtonVisibility(true);
         pauseImageButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+        pauseImageButton.setContentDescription(getString(R.string.access_play));
 
         status = STATUS_STANDBY;
     }
@@ -184,6 +189,7 @@ public class RecordingFragment extends Fragment {
 
         setStopButtonVisibility(false);
         pauseImageButton.setImageResource(R.drawable.ic_pause_black_24dp);
+        pauseImageButton.setContentDescription(getString(R.string.access_pause));
         status = STATUS_ACTIVE;
     }
 
@@ -194,6 +200,7 @@ public class RecordingFragment extends Fragment {
 
         setStopButtonVisibility(false);
         pauseImageButton.setImageResource(R.drawable.ic_pause_black_24dp);
+        pauseImageButton.setContentDescription(getString(R.string.access_pause));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
         status = STATUS_STANDBY;
