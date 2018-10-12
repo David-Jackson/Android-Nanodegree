@@ -13,7 +13,7 @@ public class ContentItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     private static final String TAG = "TaskItemTouchHelperCallback";
 
-    public static final float ALPHA_FULL = 1.0f;
+    private static final float ALPHA_FULL = 1.0f;
     private final ItemTouchHelperAdapter adapter;
 
     public ContentItemTouchHelperCallback(ItemTouchHelperAdapter adapter) {

@@ -1,7 +1,6 @@
 package fyi.jackson.activejournal.recycler;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.recycler.holder.ActivityViewHolder;
 import fyi.jackson.activejournal.recycler.holder.EmptyListViewHolder;
-import fyi.jackson.activejournal.recycler.holder.SpacerViewHolder;
 import fyi.jackson.activejournal.ui.ItemClickListener;
 
 public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 
 import java.util.List;
@@ -142,6 +141,7 @@ public class AppViewModel extends AndroidViewModel {
         }.execute();
     }
 
+    @SuppressLint("StaticFieldLeak")
     public void removeContents(Content contents) {
         // AsyncTask won't leak memory when used within the ViewModel
         new AsyncTask<Content, Void, Void>() {

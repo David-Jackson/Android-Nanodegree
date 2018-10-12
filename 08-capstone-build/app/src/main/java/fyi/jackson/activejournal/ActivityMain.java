@@ -44,13 +44,13 @@ public class ActivityMain extends AppCompatActivity
 
     private FirebaseAnalytics firebaseAnalytics;
 
-    AppViewModel viewModel;
+    private AppViewModel viewModel;
 
     Snackbar snackbar;
-    FrameLayout bottomFrame;
+    private FrameLayout bottomFrame;
 
-    boolean jumpToDetailFragment = false;
-    long jumpToActivityId = -1;
+    private boolean jumpToDetailFragment = false;
+    private long jumpToActivityId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

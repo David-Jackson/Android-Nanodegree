@@ -1,7 +1,6 @@
 package fyi.jackson.activejournal.data.dao;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -57,7 +56,7 @@ public interface ActivityDao {
     void insertContent(Content... contents);
 
     @Query("UPDATE activities SET thumbnail = :thumbnailFileName WHERE activityId = :activityId")
-    void updateThumbail(long activityId, String thumbnailFileName);
+    void updateThumbnail(long activityId, String thumbnailFileName);
 
     @Update
     void updateActivity(Activity... activities);

@@ -1,6 +1,5 @@
 package fyi.jackson.activejournal.recycler.holder;
 
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -8,7 +7,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Content;
@@ -51,7 +49,6 @@ public class ContentEditTextViewHolder extends RecyclerView.ViewHolder {
                     firstChange = false;
                     return;
                 }
-                Log.d(TAG, "afterTextChanged: TXTDEBUG : " + content.getUid() + " has changed.");
                 content.setValue(editable.toString());
                 changeListener.onChange(content);
             }

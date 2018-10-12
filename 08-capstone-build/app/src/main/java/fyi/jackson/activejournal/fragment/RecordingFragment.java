@@ -39,8 +39,8 @@ public class RecordingFragment extends Fragment {
 
     public static final String TAG = RecordingFragment.class.getSimpleName();
 
-    public static final int STATUS_STANDBY = 0;
-    public static final int STATUS_ACTIVE = 1;
+    private static final int STATUS_STANDBY = 0;
+    private static final int STATUS_ACTIVE = 1;
 
     private int status = STATUS_STANDBY;
 
@@ -156,7 +156,7 @@ public class RecordingFragment extends Fragment {
     }
 
     private void updateStats(Stats stats) {
-        pointsTextView.setText(stats.getPointCount() + "");
+        pointsTextView.setText(getString(R.string.point_count, stats.getPointCount()));
         durationTextView.setText(Formatter.millisToDurationString(stats.getDuration()));
         speedTextView.setText(Formatter.speedToString(stats.getAverageSpeed()));
     }
@@ -207,20 +207,20 @@ public class RecordingFragment extends Fragment {
         updateVisibilities();
     }
 
-    private void setStopButtonVisibility(boolean visibile) {
+    private void setStopButtonVisibility(boolean visible) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             TransitionManager.beginDelayedTransition((ViewGroup) bottomSheetView);
         }
 
-        stopImageButton.setVisibility(visibile ? View.VISIBLE : View.INVISIBLE);
+        stopImageButton.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
 
         int unset = ConstraintLayout.LayoutParams.UNSET;
         int parentId = ConstraintLayout.LayoutParams.PARENT_ID;
 
         ConstraintLayout.LayoutParams layoutParams =
                 (ConstraintLayout.LayoutParams) pauseImageButton.getLayoutParams();
-        layoutParams.rightToRight = visibile ? unset : parentId;
-        layoutParams.rightToLeft = visibile ? R.id.iv_stop : unset;
+        layoutParams.rightToRight = visible ? unset : parentId;
+        layoutParams.rightToLeft = visible ? R.id.iv_stop : unset;
         pauseImageButton.setLayoutParams(layoutParams);
     }
 

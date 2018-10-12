@@ -2,7 +2,6 @@ package fyi.jackson.activejournal.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -49,8 +48,7 @@ public class Formatter {
         DateFormat df = SimpleDateFormat.getDateTimeInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
         sdf.setTimeZone(df.getTimeZone());
-        String dayString = sdf.format(new Date(timestamp));
-        return dayString;
+        return sdf.format(new Date(timestamp));
     }
 
     private static String getTimeOfDay(long timestamp) {

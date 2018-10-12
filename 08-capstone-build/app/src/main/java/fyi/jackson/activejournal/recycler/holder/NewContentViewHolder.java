@@ -4,21 +4,17 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import fyi.jackson.activejournal.R;
-import fyi.jackson.activejournal.data.entities.Content;
-import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
-import fyi.jackson.activejournal.ui.ContentClickListener;
 import fyi.jackson.activejournal.ui.NewContentRowClickListener;
 
 public class NewContentViewHolder extends RecyclerView.ViewHolder {
 
     public static final String TAG = NewContentViewHolder.class.getSimpleName();
 
-    public LinearLayout addTextLayout;
-    public LinearLayout addImageLayout;
-    public LinearLayout editContentLayout;
+    private LinearLayout addTextLayout;
+    private LinearLayout addImageLayout;
+    private LinearLayout editContentLayout;
 
     public NewContentViewHolder(@NonNull View itemView) {
         super(itemView);

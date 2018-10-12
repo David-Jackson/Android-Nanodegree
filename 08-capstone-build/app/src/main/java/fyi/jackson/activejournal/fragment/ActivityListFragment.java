@@ -35,14 +35,14 @@ import fyi.jackson.activejournal.util.ActivityTransitionNames;
 
 public class ActivityListFragment extends Fragment implements ItemClickListener {
 
-    public static final String TAG = ActivityListFragment.class.getSimpleName();
+    private static final String TAG = ActivityListFragment.class.getSimpleName();
 
     private Unbinder unbinder;
 
-    AppViewModel appViewModel;
+    private AppViewModel appViewModel;
 
     @BindView(R.id.rv_activity_list) RecyclerView recyclerView;
-    ActivityListAdapter adapter;
+    private ActivityListAdapter adapter;
 
     public ActivityListFragment() {}
 

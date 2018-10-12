@@ -9,5 +9,7 @@
         android:id="@+id/et_text_content"
         style="@style/FullWidthEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="@string/access_type_content"
+        android:inputType="textAutoCorrect" />
 </android.support.v7.widget.CardView>

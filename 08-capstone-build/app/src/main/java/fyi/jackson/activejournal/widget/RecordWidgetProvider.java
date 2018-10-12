@@ -1,15 +1,12 @@
 package fyi.jackson.activejournal.widget;
 
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -19,7 +16,6 @@ import java.util.List;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.AppDatabase;
 import fyi.jackson.activejournal.data.entities.Activity;
-import fyi.jackson.activejournal.data.entities.Content;
 import fyi.jackson.activejournal.service.RecordingService;
 import fyi.jackson.activejournal.service.ServiceConstants;
 

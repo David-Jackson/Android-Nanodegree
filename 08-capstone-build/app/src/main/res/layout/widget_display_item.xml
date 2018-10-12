@@ -16,11 +16,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Activity Title"
         android:textColor="@color/primaryTextColor"
         android:textSize="18sp"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/iv_activity_type"/>
+        android:layout_toLeftOf="@id/iv_activity_type"
+        android:layout_toStartOf="@id/iv_activity_type" />
     <ImageView
         android:id="@+id/iv_activity_type"
         android:layout_width="wrap_content"

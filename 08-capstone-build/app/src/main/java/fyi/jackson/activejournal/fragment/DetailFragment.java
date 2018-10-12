@@ -57,9 +57,9 @@ public class DetailFragment
         extends Fragment
         implements ContentClickListener, ContentChangeListener, ImageRequester {
 
-    public static final String TAG = DetailFragment.class.getSimpleName();
+    private static final String TAG = DetailFragment.class.getSimpleName();
 
-    public static final String EXTRA_ACTIVITY = "EXTRA_ACTIVITY";
+    private static final String EXTRA_ACTIVITY = "EXTRA_ACTIVITY";
 
     private static final String EVENT_CONTENT_INSERTED = "content_inserted";
     private static final String EVENT_CONTENT_REMOVED = "content_removed";
@@ -74,12 +74,12 @@ public class DetailFragment
     @BindView(R.id.iv_activity_type) ImageView typeImageView;
     @BindView(R.id.layout_container) ConstraintLayout containerLayout;
     @BindView(R.id.rv_content_list) RecyclerView recyclerView;
-    ContentListAdapter adapter;
-    ItemTouchHelper itemTouchHelper;
+    private ContentListAdapter adapter;
+    private ItemTouchHelper itemTouchHelper;
 
-    AppViewModel appViewModel;
+    private AppViewModel appViewModel;
 
-    Activity currentActivity;
+    private Activity currentActivity;
 
     private FirebaseAnalytics firebaseAnalytics;
 
@@ -129,10 +129,6 @@ public class DetailFragment
                 .observe(this, new Observer<List<Content>>() {
                     @Override
                     public void onChanged(@Nullable List<Content> contents) {
-                        Log.d(TAG, "onChanged: TXTDEBUG Content changed:");
-                        for (Content c : contents) {
-                            Log.d(TAG, "onChanged: TXTDEBUG : " + c.getUid() + " : " + c.getValue());
-                        }
                         if (expectingChange) {
                             expectingChange = false;
                             return;
@@ -187,6 +183,8 @@ public class DetailFragment
 
         titleTextView.setText(activity.getName());
         typeImageView.setImageResource(activity.getTypeResId());
+
+        mainImageView.setContentDescription(getString(R.string.access_map));
         typeImageView.setContentDescription(getString(R.string.access_activity_type, activity.getTypeName()));
 
         mainImageView.setOnClickListener(new View.OnClickListener() {

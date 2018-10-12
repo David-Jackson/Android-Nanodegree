@@ -19,12 +19,11 @@ import java.util.List;
 import androidx.work.Worker;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.AppDatabase;
-import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.data.entities.Position;
 
 public class ThumbnailWorker extends Worker {
 
-    public static final String TAG = ThumbnailWorker.class.getSimpleName();
+    private static final String TAG = ThumbnailWorker.class.getSimpleName();
     public static final String KEY_ACTIVITY_ID = "KEY_ACTIVITY_ID";
 
     @NonNull
@@ -52,7 +51,7 @@ public class ThumbnailWorker extends Worker {
                     .setFileName(thumbnailFileName)
                     .save(bitmap);
 
-            appDatabase.activityDao().updateThumbail(activityId, newFileName);
+            appDatabase.activityDao().updateThumbnail(activityId, newFileName);
 
             return Result.SUCCESS;
 
@@ -106,7 +105,7 @@ public class ThumbnailWorker extends Worker {
             byte messageDigest[] = digest.digest();
 
             // Create Hex String
-            StringBuffer hexString = new StringBuffer();
+            StringBuilder hexString = new StringBuilder();
             for (int i=0; i<messageDigest.length; i++)
                 hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
             return hexString.toString();

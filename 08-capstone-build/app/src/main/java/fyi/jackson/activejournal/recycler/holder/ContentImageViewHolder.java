@@ -9,16 +9,13 @@ import android.widget.ImageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Content;
 import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
-import fyi.jackson.activejournal.ui.ContentClickListener;
 
 public class ContentImageViewHolder extends RecyclerView.ViewHolder {
 
-    public static final String TAG = ContentImageViewHolder.class.getSimpleName();
+    private static final String TAG = ContentImageViewHolder.class.getSimpleName();
 
     public ImageView image;
 

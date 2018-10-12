@@ -10,7 +10,6 @@ import android.widget.RemoteViewsService;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,11 +26,11 @@ public class DisplayWidgetService extends RemoteViewsService {
 
     class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         private List<Activity> activities = new ArrayList<>();
-        private Context cntext;
+        private Context context;
         private int appWidgetId;
 
         public StackRemoteViewsFactory(Context context, Intent intent) {
-            cntext = context;
+            this.context = context;
             appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
         }
@@ -50,7 +49,7 @@ public class DisplayWidgetService extends RemoteViewsService {
         public RemoteViews getViewAt(int position) {
             Activity activity = activities.get(position);
 
-            RemoteViews rv = new RemoteViews(cntext.getPackageName(), R.layout.widget_display_item);
+            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_display_item);
             rv.setTextViewText(R.id.tv_activity_title, activity.getName());
             rv.setImageViewResource(R.id.iv_activity_type, activity.getTypeResId());
 
@@ -88,7 +87,7 @@ public class DisplayWidgetService extends RemoteViewsService {
         }
 
         public void onDataSetChanged() {
-            activities = AppDatabase.getDatabase(cntext).activityDao().getAllActivities();
+            activities = AppDatabase.getDatabase(context).activityDao().getAllActivities();
         }
     }
 

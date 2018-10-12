@@ -8,7 +8,6 @@ import android.widget.TextView;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.entities.Content;
 import fyi.jackson.activejournal.recycler.helper.OnStartDragListener;
-import fyi.jackson.activejournal.ui.ContentClickListener;
 
 public class ContentTextViewHolder extends RecyclerView.ViewHolder {
 

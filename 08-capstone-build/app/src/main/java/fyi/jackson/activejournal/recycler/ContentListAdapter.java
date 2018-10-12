@@ -29,7 +29,7 @@ public class ContentListAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements ItemTouchHelperAdapter, NewContentRowClickListener, ContentChangeListener {
 
-    public static final String TAG = ContentListAdapter.class.getSimpleName();
+    private static final String TAG = ContentListAdapter.class.getSimpleName();
 
     public static final int VIEW_TYPE_TEXT_CONTENT = Content.TYPE_TEXT;
     public static final int VIEW_TYPE_IMAGE_CONTENT = Content.TYPE_IMAGE;
@@ -175,7 +175,6 @@ public class ContentListAdapter
     }
 
     private void addTextContent() {
-        Log.d(TAG, "addTextContent: TXTDEBUG Adding new Text Content");
         Content newContent = new Content();
         newContent.setPosition(contents.size());
         newContent.setType(Content.TYPE_TEXT);
@@ -185,7 +184,7 @@ public class ContentListAdapter
     }
 
     private void focusOnContent(int position) {
-        // TODO: 9/21/2018 implement functionality that allows keyoard focus on certain veiw holder
+        // TODO: 9/21/2018 implement functionality that allows keyboard focus on certain view holder
     }
 
     private void toggleEditMode() {

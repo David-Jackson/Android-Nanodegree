@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Active Journal</string>
     <string name="title_activity_main">@string/app_name</string>
-    <string name="bottom_sheet_recording_label">Recording...</string>
+    <string name="bottom_sheet_recording_label">Recording…</string>
     <string name="activity_title_placeholder">Activity Title</string>
     <string name="recording_notification_content_title">Recording Activity</string>
     <string name="recording_notification_content_text">Content Text</string>
@@ -29,4 +29,7 @@
     <string name="access_play">Resume Recording</string>
     <string name="access_activity_type">Activity Type: %s</string>
     <string name="access_widget_recording_start">Active Journal widget: Start recording new activity</string>
+    <string name="access_map">Detail Map View</string>
+    <string name="access_type_content">Type to add content...</string>
+    <string name="point_count">%d</string>
 </resources>
