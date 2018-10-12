@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'udacityTestKey'
+            keyPassword 'password'
+            storeFile file("$rootProject.projectDir/keystore.jks")
+            storePassword 'password'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "fyi.jackson.activejournal"
@@ -27,12 +35,13 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:support-compat:28.0.0'
     implementation 'com.android.support:exifinterface:28.0.0'
     implementation 'com.android.support:appcompat-v7:28.0.0'
