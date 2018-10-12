@@ -1,6 +1,5 @@
 package fyi.jackson.activejournal.widget;
 
-import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -10,16 +9,11 @@ import android.net.Uri;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import java.util.Iterator;
-import java.util.List;
-
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.AppDatabase;
 import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.service.RecordingService;
 import fyi.jackson.activejournal.service.ServiceConstants;
-
-import static android.content.Context.ACTIVITY_SERVICE;
 
 public class RecordWidgetProvider extends AppWidgetProvider {
     public static final String TAG = RecordWidgetProvider.class.getSimpleName();
@@ -48,8 +42,7 @@ public class RecordWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(ACTION_START)) {
-            boolean serviceRunning = isServiceRunning(context, RecordingService.class.getName());
-            if (serviceRunning) {
+            if (RecordingService.IS_SERVICE_RUNNING) {
                 askToStopRecording(context);
             } else {
                 startRecording(context);
@@ -93,19 +86,6 @@ public class RecordWidgetProvider extends AppWidgetProvider {
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         return PendingIntent.getBroadcast(context, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
-    private boolean isServiceRunning(Context context, String serviceName){
-        ActivityManager am = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-        List<ActivityManager.RunningServiceInfo> l = am.getRunningServices(50);
-        Iterator<ActivityManager.RunningServiceInfo> i = l.iterator();
-        while (i.hasNext()) {
-            ActivityManager.RunningServiceInfo runningServiceInfo = i.next();
-            if(runningServiceInfo.service.getClassName().equals(serviceName)){
-                return true;
-            }
-        }
-        return false;
     }
 
     private void startRecording(Context context) {
