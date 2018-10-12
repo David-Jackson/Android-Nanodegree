@@ -220,7 +220,9 @@ public class RecordingFragment extends Fragment {
         ConstraintLayout.LayoutParams layoutParams =
                 (ConstraintLayout.LayoutParams) pauseImageButton.getLayoutParams();
         layoutParams.rightToRight = visible ? unset : parentId;
+        layoutParams.endToEnd = visible ? unset : parentId;
         layoutParams.rightToLeft = visible ? R.id.iv_stop : unset;
+        layoutParams.endToStart = visible ? R.id.iv_stop : unset;
         pauseImageButton.setLayoutParams(layoutParams);
     }
 

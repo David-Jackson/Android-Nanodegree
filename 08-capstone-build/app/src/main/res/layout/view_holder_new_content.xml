@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/bottom_sheet_peek_height">
-
         <LinearLayout
             android:id="@+id/layout_add_text"
             android:layout_width="0dp"
@@ -19,7 +18,9 @@
             android:background="?selectableItemBackground"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/layout_add_image">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/layout_add_image"
+            app:layout_constraintEnd_toStartOf="@id/layout_add_image">
             <ImageView
                 android:id="@+id/iv_add_text"
                 android:layout_width="wrap_content"
@@ -44,7 +45,9 @@
             android:background="?selectableItemBackground"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/layout_add_text"
-            app:layout_constraintRight_toLeftOf="@id/layout_edit_content">
+            app:layout_constraintStart_toEndOf="@id/layout_add_text"
+            app:layout_constraintRight_toLeftOf="@id/layout_edit_content"
+            app:layout_constraintEnd_toStartOf="@id/layout_edit_content">
             <ImageView
                 android:id="@+id/iv_add_image"
                 android:layout_width="wrap_content"
@@ -69,7 +72,9 @@
             android:background="?selectableItemBackground"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/layout_add_image"
-            app:layout_constraintRight_toRightOf="parent">
+            app:layout_constraintStart_toEndOf="@id/layout_add_image"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
             <ImageView
                 android:id="@+id/iv_edit_content"
                 android:layout_width="wrap_content"
@@ -84,7 +89,5 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/edit_content"/>
         </LinearLayout>
-
-
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
