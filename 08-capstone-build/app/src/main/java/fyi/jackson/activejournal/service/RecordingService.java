@@ -202,7 +202,6 @@ public class RecordingService extends Service {
         notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_RECORDING)
                 .setTicker(getString(R.string.app_name))
                 .setContentTitle(getString(R.string.recording_notification_content_title))
-                .setContentText(getString(R.string.recording_notification_content_text))
                 .setSmallIcon(R.drawable.ic_stat_timeline)
                 .setLargeIcon(icon)
                 .setContentIntent(pendingIntent)
@@ -221,7 +220,7 @@ public class RecordingService extends Service {
     private void updateNotification(Stats stats) {
         notificationBuilder.setContentText(
                         stats.getPointCount() + " points, " +
-                        Formatter.millisToDurationString(stats.getDuration()) + " ms, " +
+                        Formatter.millisToDurationString(stats.getDuration()) + ", " +
                         Formatter.distanceToString(stats.getDistance()) + " m, " +
                         Formatter.speedToString(stats.getAverageSpeed()) + " m/s");
         notificationManager.notify(NOTIFICATION_ID_RECORDING, notificationBuilder.build());
