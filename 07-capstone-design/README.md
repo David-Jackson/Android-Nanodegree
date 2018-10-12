@@ -97,7 +97,7 @@ The Location API will be used to listen for changes in device location while rec
 
 ### Task 1: Project Setup
 - [x] Configure libraries. [#16dd7](https://github.com/David-Jackson/Android-Nanodegree/commit/16dd72099b71e6cf0d0eb5bc8c247e0cafa2f1d0)
-- [ ] Create Project/API Keys/google_services.json in Google API Console.
+- [x] Create Project/API Keys/google_services.json in Google API Console.
 
 ### Task 2: Implement UI for Each Activity and Fragment
 - [x] Build UI for MainActivity. [#daaaa](https://github.com/David-Jackson/Android-Nanodegree/commit/daaaa7a2c013833ec6f9fc9a05452f1fb2100191)
@@ -123,8 +123,8 @@ The Location API will be used to listen for changes in device location while rec
 - [x] Build logic for arranging content. [#bc333](https://github.com/David-Jackson/Android-Nanodegree/commit/bc333b33f595d3839b508d1040833f3f4f321582)
 
 ### Task 7: Implement Widgets
-- [ ] Build widget for starting activity recording.
-- [ ] Build widget for flipping through previous activities.
+- [x] Build widget for starting activity recording. [#020f8](https://github.com/David-Jackson/Android-Nanodegree/commit/020f8858d677dded615ce540a399f570cf1331ef)
+- [x] Build widget for flipping through previous activities. [#4f782](https://github.com/David-Jackson/Android-Nanodegree/commit/4f78233b04995a6da0fe6c3e0b09d1797e51b01d)
 
 ### Task 8: Implement Activity Importing
 - [ ] Connect to Google Fit API.
