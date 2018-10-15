@@ -2,6 +2,21 @@
 
 Here a repository of all work done on projects for Udacity's Android Nanodegree program.
 
+## Project #8: Capstone Stage 2 - Build
+*This is your chance to take the skills that you've learned across your Nanodegree journey and apply it to an app idea of your own. You control the vision!*
+
+Here is the design concept side-by-side with the end result:
+
+| Design | Build |
+|--------|-------|
+| <img alt='' height='500px' src='https://github.com/David-Jackson/Android-Nanodegree/raw/master/07-capstone-design/mockups/exports/01%20Start%20Screen.png'/> | <img alt='' height='500px' src='https://github.com/David-Jackson/Android-Nanodegree/blob/master/08-capstone-build/images/Screenshot_1539372019.png'/> |
+| <img alt='' height='500px' src='https://github.com/David-Jackson/Android-Nanodegree/raw/master/07-capstone-design/mockups/exports/02%20Recording%20Screen.png'/> | <img alt='' height='500px' src='https://github.com/David-Jackson/Android-Nanodegree/blob/master/08-capstone-build/images/Screenshot_1539372023.png'/> |
+| <img alt='' height='500px' src='https://github.com/David-Jackson/Android-Nanodegree/raw/master/07-capstone-design/mockups/exports/04%20Recording%20Screen%20Expanded.png'/> | <img alt='' height='500px' src='https://github.com/David-Jackson/Android-Nanodegree/blob/master/08-capstone-build/images/Screenshot_1539371294.png'/> |
+| <img alt='' height='500px' src='https://github.com/David-Jackson/Android-Nanodegree/raw/master/07-capstone-design/mockups/exports/06%20Edit%20Trip%20Screen.png'/> | <img alt='' height='500px' src='https://github.com/David-Jackson/Android-Nanodegree/blob/master/08-capstone-build/images/Screenshot_1539372113.png'/> |
+| <img alt='' width='250px' src='https://github.com/David-Jackson/Android-Nanodegree/raw/master/07-capstone-design/mockups/exports/07%20App%20Widgets.png'/> | <img alt='' height='500px' src='https://github.com/David-Jackson/Android-Nanodegree/blob/master/08-capstone-build/images/Screenshot_1539372096.png'/> |
+
+<a href='https://play.google.com/store/apps/details?id=fyi.jackson.activejournal'><img alt='Get it on Google Play' width='300px' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+
 ## Project #7: Capstone Stage 1 - Design
 *This is your chance to take the skills that you've learned across your Nanodegree journey and apply it to an app idea of your own. You control the vision! In Stage 1, you will design and plan your app, and receive feedback prior to building it in Stage 2.*
 
@@ -13,7 +28,7 @@ I have created UI mockups and a proposal that can be found [here](07-capstone-de
 ### Result
 | Before | After |
 |--------|-------|
-|![XYZ Reader before redesign](https://github.com/David-Jackson/Android-Nanodegree/blob/master/06-make-your-app-material/images/device-2018-08-28-130020.gif) | ![XYZ Reader after redesign](https://github.com/David-Jackson/Android-Nanodegree/blob/master/06-make-your-app-material/images/device-2018-08-28-124459.gif) |
+|[XYZ Reader before redesign](https://github.com/David-Jackson/Android-Nanodegree/blob/master/06-make-your-app-material/images/device-2018-08-28-130020.gif) | [XYZ Reader after redesign](https://github.com/David-Jackson/Android-Nanodegree/blob/master/06-make-your-app-material/images/device-2018-08-28-124459.gif) |
 
 ## Project #5: Build It Bigger
 *In this project, you will use Gradle to build a joke-telling app, factoring functionality into libraries and flavors to keep the build simple. You'll also configure a Google Cloud Endpoints development server to supply the jokes.*
