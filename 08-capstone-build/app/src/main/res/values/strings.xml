@@ -32,4 +32,6 @@
     <string name="access_map">Detail Map View</string>
     <string name="access_type_content">Type to add content...</string>
     <string name="point_count">%d</string>
+    <string name="sample_activity_long_text">This is a very long string that explains my recent activity in great detail. It was so great. I had so much fun. Here\'s some Lorem Ipsum: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum tincidunt quam, eu hendrerit mauris blandit vitae. Donec eu laoreet nulla. Cras facilisis tempor eros vel eleifend. Curabitur eros mi, volutpat eget urna in, efficitur tempus leo. Duis non efficitur felis, id posuere magna. Nullam ultrices nisi ac nisi venenatis laoreet. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In hac habitasse platea dictumst. Morbi accumsan volutpat dui eget consectetur.</string>
+    <string name="sample_activity_short_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum tincidunt quam, eu hendrerit mauris blandit vitae. Donec eu laoreet nulla. Cras facilisis tempor eros vel eleifend.</string>
 </resources>

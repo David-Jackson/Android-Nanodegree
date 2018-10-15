@@ -178,26 +178,19 @@ public class ActivityListFragment extends Fragment implements ItemClickListener 
         appViewModel.insertActivities(activity, activity1);
 
 
-        String longText = "This is a very long string that explains my recent activity in great detail. It was so great. I had so much fun. Here's some Lorem Ipsum: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum tincidunt quam, eu hendrerit mauris blandit vitae. Donec eu laoreet nulla. Cras facilisis tempor eros vel eleifend. Curabitur eros mi, volutpat eget urna in, efficitur tempus leo. Duis non efficitur felis, id posuere magna. Nullam ultrices nisi ac nisi venenatis laoreet. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In hac habitasse platea dictumst. Morbi accumsan volutpat dui eget consectetur.";
+        String longText = getString(R.string.sample_activity_long_text);
         Content textContent = new Content();
         textContent.setType(Content.TYPE_TEXT);
         textContent.setPosition(0);
         textContent.setActivityId(activityId);
         textContent.setValue(longText);
 
-        String shortText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum tincidunt quam, eu hendrerit mauris blandit vitae. Donec eu laoreet nulla. Cras facilisis tempor eros vel eleifend.";
+        String shortText = getString(R.string.sample_activity_short_text);
         Content textContent2 = new Content();
         textContent2.setType(Content.TYPE_TEXT);
         textContent2.setPosition(2);
         textContent2.setActivityId(activityId);
         textContent2.setValue(shortText);
-
-//        String imageUri = "/storage/self/primary/DCIM/Camera/IMG_20170715_205901021.jpg";
-//        Content imageContent = new Content();
-//        imageContent.setType(Content.TYPE_IMAGE);
-//        imageContent.setPosition(1);
-//        imageContent.setActivityId(activityId);
-//        imageContent.setValue(imageUri);
 
         appViewModel.insertContents(textContent, textContent2);
     }
