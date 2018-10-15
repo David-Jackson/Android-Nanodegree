@@ -74,7 +74,9 @@ public class ActivityMain extends AppCompatActivity
                 jumpToActivityId = incomingIntent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
                 jumpToDetailFragment = true;
             default: // android.intent.action.MAIN
-                fragmentTransaction(R.id.frame_bottom_layer, ActivityListFragment.newInstance());
+                if (savedInstanceState == null) {
+                    fragmentTransaction(R.id.frame_bottom_layer, ActivityListFragment.newInstance());
+                }
         }
 
         viewModel = ViewModelProviders.of(this).get(AppViewModel.class);
