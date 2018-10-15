@@ -18,16 +18,15 @@ import android.widget.FrameLayout;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.HashMap;
 import java.util.List;
 
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
 import fyi.jackson.activejournal.data.AppViewModel;
 import fyi.jackson.activejournal.data.entities.Activity;
 import fyi.jackson.activejournal.fragment.ActivityListFragment;
 import fyi.jackson.activejournal.fragment.DetailFragment;
 import fyi.jackson.activejournal.fragment.RecordingFragment;
-import fyi.jackson.activejournal.worker.ThumbnailWorker;
+import fyi.jackson.activejournal.worker.ThumbnailService;
 
 public class ActivityMain extends AppCompatActivity
         implements FragmentManager.OnBackStackChangedListener {
@@ -52,6 +51,9 @@ public class ActivityMain extends AppCompatActivity
     private boolean jumpToDetailFragment = false;
     private long jumpToActivityId = -1;
 
+    private HashMap<Long, Long> thumbnailRequests;
+    private long THUMBNAIL_REQUEST_TIMEOUT = 60 * 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,8 @@ public class ActivityMain extends AppCompatActivity
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         getSupportFragmentManager().addOnBackStackChangedListener(this);
+
+        thumbnailRequests = new HashMap<>();
 
         bottomFrame = findViewById(R.id.frame_bottom_layer);
 
@@ -124,20 +128,25 @@ public class ActivityMain extends AppCompatActivity
     }
 
     private void updateThumbnails(List<Activity> activities) {
+        long timeMillis = System.currentTimeMillis();
         for (Activity activity : activities) {
-            if (activity.getThumbnail() == null) {
-                androidx.work.Data activityData = new androidx.work.Data.Builder()
-                        .putLong(ThumbnailWorker.KEY_ACTIVITY_ID, activity.getActivityId())
-                        .build();
 
-                OneTimeWorkRequest thumbnailRequest =
-                        new OneTimeWorkRequest.Builder(ThumbnailWorker.class)
-                                .setInputData(activityData)
-                                .build();
+            // Check if thumnbail has been requested before
+            Long previousRequestTime = thumbnailRequests.get(activity.getActivityId());
+            if (previousRequestTime == null) {
+                previousRequestTime = 0l;
+            }
 
-                WorkManager.getInstance().enqueue(thumbnailRequest);
+            // If we need to request a thumbnail and the request has expired, then request it
+            if (activity.getThumbnail() == null &&
+                    previousRequestTime <= timeMillis - THUMBNAIL_REQUEST_TIMEOUT) {
 
-                return;
+                // Save when we sent the reqest so we can ignore updates from other changes
+                thumbnailRequests.put(activity.getActivityId(), System.currentTimeMillis());
+
+                Intent loadThumbnailIntent = new Intent(this, ThumbnailService.class);
+                loadThumbnailIntent.putExtra(ThumbnailService.EXTRA_ACTIVITY_ID, activity.getActivityId());
+                startService(loadThumbnailIntent);
             }
         }
     }

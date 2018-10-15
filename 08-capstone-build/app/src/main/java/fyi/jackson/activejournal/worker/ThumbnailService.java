@@ -1,8 +1,10 @@
 package fyi.jackson.activejournal.worker;
 
+import android.app.IntentService;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -21,20 +23,28 @@ import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.AppDatabase;
 import fyi.jackson.activejournal.data.entities.Position;
 
-public class ThumbnailWorker extends Worker {
+public class ThumbnailService extends IntentService {
 
-    private static final String TAG = ThumbnailWorker.class.getSimpleName();
-    public static final String KEY_ACTIVITY_ID = "KEY_ACTIVITY_ID";
+    public static final String TAG = ThumbnailService.class.getSimpleName();
+    public static final String EXTRA_ACTIVITY_ID = "fyi.jackson.activejournal.EXTRA_ACTIVITY_ID";
 
-    @NonNull
+    public ThumbnailService() {
+        super(ThumbnailService.class.getSimpleName());
+    }
+
     @Override
-    public Result doWork() {
+    protected void onHandleIntent(@Nullable Intent intent) {
 
-        long activityId = getInputData().getLong(KEY_ACTIVITY_ID, -1);
+        long activityId = intent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
 
-        if (activityId == -1) return Result.SUCCESS;
+        if (activityId == -1) {
+            Log.e(TAG, "onHandleIntent: EXTRA_ACTIVITY_ID not set");
+            return;
+        }
 
-        AppDatabase appDatabase  = AppDatabase.getDatabase(getApplicationContext());
+        AppDatabase appDatabase = AppDatabase.getDatabase(getApplicationContext());
+
+
 
         List<Position> positions = appDatabase.activityDao().getPositionsForActivity(activityId);
 
@@ -53,12 +63,11 @@ public class ThumbnailWorker extends Worker {
 
             appDatabase.activityDao().updateThumbnail(activityId, newFileName);
 
-            return Result.SUCCESS;
-
         } catch (IOException e) {
             e.printStackTrace();
-            return Result.FAILURE;
         }
+
+        Log.d(TAG, "onHandleIntent: Done handling reqest for " + activityId);
     }
 
     private String encodePositions(List<Position> positions) {
