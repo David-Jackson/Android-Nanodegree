@@ -164,7 +164,12 @@ public class RecordingFragment extends Fragment {
     private void startRecording() {
         Intent service = new Intent(getContext(), RecordingService.class);
         service.setAction(ServiceConstants.ACTION.START_FOREGROUND);
-        getContext().startService(service);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getContext().startForegroundService(service);
+        } else {
+            getContext().startService(service);
+        }
 
         status = STATUS_ACTIVE;
         updateVisibilities();
