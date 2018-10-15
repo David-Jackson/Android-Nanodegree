@@ -39,6 +39,7 @@ public class DisplayWidgetProvider extends AppWidgetProvider {
                 long activityId = intent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
                 if (activityId != -1) {
                     Intent startDetailFragmentIntent = new Intent(context, ActivityMain.class);
+                    startDetailFragmentIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startDetailFragmentIntent.setAction(ActivityMain.ACTION_VIEW);
                     startDetailFragmentIntent.putExtra(ActivityMain.EXTRA_ACTIVITY_ID, activityId);
                     context.startActivity(startDetailFragmentIntent);

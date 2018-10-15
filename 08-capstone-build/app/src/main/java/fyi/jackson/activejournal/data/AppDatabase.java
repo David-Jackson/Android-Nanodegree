@@ -28,7 +28,11 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     // TODO: 9/19/2018 Implement Migrations
-
+					// I realize main thread queries is not good practice
+					// however, the only time I'm leveraging main thread 
+					// queries is in the RecordingWidgetProvider, where 
+					// main thread queries are allowed. All other queries
+					// are in a background thread.
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "activejournal_database")
                             .fallbackToDestructiveMigration()

@@ -18,7 +18,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.work.Worker;
 import fyi.jackson.activejournal.R;
 import fyi.jackson.activejournal.data.AppDatabase;
 import fyi.jackson.activejournal.data.entities.Position;
