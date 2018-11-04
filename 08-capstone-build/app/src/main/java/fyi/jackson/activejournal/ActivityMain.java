@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -27,6 +28,7 @@ import fyi.jackson.activejournal.fragment.ActivityListFragment;
 import fyi.jackson.activejournal.fragment.DetailFragment;
 import fyi.jackson.activejournal.fragment.RecordingFragment;
 import fyi.jackson.activejournal.worker.ThumbnailService;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class ActivityMain extends AppCompatActivity
         implements FragmentManager.OnBackStackChangedListener {
@@ -51,8 +53,10 @@ public class ActivityMain extends AppCompatActivity
     private boolean jumpToDetailFragment = false;
     private long jumpToActivityId = -1;
 
+    // thumbnailRequests is a map of activityIds and timestamps used to keep track of whether an
+    // request has been made for a certain activityId.
     private HashMap<Long, Long> thumbnailRequests;
-    private long THUMBNAIL_REQUEST_TIMEOUT = 60 * 1000;
+    private long THUMBNAIL_REQUEST_TIMEOUT_MS = 60 * 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +115,7 @@ public class ActivityMain extends AppCompatActivity
 
     private void checkForPermissions() {
         String[] permissions = new String[]{
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                Manifest.permission.ACCESS_FINE_LOCATION
         };
 
         boolean permissionGranted = true;
@@ -141,7 +144,7 @@ public class ActivityMain extends AppCompatActivity
 
             // If we need to request a thumbnail and the request has expired, then request it
             if (activity.getThumbnail() == null &&
-                    previousRequestTime <= timeMillis - THUMBNAIL_REQUEST_TIMEOUT) {
+                    previousRequestTime <= timeMillis - THUMBNAIL_REQUEST_TIMEOUT_MS) {
 
                 // Save when we sent the reqest so we can ignore updates from other changes
                 thumbnailRequests.put(activity.getActivityId(), System.currentTimeMillis());
